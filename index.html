@@ -1118,8 +1118,17 @@ footer {
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
 <script>
 
+const SUPABASE_URL = "https://squlqtobgvrkupqfyayw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_2uyEYgGXJk6RdRiLl_3aMQ_jH9GQNyL";
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+    
 function toggleMenu() {
     document.getElementById('nav').classList.toggle('open');
 }
@@ -1135,8 +1144,8 @@ function openPrayer() {
 function closePrayer() {
     document.getElementById('prayerModal').classList.remove('open');
 }
-
-function sendPrayer() {
+    
+async function sendPrayer() {
     const text = document.getElementById('prayerText').value.trim();
 
     if (!text) {
@@ -1144,9 +1153,26 @@ function sendPrayer() {
         return;
     }
 
-    alert('Seu pedido foi preenchido! Para realizar o envio, conecte o formulário a um serviço de mensagens.');
+    const { error } = await supabaseClient
+        .from('pedidos_oracao')
+        .insert([
+            {
+                pedido: text
+            }
+        ]);
 
+    if (error) {
+        console.error('Erro ao enviar pedido:', error);
+        alert('Não foi possível enviar seu pedido. Tente novamente.');
+        return;
+    }
+
+    alert('Seu pedido de oração foi enviado com carinho! 🙏');
+
+    document.getElementById('prayerText').value = '';
+    closePrayer();
 }
+
 
 
 // PLAYER DE MÚSICA AMBIENTE
@@ -1266,6 +1292,7 @@ document.addEventListener('keydown', function(event) {
   // salvarNoBanco('visitas', 1);
   // lerDoBanco();
 </script>
+
     
 </body>
 </html>
