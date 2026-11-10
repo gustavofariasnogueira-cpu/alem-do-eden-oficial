@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livro | Além do Éden</title>
+<style>
+:root{--green:#315b42;--green2:#52785b;--cream:#f5f7f1;--ink:#26372b;--line:#e1e8dc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px clamp(14px,4vw,45px);background:#fff;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:40px;height:40px;display:grid;place-items:center;background:var(--green);color:#fff;border-radius:12px;font-size:21px}
+.brand small{display:block;color:var(--green2);font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.brand h1{font-size:18px;margin:0}
+.back{color:var(--green);font-size:14px;font-weight:700;text-decoration:none}
+main{max-width:1200px;margin:auto;padding:24px 16px 35px}
+.heading{text-align:center;margin:0 auto 20px}.heading h2{font:500 clamp(25px,3.5vw,36px)/1.15 Georgia,serif;color:var(--green);margin:0 0 7px}.heading p{margin:0;color:#718071;font-size:13px}
+.reader{height:calc(100vh - 180px);min-height:440px;overflow:hidden;background:#e6e9e4;border:1px solid #d9e1d5;border-radius:16px;box-shadow:0 8px 28px #315b4210}
+iframe{display:block;width:100%;height:100%;border:0}
+footer{text-align:center;color:#8a9686;font-size:12px;padding:0 18px 20px}
+@media(max-width:600px){header{padding:13px}.back{font-size:12px}.reader{height:calc(100vh - 165px);min-height:350px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">✝</div><div><small>Além do Éden</small><h1>Leitura Bíblica</h1></div></div>
+  <a class="back" href="index.html">← Voltar ao início</a>
+</header>
+<main>
+  <section class="heading">
+    <h2>Leia e medite</h2>
+    <p>Seu livro em PDF, aberto diretamente nesta página.</p>
+  </section>
+  <section class="reader" aria-label="Visualização do livro PDF">
+    <iframe src="O poço.pdf" title="Livro PDF" type="application/pdf"></iframe>
+  </section>
+</main>
+<footer>Além do Éden · Leitura e edificação na Palavra.</footer>
+</body>
+</html>
