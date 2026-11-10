@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Judas | Bíblia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #222;
+        margin: 0;
+        line-height: 1.8;
+    }
+
+    header {
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
+    }
+
+    header a {
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 40px 20px 80px;
+    }
+
+    h1 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 10px;
+    }
+
+    .sub {
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    /* MENU DE CAPÍTULOS */
+    .capitulos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 50px;
+    }
+
+    .capitulos a {
+        padding: 8px 14px;
+        background: #f3f3f3;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .capitulos a:hover {
+        background: #c9a44c;
+        color: #fff;
+    }
+
+    section {
+        margin-bottom: 80px;
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+.capitulos-wrapper {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    padding: 15px 0;
+    z-index: 100;
+    border-bottom: 1px solid #eee;
+}
+
+.capitulos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 900px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.capitulos a {
+    padding: 8px 14px;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+/* Botão fixo */
+.toggle-caps {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: #1f4f3a;
+    color: #fff;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Gaveta */
+.capitulos-wrapper {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    max-height: 60vh;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow-y: auto;
+
+    /* estado fechado */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(30px);
+    transition: all 0.3s ease;
+
+    z-index: 1000;
+}
+
+/* estado aberto */
+.capitulos-wrapper.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.capitulos {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+.capitulos a {
+    text-align: center;
+    padding: 8px 0;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="biblia.html" class="voltar-menu">← Voltar ao menu</a>
+</header>
+
+<div class="container">
+
+<h1>Judas</h1>
+<div class="sub">Capítulos 1 ao 1</div>
+
+<!-- Botão que abre a gaveta -->
+<button class="toggle-caps" onclick="toggleCapitulos()">☰ Capítulos</button>
+
+<!-- Gaveta -->
+<div class="capitulos-wrapper" id="capitulosDrawer">
+    <nav class="capitulos">
+        <a href="#cap1">1</a>
+    </nav>
+</div>
+
+<section id="cap1"><h2>CAP-1</h2><p>1 Judas, servo de Jesus Cristo, e irmão de Tiago, aos chamados, santificados em Deus Pai, e conservados em Jesus Cristo:
+2 Misericórdia, e paz, e amor vos sejam multiplicados.
+3 Amados, procurando eu escrever-vos com toda a diligência acerca da salvação comum, tive por necessidade escrever-vos, e exortar-vos a batalhar pela fé que uma vez foi entregue aos santos.
+4 Porque se introduziram furtivamente alguns, os quais já antes estavam escritos para este mesmo juízo, homens ímpios, que convertem em dissolução a graça de Deus, e negam a Deus, único dominador e Senhor nosso, Jesus Cristo.
+5 Mas quero lembrar-vos, como a quem já uma vez soube isto, que, havendo o Senhor salvo um povo, tirando-o da terra do Egito, destruiu depois os que não creram;
+6 E aos anjos que não guardaram o seu principado, mas deixaram a sua própria habitação, reservou na escuridão e em prisões eternas até ao juízo daquele grande dia;
+7 Assim como Sodoma e Gomorra, e as cidades circunvizinhas, que, havendo-se entregue à fornicação como aqueles, e ido após outra carne, foram postas por exemplo, sofrendo a pena do fogo eterno.
+8 E, contudo, também estes, semelhantemente adormecidos, contaminam a sua carne, e rejeitam a dominação, e difamam as dignidades.
+9 Mas o arcanjo Miguel, quando contendia com o diabo, e disputava a respeito do corpo de Moisés, não ousou pronunciar juízo de maldição contra ele; mas disse: O Senhor te repreenda.
+10 Estes, porém, dizem mal do que não sabem; e, naquilo que naturalmente conhecem, como animais irracionais se corrompem.
+11 Ai deles! Porque entraram pelo caminho de Caim, e foram levados pelo engano do prêmio de Balaão, e pereceram na contradição de Coré.
+12 Estes são manchas em vossas festas de amor, banqueteando-se convosco, e apascentando-se a si mesmos sem temor; são nuvens sem água, levadas pelos ventos de uma para outra parte; são como árvores murchas, infrutíferas, duas vezes mortas, desarraigadas;
+13 Ondas impetuosas do mar, que espumam as suas mesmas abominações; estrelas errantes, para os quais está eternamente reservada a negrura das trevas.
+14 E destes profetizou também Enoque, o sétimo depois de Adão, dizendo: Eis que é vindo o Senhor com milhares de seus santos;
+15 Para fazer juízo contra todos e condenar dentre eles todos os ímpios, por todas as suas obras de impiedade, que impiamente cometeram, e por todas as duras palavras que ímpios pecadores disseram contra ele.
+16 Estes são murmuradores, queixosos da sua sorte, andando segundo as suas concupiscências, e cuja boca diz coisas mui arrogantes, admirando as pessoas por causa do interesse.
+17 Mas vós, amados, lembrai-vos das palavras que vos foram preditas pelos apóstolos de nosso Senhor Jesus Cristo;
+18 Os quais vos diziam que nos últimos tempos haveria escarnecedores que andariam segundo as suas ímpias concupiscências.
+19 Estes são os que a si mesmos se separam, sensuais, que não têm o Espírito.
+20 Mas vós, amados, edificando-vos a vós mesmos sobre a vossa santíssima fé, orando no Espírito Santo,
+21 Conservai-vos a vós mesmos no amor de Deus, esperando a misericórdia de nosso Senhor Jesus Cristo para a vida eterna.
+22 E apiedai-vos de alguns, usando de discernimento;
+23 E salvai alguns com temor, arrebatando-os do fogo, odiando até a túnica manchada da carne.
+24 Ora, àquele que é poderoso para vos guardar de tropeçar, e apresentar-vos irrepreensíveis, com alegria, perante a sua glória,
+25 Ao Deus único, sábio, Salvador nosso, seja glória e majestade, domínio e poder, agora, e para todo o sempre. Amém.</p></section>
+
+</div>
+
+<script>
+function toggleCapitulos() {
+    document.getElementById('capitulosDrawer')
+        .classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

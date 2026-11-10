@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Bíblia | Livros</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+ --bg:#f6f1e7;--surface:#fffaf2;--surface-strong:#fffdf8;
+ --text:#342f27;--muted:#81776a;--primary:#536b4b;--primary-dark:#344832;
+ --accent:#c69b59;--accent-soft:#f3e5c8;--border:#e8ddca;
+ --shadow:0 18px 48px rgba(72,55,32,.10);--shadow-soft:0 9px 26px rgba(72,55,32,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ font-family:'Inter',sans-serif;color:var(--text);margin:0;line-height:1.7;
+ background:
+ radial-gradient(ellipse at 10% 0%,rgba(198,155,89,.15),transparent 30%),
+ radial-gradient(ellipse at 95% 20%,rgba(83,107,75,.10),transparent 28%),
+ linear-gradient(180deg,#f8f3e9 0%,#f2eadc 100%);
+}
+header{
+ position:sticky;top:0;z-index:100;padding:14px 24px;
+ background:rgba(250,246,238,.88);backdrop-filter:blur(16px);
+ border-bottom:1px solid rgba(130,110,75,.13);
+}
+.header-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+header a{
+ color:var(--primary-dark);text-decoration:none;font-weight:700;font-size:1rem;
+ letter-spacing:.02em;display:inline-flex;align-items:center;gap:11px;
+}
+header a::before{
+ content:"✧";display:grid;place-items:center;width:36px;height:36px;border-radius:12px;
+ background:#e7eddc;color:var(--primary);font-size:1.35rem;
+}
+header a:hover{color:var(--accent)}
+.container{max-width:1160px;margin:0 auto;padding:54px 22px 86px}
+.hero-card{
+ background:linear-gradient(135deg,rgba(255,252,244,.96),rgba(242,233,213,.94));
+ border:1px solid rgba(255,255,255,.8);box-shadow:var(--shadow);
+ border-radius:32px;padding:58px 30px 52px;text-align:center;position:relative;overflow:hidden;margin-bottom:30px;
+}
+.hero-card::before,.hero-card::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero-card::before{width:300px;height:300px;right:-100px;top:-150px;background:rgba(198,155,89,.13)}
+.hero-card::after{width:240px;height:240px;left:-100px;bottom:-150px;background:rgba(83,107,75,.12)}
+.eyebrow{
+ display:inline-block;padding:7px 15px;border-radius:999px;background:#e8eddf;color:#526b49;
+ font-size:.78rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;margin-bottom:18px;position:relative;z-index:1;
+}
+h1{font-family:'Playfair Display',serif;color:#394d34;font-size:clamp(2.5rem,5vw,4rem);line-height:1.12;margin:0 0 14px;position:relative;z-index:1}
+.sub{color:#786e60;margin:0 0 22px;font-size:1.05rem;position:relative;z-index:1}
+.verse{max-width:620px;margin:0 auto;color:#5f594e;font-family:'Playfair Display',serif;font-size:1.18rem;font-style:italic;position:relative;z-index:1}
+.livros-section{
+ background:rgba(255,251,244,.86);border:1px solid rgba(255,255,255,.88);
+ box-shadow:var(--shadow-soft);border-radius:28px;padding:34px 28px 30px;
+}
+.section-head{text-align:center;margin-bottom:24px}
+.section-head h2{margin:0 0 7px;color:#42583b;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem)}
+.section-head p{margin:0;color:var(--muted);font-size:.96rem}
+.testamento-titulo{
+ margin:30px 0 15px;padding:10px 14px;color:#4d6042;font-size:.9rem;font-weight:700;
+ letter-spacing:.08em;text-transform:uppercase;border-left:4px solid var(--accent);
+ background:linear-gradient(90deg,rgba(232,220,194,.55),transparent);border-radius:0 10px 10px 0;
+}
+.livros-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px}
+.livros-grid a{
+ display:flex;align-items:center;justify-content:center;min-height:56px;padding:12px 14px;
+ text-align:center;background:var(--book-bg,#fffdf8);border:1px solid var(--book-border,#e8ddca);
+ border-radius:14px;text-decoration:none;color:var(--book-text,var(--primary-dark));font-weight:600;
+ font-size:.93rem;box-shadow:0 3px 10px rgba(72,55,32,.035);transition:transform .2s,box-shadow .2s,background .2s;
+ position:relative;overflow:hidden;
+}
+.livros-grid a::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--book-accent,#b6c6a7);opacity:.9}
+/* Antigo Testamento: grupos de livros com cores suaves */
+    .livros-grid:first-of-type a:nth-child(-n+5) {
+        --book-bg: #eff7ed;
+        --book-border: #dcebd8;
+        --book-text: #355b3d;
+        --book-accent: #a9c99f;
+    }
+/* Livros históricos: Josué a Ester */
+    .livros-grid:first-of-type a:nth-child(n+6):nth-child(-n+17) {
+        --book-bg: #edf5f8;
+        --book-border: #d8e8ee;
+        --book-text: #315a70;
+        --book-accent: #9fc5d5;
+    }
+/* Poesia e sabedoria: Jó a Cantares */
+    .livros-grid:first-of-type a:nth-child(n+18):nth-child(-n+22) {
+        --book-bg: #fbf3e7;
+        --book-border: #f0e2ca;
+        --book-text: #80613a;
+        --book-accent: #d9bd8a;
+    }
+/* Profetas maiores: Isaías a Daniel */
+    .livros-grid:first-of-type a:nth-child(n+23):nth-child(-n+27) {
+        --book-bg: #f2eef8;
+        --book-border: #e3d9f0;
+        --book-text: #655080;
+        --book-accent: #b9a6d5;
+    }
+/* Profetas menores: Oseias a Malaquias */
+    .livros-grid:first-of-type a:nth-child(n+28) {
+        --book-bg: #f0f5ee;
+        --book-border: #dfe9d9;
+        --book-text: #496747;
+        --book-accent: #b4c9a6;
+    }
+/* Novo Testamento: Evangelhos */
+    .livros-grid:nth-of-type(2) a:nth-child(-n+4) {
+        --book-bg: #eaf3fb;
+        --book-border: #d5e6f5;
+        --book-text: #355c83;
+        --book-accent: #9fc4e7;
+    }
+/* Atos */
+    .livros-grid:nth-of-type(2) a:nth-child(5) {
+        --book-bg: #edf7ef;
+        --book-border: #d8eadc;
+        --book-text: #3c6948;
+        --book-accent: #a6cdae;
+    }
+/* Cartas de Paulo: Romanos a Filemom */
+    .livros-grid:nth-of-type(2) a:nth-child(n+6):nth-child(-n+18) {
+        --book-bg: #f1eef8;
+        --book-border: #e1d9f0;
+        --book-text: #665183;
+        --book-accent: #b8a8d7;
+    }
+/* Hebreus e cartas gerais */
+    .livros-grid:nth-of-type(2) a:nth-child(n+19):nth-child(-n+26) {
+        --book-bg: #fbf1e9;
+        --book-border: #f0dfd0;
+        --book-text: #865d43;
+        --book-accent: #d9b49a;
+    }
+/* Apocalipse */
+    .livros-grid:nth-of-type(2) a:nth-child(27) {
+        --book-bg: #f9f3e2;
+        --book-border: #eee2bd;
+        --book-text: #806a2e;
+        --book-accent: #d6bf75;
+    }
+.livros-grid a:hover {
+        background: var(--book-accent, var(--accent));
+        color: #fff;
+        border-color: transparent;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 22px rgba(31, 79, 58, 0.14);
+    }
+.livros-grid a:hover::before {
+        opacity: 0;
+    }
+.livros-grid a:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(72,55,32,.12);filter:saturate(1.05)}
+.livros-grid a:focus-visible{outline:3px solid #c69b59;outline-offset:3px}
+.search-area{max-width:700px;margin:26px auto 32px}
+.search-box{position:relative}
+.search-box input{
+ width:100%;padding:15px 18px 15px 48px;border-radius:16px;border:1px solid #e4d8c4;
+ background:#fffdf8;color:#342f27;font:inherit;box-shadow:0 5px 18px rgba(72,55,32,.045);outline:none;
+}
+.search-box input:focus{border-color:#9eaf8d;box-shadow:0 0 0 4px rgba(83,107,75,.12)}
+.search-box::before{content:"⌕";position:absolute;left:17px;top:6px;font-size:1.7rem;color:#7b8b6d;pointer-events:none}
+.search-meta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:10px 4px 0;color:#82786a;font-size:.82rem}
+.search-meta strong{color:#526b49}
+.empty-message{display:none;text-align:center;color:#82786a;padding:25px 12px}
+@media(max-width:640px){
+ header{padding:12px 16px}.container{padding:30px 14px 54px}
+ .hero-card{padding:42px 18px 38px;border-radius:24px;margin-bottom:20px}
+ .livros-section{padding:24px 15px 20px;border-radius:22px}
+ .livros-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .livros-grid a{min-height:52px;padding:10px 9px;font-size:.88rem}
+ .testamento-titulo{margin-top:25px}
+ .search-meta{font-size:.77rem}
+}
+@media(max-width:380px){.livros-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+
+<body>
+
+<nav class="nav" id="nav">
+<a href="../index.html" class="bible-link" onclick="closeMenu()">Além do Éden ↗</a>
+</nav>
+
+<header>
+    <div class="header-inner">
+        <a href="../index.html">Boa Leitura</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="hero-card">
+        <div class="eyebrow">Palavra de Deus</div>
+        <h1>Bíblia Sagrada</h1>
+        <div class="sub">Selecione um livro para leitura</div>
+
+        <p class="verse">
+            Conhecereis a Verdade e a Verdade vós libertará.
+        </p>
+    </div>
+
+    <section class="livros-section">
+        <div class="section-head">
+            <h2>Livros da Bíblia</h2>
+            <p>Escolha um livro para continuar sua leitura</p>
+        </div>
+
+
+        <div class="search-area">
+            <div class="search-box">
+                <input id="buscaLivros" type="search" placeholder="Buscar um livro… ex.: Salmos, João, Gênesis" aria-label="Buscar livro da Bíblia">
+            </div>
+            <div class="search-meta">
+                <span>Encontre rapidamente sua leitura</span>
+                <span><strong id="contadorLivros">66 livros</strong></span>
+            </div>
+        </div>
+
+        <div class="testamento-titulo">Antigo Testamento</div>
+        <nav class="livros-grid">
+            <a href="genesis.html">Gênesis</a>
+            <a href="exodo.html">Êxodo</a>
+            <a href="levitico.html">Levítico</a>
+            <a href="numeros.html">Números</a>
+            <a href="deuteronomio.html">Deuteronômio</a>
+            <a href="josue.html">Josué</a>
+            <a href="juizes.html">Juízes</a>
+            <a href="rute.html">Rute</a>
+            <a href="1samuel.html">1 Samuel</a>
+            <a href="2samuel.html">2 Samuel</a>
+            <a href="1reis.html">1 Reis</a>
+            <a href="2reis.html">2 Reis</a>
+            <a href="1cronicas.html">1 Crônicas</a>
+            <a href="2cronicas.html">2 Crônicas</a>
+            <a href="esdras.html">Esdras</a>
+            <a href="neemias.html">Neemias</a>
+            <a href="ester.html">Ester</a>
+            <a href="jo.html">Jó</a>
+            <a href="salmos.html">Salmos</a>
+            <a href="proverbios.html">Provérbios</a>
+            <a href="eclesiastes.html">Eclesiastes</a>
+            <a href="cantares.html">Cantares</a>
+            <a href="isaias.html">Isaías</a>
+            <a href="jeremias.html">Jeremias</a>
+            <a href="lamentacoes.html">Lamentações</a>
+            <a href="ezequiel.html">Ezequiel</a>
+            <a href="daniel.html">Daniel</a>
+            <a href="oseias.html">Oseias</a>
+            <a href="joel.html">Joel</a>
+            <a href="amos.html">Amós</a>
+            <a href="obadias.html">Obadias</a>
+            <a href="jonas.html">Jonas</a>
+            <a href="miqueias.html">Miqueias</a>
+            <a href="naum.html">Naum</a>
+            <a href="habacuque.html">Habacuque</a>
+            <a href="sofonias.html">Sofonias</a>
+            <a href="ageu.html">Ageu</a>
+            <a href="zacarias.html">Zacarias</a>
+            <a href="malaquias.html">Malaquias</a>
+        </nav>
+
+        <div class="testamento-titulo">Novo Testamento</div>
+        <nav class="livros-grid">
+            <a href="mateus.html">Mateus</a>
+            <a href="marcos.html">Marcos</a>
+            <a href="lucas.html">Lucas</a>
+            <a href="joao.html">João</a>
+            <a href="atos.html">Atos</a>
+            <a href="romanos.html">Romanos</a>
+            <a href="1 corintios.html">1 Coríntios</a>
+            <a href="2 corintios.html">2 Coríntios</a>
+            <a href="galatas.html">Gálatas</a>
+            <a href="efesios.html">Efésios</a>
+            <a href="filipenses.html">Filipenses</a>
+            <a href="colossenses.html">Colossenses</a>
+            <a href="1tessalonicenses.html">1 Tessalonicenses</a>
+            <a href="2tessalonicenses.html">2 Tessalonicenses</a>
+            <a href="1timoteo.html">1 Timóteo</a>
+            <a href="2timoteo.html">2 Timóteo</a>
+            <a href="tito.html">Tito</a>
+            <a href="filemom.html">Filemom</a>
+            <a href="hebreus.html">Hebreus</a>
+            <a href="tiago.html">Tiago</a>
+            <a href="1pedro.html">1 Pedro</a>
+            <a href="2pedro.html">2 Pedro</a>
+            <a href="1joao.html">1 João</a>
+            <a href="2joao.html">2 João</a>
+            <a href="3joao.html">3 João</a>
+            <a href="judas.html">Judas</a>
+            <a href="apocalipse.html">Apocalipse</a>
+        </nav>
+    </section>
+</div>
+
+
+<script>
+(() => {
+ const input = document.getElementById('buscaLivros');
+ const links = Array.from(document.querySelectorAll('.livros-grid a'));
+ const counter = document.getElementById('contadorLivros');
+ const headings = Array.from(document.querySelectorAll('.testamento-titulo'));
+ const grids = Array.from(document.querySelectorAll('.livros-grid'));
+ function filterBooks(){
+   const query = input.value.trim().toLocaleLowerCase('pt-BR');
+   let shown = 0;
+   grids.forEach((grid,index)=>{
+     let groupShown=0;
+     grid.querySelectorAll('a').forEach(link=>{
+       const match=link.textContent.trim().toLocaleLowerCase('pt-BR').includes(query);
+       link.style.display=match?'flex':'none';
+       if(match){shown++;groupShown++;}
+     });
+     headings[index].style.display=groupShown?'block':'none';
+     grid.style.display=groupShown?'grid':'none';
+   });
+   counter.textContent=query ? `${shown} ${shown===1?'livro encontrado':'livros encontrados'}` : `${links.length} livros`;
+ }
+ input.addEventListener('input',filterBooks);
+})();
+</script>
+
+</body>
+</html>

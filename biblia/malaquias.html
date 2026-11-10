@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Malaquias | Bíblia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #222;
+        margin: 0;
+        line-height: 1.8;
+    }
+
+    header {
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
+    }
+
+    header a {
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 40px 20px 80px;
+    }
+
+    h1 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 10px;
+    }
+
+    .sub {
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    /* MENU DE CAPÍTULOS */
+    .capitulos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 50px;
+    }
+
+    .capitulos a {
+        padding: 8px 14px;
+        background: #f3f3f3;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .capitulos a:hover {
+        background: #c9a44c;
+        color: #fff;
+    }
+
+    section {
+        margin-bottom: 80px;
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+.capitulos-wrapper {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    padding: 15px 0;
+    z-index: 100;
+    border-bottom: 1px solid #eee;
+}
+
+.capitulos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 900px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.capitulos a {
+    padding: 8px 14px;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+/* Botão fixo */
+.toggle-caps {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: #1f4f3a;
+    color: #fff;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Gaveta */
+.capitulos-wrapper {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    max-height: 60vh;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow-y: auto;
+
+    /* estado fechado */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(30px);
+    transition: all 0.3s ease;
+
+    z-index: 1000;
+}
+
+/* estado aberto */
+.capitulos-wrapper.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.capitulos {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+.capitulos a {
+    text-align: center;
+    padding: 8px 0;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="biblia.html" class="voltar-menu">← Voltar ao menu</a>
+</header>
+
+<div class="container">
+
+<h1>Malaquias</h1>
+<div class="sub">Capítulos 1 ao 4</div>
+
+<!-- Botão que abre a gaveta -->
+<button class="toggle-caps" onclick="toggleCapitulos()">☰ Capítulos</button>
+
+<!-- Gaveta -->
+<div class="capitulos-wrapper" id="capitulosDrawer">
+    <nav class="capitulos">
+        <a href="#cap1">1</a>
+        <a href="#cap2">2</a>
+        <a href="#cap3">3</a>
+        <a href="#cap4">4</a>
+    </nav>
+</div>
+
+<section id="cap1"><h2>CAP-1</h2><p>1 Peso da palavra do Senhor contra Israel, por intermédio de Malaquias.
+2 Eu vos tenho amado, diz o Senhor. Mas vós dizeis: Em que nos tens amado? Não era Esaú irmão de Jacó? Disse o Senhor; todavia amei a Jacó,
+3 E odiei a Esaú; e fiz dos seus montes uma desolação, e dei a sua herança aos chacais do deserto.
+4 Ainda que Edom diga: Empobrecidos estamos, porém tornaremos a edificar os lugares desolados; assim diz o Senhor dos Exércitos: Eles edificarão, e eu destruirei; e lhes chamarão: Termo de impiedade, e povo contra quem o Senhor está irado para sempre.
+5 E os vossos olhos o verão, e direis: O Senhor seja engrandecido além dos termos de Israel.
+6 O filho honra o pai, e o servo o seu senhor; se eu sou pai, onde está a minha honra? E, se eu sou senhor, onde está o meu temor? Diz o Senhor dos Exércitos a vós, ó sacerdotes, que desprezais o meu nome. E vós dizeis: Em que nós temos desprezado o teu nome?
+7 Ofereceis sobre o meu altar pão imundo, e dizeis: Em que te havemos profanado? Nisto que dizeis: A mesa do Senhor é desprezível.
+8 Porque, quando ofereceis animal cego para o sacrifício, isso não é mau? E quando ofereceis o coxo ou enfermo, isso não é mau? Ora apresenta-o ao teu governador; porventura terá ele agrado em ti? Ou aceitará ele a tua pessoa? Diz o Senhor dos Exércitos.
+9 Agora, pois, eu suplico, pedi a Deus, que ele seja misericordioso conosco; isto veio das vossas mãos; aceitará ele a vossa pessoa? Diz o Senhor dos Exércitos.
+10 Quem há também entre vós que feche as portas por nada, e não acenda em vão o fogo do meu altar? Eu não tenho prazer em vós, diz o Senhor dos Exércitos, nem aceitarei oferta da vossa mão.
+11 Mas desde o nascente do sol até ao poente é grande entre os gentios o meu nome; e em todo o lugar se oferecerá ao meu nome incenso, e uma oferta pura; porque o meu nome é grande entre os gentios, diz o Senhor dos Exércitos.
+12 Mas vós o profanais, quando dizeis: A mesa do Senhor é impura, e o seu produto, isto é, a sua comida é desprezível.
+13 E dizeis ainda: Eis aqui, que canseira! E o lançastes ao desprezo, diz o Senhor dos Exércitos; vós ofereceis o que foi roubado, e o coxo e o enfermo; assim trazeis a oferta. Aceitaria eu isso de vossa mão? Diz o Senhor.
+14 Pois seja maldito o enganador que, tendo macho no seu rebanho, promete e oferece ao Senhor o que tem mácula; porque eu sou grande Rei, diz o Senhor dos Exércitos, o meu nome é temível entre os gentios.</p></section>
+
+<section id="cap2"><h2>CAP-2</h2><p>1 Agora, ó sacerdotes, este mandamento é para vós.
+2 Se não ouvirdes e se não propuserdes, no vosso coração, dar honra ao meu nome, diz o Senhor dos Exércitos, enviarei a maldição contra vós, e amaldiçoarei as vossas bênçãos; e também já as tenho amaldiçoado, porque não aplicais a isso o coração.
+3 Eis que reprovarei a vossa semente, e espalharei esterco sobre os vossos rostos, o esterco das vossas festas solenes; e para junto deste sereis levados.
+4 Então sabereis que eu vos enviei este mandamento, para que a minha aliança fosse com Levi, diz o Senhor dos Exércitos.
+5 Minha aliança com ele foi de vida e de paz, e eu lhas dei para que temesse; então temeu-me, e assombrou-se por causa do meu nome.
+6 A lei da verdade esteve na sua boca, e a iniquidade não se achou nos seus lábios; andou comigo em paz e em retidão, e da iniquidade converteu a muitos.
+7 Porque os lábios do sacerdote devem guardar o conhecimento, e da sua boca devem os homens buscar a lei porque ele é o mensageiro do Senhor dos Exércitos.
+8 Mas vós vos desviastes do caminho; a muitos fizestes tropeçar na lei; corrompestes a aliança de Levi, diz o Senhor dos Exércitos.
+9 Por isso também eu vos fiz desprezíveis, e indignos diante de todo o povo, visto que não guardastes os meus caminhos, mas fizestes acepção de pessoas na lei.
+10 Não temos nós todos um mesmo Pai? Não nos criou um mesmo Deus? Por que agimos aleivosamente cada um contra seu irmão, profanando a aliança de nossos pais?
+11 Judá tem sido desleal, e abominação se cometeu em Israel e em Jerusalém; porque Judá profanou o santuário do Senhor, o qual ele ama, e se casou com a filha de deus estranho.
+12 O Senhor destruirá das tendas de Jacó o homem que fizer isto, o que vela, e o que responde, e o que apresenta uma oferta ao Senhor dos Exércitos.
+13 Ainda fazeis isto outra vez, cobrindo o altar do Senhor de lágrimas, com choro e com gemidos; de sorte que ele não olha mais para a oferta, nem a aceitará com prazer da vossa mão.
+14 E dizeis: Por quê? Porque o Senhor foi testemunha entre ti e a mulher da tua mocidade, com a qual tu foste desleal, sendo ela a tua companheira, e a mulher da tua aliança.
+15 E não fez ele somente um, ainda que lhe sobrava o espírito? E por que somente um? Ele buscava uma descendência para Deus. Portanto guardai-vos em vosso espírito, e ninguém seja infiel para com a mulher da sua mocidade.
+16 Porque o Senhor, o Deus de Israel diz que odeia o repúdio, e aquele que encobre a violência com a sua roupa, diz o Senhor dos Exércitos; portanto guardai-vos em vosso espírito, e não sejais desleais.
+17 Enfadais ao Senhor com vossas palavras; e ainda dizeis: Em que o enfadamos? Nisto que dizeis: Qualquer que faz o mal passa por bom aos olhos do Senhor, e desses é que ele se agrada, ou, onde está o Deus do juízo?</p></section>
+
+<section id="cap3"><h2>CAP-3</h2><p>1 Eis que eu envio o meu mensageiro, que preparará o caminho diante de mim; e de repente virá ao seu templo o Senhor, a quem vós buscais; e o mensageiro da aliança, a quem vós desejais, eis que ele vem, diz o Senhor dos Exércitos.
+2 Mas quem suportará o dia da sua vinda? E quem subsistirá, quando ele aparecer? Porque ele será como o fogo do ourives e como o sabão dos lavandeiros.
+3 E assentar-se-á como fundidor e purificador de prata; e purificará os filhos de Levi, e os refinará como ouro e como prata; então ao Senhor trarão oferta em justiça.
+4 E a oferta de Judá e de Jerusalém será agradável ao Senhor, como nos dias antigos, e como nos primeiros anos.
+5 E chegar-me-ei a vós para juízo; e serei uma testemunha veloz contra os feiticeiros, contra os adúlteros, contra os que juram falsamente, contra os que defraudam o diarista em seu salário, e a viúva, e o órfão, e que pervertem o direito do estrangeiro, e não me temem, diz o Senhor dos Exércitos.
+6 Porque eu, o Senhor, não mudo; por isso vós, ó filhos de Jacó, não sois consumidos.
+7 Desde os dias de vossos pais vos desviastes dos meus estatutos, e não os guardastes; tornai-vos para mim, e eu me tornarei para vós, diz o Senhor dos Exércitos; mas vós dizeis: Em que havemos de tornar?
+8 Roubará o homem a Deus? Todavia vós me roubais, e dizeis: Em que te roubamos? Nos dízimos e nas ofertas.
+9 Com maldição sois amaldiçoados, porque a mim me roubais, sim, toda esta nação.
+10 Trazei todos os dízimos à casa do tesouro, para que haja mantimento na minha casa, e depois fazei prova de mim nisto, diz o Senhor dos Exércitos, se eu não vos abrir as janelas do céu, e não derramar sobre vós uma bênção tal até que não haja lugar suficiente para a recolherdes.
+11 E por causa de vós repreenderei o devorador, e ele não destruirá os frutos da vossa terra; e a vossa vide no campo não será estéril, diz o Senhor dos Exércitos.
+12 E todas as nações vos chamarão bem-aventurados; porque vós sereis uma terra deleitosa, diz o Senhor dos Exércitos.
+13 As vossas palavras foram agressivas para mim, diz o Senhor; mas vós dizeis: Que temos falado contra ti?
+14 Vós tendes dito: Inútil é servir a Deus; que nos aproveita termos cuidado em guardar os seus preceitos, e em andar de luto diante do Senhor dos Exércitos?
+15 Ora, pois, nós reputamos por bem-aventurados os soberbos; também os que cometem impiedade são edificados; sim, eles tentam a Deus, e escapam.
+16 Então aqueles que temeram ao Senhor falaram frequentemente um ao outro; e o Senhor atentou e ouviu; e um memorial foi escrito diante dele, para os que temeram o Senhor, e para os que se lembraram do seu nome.
+17 E eles serão meus, diz o Senhor dos Exércitos; naquele dia serão para mim joias; poupá-los-ei, como um homem poupa a seu filho, que o serve.
+18 Então voltareis e vereis a diferença entre o justo e o ímpio; entre o que serve a Deus, e o que não o serve.</p></section>
+
+<section id="cap4"><h2>CAP-4</h2><p>1 Porque eis que aquele dia vem ardendo como fornalha; todos os soberbos, e todos os que cometem impiedade, serão como a palha; e o dia que está para vir os abrasará, diz o Senhor dos Exércitos, de sorte que lhes não deixará nem raiz nem ramo.
+2 Mas para vós, os que temeis o meu nome, nascerá o sol da justiça, e cura trará nas suas asas; e saireis e saltareis como bezerros da estrebaria.
+3 E pisareis os ímpios, porque se farão cinza debaixo das plantas de vossos pés, naquele dia que estou preparando, diz o Senhor dos Exércitos.
+4 Lembrai-vos da lei de Moisés, meu servo, que lhe mandei em Horebe para todo o Israel, a saber, estatutos e juízos.
+5 Eis que eu vos enviarei o profeta Elias, antes que venha o grande e terrível dia do Senhor;
+6 E ele converterá o coração dos pais aos filhos, e o coração dos filhos a seus pais; para que eu não venha, e fira a terra com maldição.</p></section>
+
+</div>
+
+<script>
+function toggleCapitulos() {
+    document.getElementById('capitulosDrawer')
+        .classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

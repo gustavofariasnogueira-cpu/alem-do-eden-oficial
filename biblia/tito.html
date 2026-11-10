@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Tito | Bíblia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #222;
+        margin: 0;
+        line-height: 1.8;
+    }
+
+    header {
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
+    }
+
+    header a {
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 40px 20px 80px;
+    }
+
+    h1 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 10px;
+    }
+
+    .sub {
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    /* MENU DE CAPÍTULOS */
+    .capitulos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 50px;
+    }
+
+    .capitulos a {
+        padding: 8px 14px;
+        background: #f3f3f3;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .capitulos a:hover {
+        background: #c9a44c;
+        color: #fff;
+    }
+
+    section {
+        margin-bottom: 80px;
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+.capitulos-wrapper {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    padding: 15px 0;
+    z-index: 100;
+    border-bottom: 1px solid #eee;
+}
+
+.capitulos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 900px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.capitulos a {
+    padding: 8px 14px;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+/* Botão fixo */
+.toggle-caps {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: #1f4f3a;
+    color: #fff;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Gaveta */
+.capitulos-wrapper {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    max-height: 60vh;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow-y: auto;
+
+    /* estado fechado */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(30px);
+    transition: all 0.3s ease;
+
+    z-index: 1000;
+}
+
+/* estado aberto */
+.capitulos-wrapper.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.capitulos {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+.capitulos a {
+    text-align: center;
+    padding: 8px 0;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="biblia.html" class="voltar-menu">← Voltar ao menu</a>
+</header>
+
+<div class="container">
+
+<h1>Tito</h1>
+<div class="sub">Capítulos 1 ao 3</div>
+
+<!-- Botão que abre a gaveta -->
+<button class="toggle-caps" onclick="toggleCapitulos()">☰ Capítulos</button>
+
+<!-- Gaveta -->
+<div class="capitulos-wrapper" id="capitulosDrawer">
+    <nav class="capitulos">
+        <a href="#cap1">1</a>
+        <a href="#cap2">2</a>
+        <a href="#cap3">3</a>
+    </nav>
+</div>
+
+<section id="cap1"><h2>CAP-1</h2><p>1 Paulo, servo de Deus, e apóstolo de Jesus Cristo, segundo a fé dos eleitos de Deus, e o conhecimento da verdade, que é segundo a piedade,
+2 Em esperança da vida eterna, a qual Deus, que não pode mentir, prometeu antes dos tempos dos séculos;
+3 Mas a seu tempo manifestou a sua palavra pela pregação que me foi confiada segundo o mandamento de Deus, nosso Salvador;
+4 A Tito, meu verdadeiro filho, segundo a fé comum: Graça, misericórdia, e paz da parte de Deus Pai, e da do Senhor Jesus Cristo, nosso Salvador.
+5 Por esta causa te deixei em Creta, para que pusesses em boa ordem as coisas que ainda restam, e de cidade em cidade estabelecesses presbíteros, como já te mandei:
+6 Aquele que for irrepreensível, marido de uma mulher, que tenha filhos fiéis, que não possam ser acusados de dissolução nem são desobedientes.
+7 Porque é necessário que o bispo seja irrepreensível, como mordomo da casa de Deus, não soberbo, nem iracundo, nem dado ao vinho, nem espancador, nem cobiçoso de torpe ganância;
+8 Mas dado à hospitalidade, amigo do bem, moderado, justo, santo, temperante;
+9 Retendo firme a fiel palavra, que é conforme a doutrina, para que seja poderoso, tanto para admoestar com a sã doutrina, como para convencer os contradizentes.
+10 Porque há muitos desordenados, faladores, vãos e enganadores, principalmente os da circuncisão,
+11 Aos quais convém tapar a boca; homens que transtornam casas inteiras ensinando o que não convém, por torpe ganância.
+12 Um deles, seu próprio profeta, disse: Os cretenses são sempre mentirosos, bestas ruins, ventres preguiçosos.
+13 Este testemunho é verdadeiro. Portanto, repreende-os severamente, para que sejam sãos na fé.
+14 Não dando ouvidos às fábulas judaicas, nem aos mandamentos de homens que se desviam da verdade.
+15 Todas as coisas são puras para os puros, mas nada é puro para os contaminados e infiéis; antes o seu entendimento e consciência estão contaminados.
+16 Confessam que conhecem a Deus, mas negam-no com as obras, sendo abomináveis, e desobedientes, e reprovados para toda a boa obra.</p></section>
+
+<section id="cap2"><h2>CAP-2</h2><p>1 Tu, porém, fala o que convém à sã doutrina.
+2 Os velhos, que sejam sóbrios, graves, prudentes, sãos na fé, no amor, e na paciência;
+3 As mulheres idosas, semelhantemente, que sejam sérias no seu viver, como convém a santas, não caluniadoras, não dadas a muito vinho, mestras no bem;
+4 Para que ensinem as mulheres novas a serem prudentes, a amarem seus maridos, a amarem seus filhos,
+5 A serem moderadas, puras, boas donas de casa, sujeitas a seus maridos, a fim de que a palavra de Deus não seja blasfemada.
+6 Exorta semelhantemente os jovens a que sejam moderados.
+7 Em tudo te dá por exemplo de boas obras; na doutrina mostra incorrupção, gravidade, sinceridade,
+8 Linguagem sã e irrepreensível, para que o adversário se envergonhe, não tendo nenhum mal que dizer de vós.
+9 Exorta os servos a que se sujeitem a seus senhores, e em tudo agradem, não contradizendo,
+10 Não defraudando, antes mostrando toda a boa lealdade, para que em tudo sejam ornamento da doutrina de Deus, nosso Salvador.
+11 Porque a graça salvadora de Deus se há manifestado a todos os homens,
+12 Ensinando-nos que, renunciando à impiedade e às concupiscências mundanas, vivamos neste presente século sóbria, e justa, e piamente,
+13 Aguardando a bem-aventurada esperança e o aparecimento da glória do grande Deus e nosso Salvador Jesus Cristo;
+14 O qual se deu a si mesmo por nós para nos remir de toda a iniquidade, e purificar para si um povo seu especial, zeloso de boas obras.
+15 Fala disto, e exorta e repreende com toda a autoridade. Ninguém te despreze.</p></section>
+
+<section id="cap3"><h2>CAP-3</h2><p>1 Admoesta-os a que se sujeitem aos principados e autoridades, que lhes obedeçam, e estejam preparados para toda a boa obra;
+2 Que a ninguém infamem, nem sejam contenciosos, mas modestos, mostrando toda a mansidão para com todos os homens.
+3 Porque também nós éramos noutro tempo insensatos, desobedientes, extraviados, servindo a várias concupiscências e deleites, vivendo em malícia e inveja, odiosos, odiando-nos uns aos outros.
+4 Mas quando apareceu a benignidade e amor de Deus, nosso Salvador, para com os homens,
+5 Não pelas obras de justiça que houvéssemos feito, mas segundo a sua misericórdia, nos salvou pela lavagem da regeneração e da renovação do Espírito Santo,
+6 Que abundantemente ele derramou sobre nós por Jesus Cristo nosso Salvador;
+7 Para que, sendo justificados pela sua graça, sejamos feitos herdeiros segundo a esperança da vida eterna.
+8 Fiel é a palavra, e isto quero que deveras afirmes, para que os que creem em Deus procurem aplicar-se às boas obras; estas coisas são boas e proveitosas aos homens.
+9 Mas não entres em questões loucas, genealogias e contendas, e nos debates acerca da lei; porque são coisas inúteis e vãs.
+10 Ao homem herege, depois de uma e outra admoestação, evita-o,
+11 Sabendo que esse tal está pervertido, e peca, estando já em si mesmo condenado.
+12 Quando te enviar Ártemas, ou Tíquico, procura vir ter comigo a Nicópolis; porque deliberei invernar ali.
+13 Acompanha com muito cuidado Zenas, doutor da lei, e Apolo, para que nada lhes falte.
+14 E os nossos aprendam também a aplicar-se às boas obras, nas coisas necessárias, para que não sejam infrutuosos.
+15 Saúdam-te todos os que estão comigo. Saúda tu os que nos amam na fé. A graça seja com vós todos. Amém.</p></section>
+
+</div>
+
+<script>
+function toggleCapitulos() {
+    document.getElementById('capitulosDrawer')
+        .classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

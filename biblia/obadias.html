@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Obadias | Bíblia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #222;
+        margin: 0;
+        line-height: 1.8;
+    }
+
+    header {
+        padding: 20px 30px;
+        border-bottom: 1px solid #eee;
+    }
+
+    header a {
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 40px 20px 80px;
+    }
+
+    h1 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 10px;
+    }
+
+    .sub {
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    /* MENU DE CAPÍTULOS */
+    .capitulos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 50px;
+    }
+
+    .capitulos a {
+        padding: 8px 14px;
+        background: #f3f3f3;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #1f4f3a;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .capitulos a:hover {
+        background: #c9a44c;
+        color: #fff;
+    }
+
+    section {
+        margin-bottom: 80px;
+    }
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        color: #1f4f3a;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+.capitulos-wrapper {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    padding: 15px 0;
+    z-index: 100;
+    border-bottom: 1px solid #eee;
+}
+
+.capitulos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 900px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.capitulos a {
+    padding: 8px 14px;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+/* Botão fixo */
+.toggle-caps {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: #1f4f3a;
+    color: #fff;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Gaveta */
+.capitulos-wrapper {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    max-height: 60vh;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow-y: auto;
+
+    /* estado fechado */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(30px);
+    transition: all 0.3s ease;
+
+    z-index: 1000;
+}
+
+/* estado aberto */
+.capitulos-wrapper.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.capitulos {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+.capitulos a {
+    text-align: center;
+    padding: 8px 0;
+    background: #f3f3f3;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f4f3a;
+    font-weight: 600;
+}
+
+.capitulos a:hover {
+    background: #c9a44c;
+    color: #fff;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="biblia.html" class="voltar-menu">← Voltar ao menu</a>
+</header>
+
+<div class="container">
+
+<h1>Obadias</h1>
+<div class="sub">Capítulos 1 ao 1</div>
+
+<!-- Botão que abre a gaveta -->
+<button class="toggle-caps" onclick="toggleCapitulos()">☰ Capítulos</button>
+
+<!-- Gaveta -->
+<div class="capitulos-wrapper" id="capitulosDrawer">
+    <nav class="capitulos">
+        <a href="#cap1">1</a>
+    </nav>
+</div>
+
+<section id="cap1"><h2>CAP-1</h2><p>1 Visão de Obadias: Assim diz o Senhor Deus a respeito de Edom: Temos ouvido a pregação do Senhor, e foi enviado aos gentios um emissário, dizendo: Levantai-vos, e levantemo-nos contra ela para a guerra.
+2 Eis que te fiz pequeno entre os gentios; tu és muito desprezado.
+3 A soberba do teu coração te enganou, como o que habita nas fendas das rochas, na sua alta morada, que diz no seu coração: Quem me derrubará em terra?
+4 Se te elevares como águia, e puseres o teu ninho entre as estrelas, dali te derrubarei, diz o Senhor.
+5 Se viessem a ti ladrões, ou assaltantes de noite (como estás destruído!), não furtariam o que lhes bastasse? Se a ti viessem os vindimadores, não deixariam algumas uvas?
+6 Como foram rebuscados os bens de Esaú! Como foram investigados os seus tesouros escondidos!
+7 Todos os teus confederados te levaram até a fronteira; os que gozam da tua paz te enganaram, prevaleceram contra ti; os que comem o teu pão puseram debaixo de ti uma armadilha; não há nele entendimento.
+8 Porventura não acontecerá naquele dia, diz o Senhor, que farei perecer os sábios de Edom, e o entendimento do monte de Esaú?
+9 E os teus poderosos, ó Temã, estarão atemorizados, para que do monte de Esaú seja cada um exterminado pela matança.
+10 Por causa da violência feita a teu irmão Jacó, cobrir-te-á a confusão, e serás exterminado para sempre.
+11 No dia em que o confrontaste, no dia em que estranhos levaram cativo o seu exército, e os estrangeiros entravam pelas suas portas, e lançaram sortes sobre Jerusalém, tu eras também como um deles.
+12 Mas tu não devias olhar com prazer para o dia de teu irmão, no dia do seu infortúnio; nem alegrar-te sobre os filhos de Judá, no dia da sua ruína; nem alargar a tua boca, no dia da angústia;
+13 Nem entrar pela porta do meu povo, no dia da sua calamidade; sim, tu não devias olhar satisfeito o seu mal, no dia da sua calamidade; nem lançar mão dos seus bens, no dia da sua calamidade;
+14 Nem parar nas encruzilhadas, para exterminares os que escapassem; nem entregar os que lhe restassem, no dia da angústia.
+15 Porque o dia do Senhor está perto, sobre todos os gentios; como tu fizeste, assim se fará contigo; a tua recompensa voltará sobre a tua cabeça.
+16 Porque, como vós bebestes no meu santo monte, assim beberão também de contínuo todos os gentios; beberão, e sorverão, e serão como se nunca tivessem sido.
+17 Mas no monte Sião haverá livramento, e ele será santo; e os da casa de Jacó possuirão as suas herdades.
+18 E a casa de Jacó será fogo, e a casa de José uma chama, e a casa de Esaú palha; e se acenderão contra eles, e os consumirão; e ninguém mais restará da casa de Esaú, porque o Senhor o falou.
+19 E os do sul possuirão o monte de Esaú, e os das planícies, os filisteus; possuirão também os campos de Efraim, e os campos de Samaria; e Benjamim possuirá a Gileade.
+20 E os cativos deste exército, dos filhos de Israel, possuirão os cananeus, até Zarefate; e os cativos de Jerusalém, que estão em Sefarade, possuirão as cidades do sul.
+21 E subirão salvadores ao monte Sião, para julgarem o monte de Esaú; e o reino será do Senhor.</p></section>
+
+</div>
+
+<script>
+function toggleCapitulos() {
+    document.getElementById('capitulosDrawer')
+        .classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
