@@ -1178,15 +1178,11 @@ async function sendPrayer() {
 // PLAYER DE MÚSICA AMBIENTE
 // Coloque os arquivos de áudio dentro da pasta "musicas" ao lado deste HTML.
 // Atualize os nomes abaixo para corresponder exatamente aos arquivos que você adicionar.
+
 const musicPlaylist = [
     "musicas/Aline Barros - Diante da Cruz - Aline Barros (Clipe Oficial MK Music) - MK MUSIC (youtube).mp3",
     "musicas/Aline Barros - Ressuscita-me (Clipe Oficial MK Music HD) - MK MUSIC (youtube).mp3",
-    "musicas/Aline Barros - Sonda-me, Usa-me (Clipe Oficial MK Music) - MK MUSIC (youtube).mp3",
-
-
-
-
-
+    "musicas/Aline Barros - Sonda-me, Usa-me (Clipe Oficial MK Music) - MK MUSIC (youtube).mp3"
 ];
 
 const ambientAudio = document.getElementById("ambientAudio");
@@ -1194,20 +1190,43 @@ const musicPlay = document.getElementById("musicPlay");
 const musicPause = document.getElementById("musicPause");
 const musicVolume = document.getElementById("musicVolume");
 const musicStatus = document.getElementById("musicStatus");
+
+const musicPrevious = document.getElementById("musicPrevious");
+const musicNext = document.getElementById("musicNext");
+
 let currentMusicIndex = 0;
 
+ambientAudio.loop = false;
 ambientAudio.volume = Number(musicVolume.value);
-ambientAudio.loop = true;
-ambientAudio.src = musicPlaylist[currentMusicIndex];
+
+function carregarMusica(index, tocar = true) {
+    currentMusicIndex = (index + musicPlaylist.length) % musicPlaylist.length;
+
+    ambientAudio.src = musicPlaylist[currentMusicIndex];
+    ambientAudio.load();
+
+    musicStatus.textContent = "Faixa " + (currentMusicIndex + 1) +
+        " de " + musicPlaylist.length;
+
+    if (tocar) {
+        ambientAudio.play()
+            .then(() => {
+                musicStatus.textContent = "Música tocando";
+            })
+            .catch((error) => {
+                musicStatus.textContent = "Clique em play";
+                console.warn("Erro ao tocar música:", error);
+            });
+    }
+}
 
 musicPlay.addEventListener("click", async function() {
     try {
         await ambientAudio.play();
         musicStatus.textContent = "Música tocando";
-        musicPlay.setAttribute("aria-label", "Música tocando");
     } catch (error) {
         musicStatus.textContent = "Confira os arquivos";
-        console.warn("Não foi possível iniciar a música. Confira o caminho/nome do arquivo:", error);
+        console.warn("Erro ao iniciar música:", error);
     }
 });
 
@@ -1216,27 +1235,37 @@ musicPause.addEventListener("click", function() {
     musicStatus.textContent = "Som pausado";
 });
 
+musicNext.addEventListener("click", function() {
+    carregarMusica(currentMusicIndex + 1);
+});
+
+musicPrevious.addEventListener("click", function() {
+    carregarMusica(currentMusicIndex - 1);
+});
+
 musicVolume.addEventListener("input", function() {
     ambientAudio.volume = Number(this.value);
-    musicStatus.textContent = ambientAudio.volume === 0 ? "Som no mudo" :
-        "Volume: " + Math.round(ambientAudio.volume * 100) + "%";
+
+    musicStatus.textContent = ambientAudio.volume === 0
+        ? "Som no mudo"
+        : "Volume: " + Math.round(ambientAudio.volume * 100) + "%";
 });
 
+// Ao terminar uma música, toca a próxima automaticamente
 ambientAudio.addEventListener("ended", function() {
-    currentMusicIndex = (currentMusicIndex + 1) % musicPlaylist.length;
-    ambientAudio.src = musicPlaylist[currentMusicIndex];
-    ambientAudio.play().catch(() => {
-        musicStatus.textContent = "Clique em play";
-    });
+    carregarMusica(currentMusicIndex + 1);
 });
 
+// Carrega a primeira música sem iniciar automaticamente
+carregarMusica(0, false);
 
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
         closePrayer();
         closeMenu();
     }
 });
+
 
 </script>
 
