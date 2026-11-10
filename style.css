@@ -1,0 +1,381 @@
+/* ==========================================
+   1. VARIÁVEIS E CONFIGURAÇÕES GLOBAIS
+   ========================================== */
+:root {
+  --green: #12391f;
+  --deep: #1c1d22;
+  --cream: #eef0eb;
+  --ink: #163b24;
+  --accent: #347b54;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #172a1d;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* ==========================================
+   2. CABEÇALHO E MENU
+   ========================================== */
+header {
+  height: 70px;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3.1%;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.menu {
+  background: transparent;
+  color: #fff;
+  border: 0;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+/* ==========================================
+   3. ESTRUTURA PRINCIPAL (MAIN)
+   ========================================== */
+main {
+  max-width: 1665px;
+  margin: auto;
+  padding: 0 0 50px;
+}
+
+/* --- Hero (Destaque Principal) --- */
+.hero {
+  margin: 0 0 55px;
+  min-height: 423px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(rgba(235, 231, 222, .72), rgba(235, 231, 222, .72)), url('https://images.unsplash.com/photo-Bible?auto=format&fit=crop&w=1800&q=80');
+  background-image: linear-gradient(rgba(235, 231, 222, .74), rgba(235, 231, 222, .74)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1800&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 4vw, 54px);
+  font-weight: normal;
+  line-height: 1.15;
+  margin: 0 auto 26px;
+  max-width: 430px;
+  color: var(--green);
+}
+
+.hero p {
+  font-size: 16px;
+  margin: 0;
+  color: #12391f;
+}
+
+/* --- Linha de Recursos (Palavra do Dia + Link) --- */
+.feature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 0 60px;
+}
+
+/* Palavra do Dia (Aqui você aponta para a sua pasta img/) */
+.daily {
+  min-height: 310px;
+  padding: 34px 13%;
+  color: #fff;
+  background: linear-gradient(0deg, rgba(0,10,24,.82), rgba(0,10,24,.15)), url('img/fundo.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.daily h2 {
+  text-align: center;
+  font-size: 30px;
+  margin: 0 0 25px;
+}
+
+.daily p {
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 0 0 14px;
+}
+
+/* Biblia (Aqui você aponta para a sua pasta img/) */
+.feature-link {
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(rgba(0, 0, 0, .25), rgba(0, 0, 0, .35)), url('img/fundo.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.feature-link h2 {
+  font: bold 27px Arial, sans-serif;
+  text-decoration: underline;
+  margin: 0;
+}
+
+.arrow {
+  width: 100px;
+  height: 34px;
+  border: 0;
+  border-radius: 30px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ==========================================
+   4. SEÇÕES E CARDS (GRADE)
+   ========================================== */
+.section {
+  margin: 0 0 58px;
+}
+
+.section-heading {
+  text-align: center;
+  margin: 0 0 55px;
+}
+
+.section-heading h2 {
+  font-size: 30px;
+  font-weight: normal;
+  margin: 0 0 24px;
+  color: #111;
+}
+
+.section-heading p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  padding: 0 0;
+}
+
+.tile {
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  min-height: 458px;
+  background: var(--deep);
+}
+
+.tile-image {
+  height: 275px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-image h3 {
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 0;
+  text-shadow: 0 2px 8px #000;
+}
+
+.tile-content {
+  flex: 1;
+  padding: 40px 20px;
+  background: var(--deep);
+  color: #fff;
+  text-align: center;
+}
+
+.tile-content.light {
+  background: var(--cream);
+  color: #303432;
+}
+
+.tile-content h4 {
+  font-size: 16px;
+  font-weight: normal;
+  text-decoration: underline;
+  margin: 0 0 32px;
+}
+
+.tile-content p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ==========================================
+   5. ÁREA DE ANÚNCIOS (ADSENSE)
+   ========================================== */
+.ad-area {
+  max-width: 300px;
+  margin: 0 auto 10px;
+  text-align: center;
+  color: #1a1a1a;
+  font-size: 13px;
+}
+
+.ad-placeholder {
+  min-height: 90px;
+  margin-top: 18px;
+  background: #fff7e4;
+  color: #866c32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 12px Arial, sans-serif;
+}
+
+/* ==========================================
+   6. RODAPÉ E MODAL DE ORAÇÃO
+   ========================================== */
+footer {
+  background: #f6f6f6;
+  padding: 65px 20px;
+  text-align: center;
+  color: #444;
+}
+
+.prayer-button {
+  position: fixed;
+  right: 18px;
+  bottom: 16px;
+  background: #19191f;
+  color: white;
+  border: 0;
+  border-radius: 18px;
+  padding: 14px 18px;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  box-shadow: 0 4px 12px #0002;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.prayer-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0008;
+  z-index: 30;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.prayer-modal.open {
+  display: flex;
+}
+
+.modal-card {
+  width: min(480px, 100%);
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+}
+
+.modal-card h2 {
+  margin-top: 0;
+  color: var(--green);
+}
+
+.modal-card textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 12px;
+  font: 15px Arial;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-actions button {
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.send {
+  background: var(--green);
+  color: #fff;
+}
+
+/* ==========================================
+   7. RESPONSIVIDADE (MOBILE / TABLET)
+   ========================================== */
+@media (max-width: 900px) {
+  main { padding: 0 18px; }
+  .hero { min-height: 330px; margin-bottom: 35px; }
+  .feature-row { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .tile { min-height: 390px; }
+  .tile-image { height: 220px; }
+  .section-heading { margin-bottom: 30px; }
+}
+
+@media (max-width: 600px) {
+  header { height: 60px; padding: 0 18px; }
+  .hero h1 { font-size: 38px; }
+  .cards { grid-template-columns: 1fr; }
+  .tile { min-height: 360px; }
+  .tile-image { height: 220px; }
+  .daily { padding: 30px 8%; }
+  .section { margin-bottom: 45px; }
+  .prayer-button { right: 10px; bottom: 10px; }
+}
