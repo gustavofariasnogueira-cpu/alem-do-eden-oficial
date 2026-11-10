@@ -1070,18 +1070,40 @@ footer {
 </footer>
 
 
+
 <!-- PLAYER FLUTUANTE DE MÚSICA AMBIENTE -->
 <aside class="music-player" aria-label="Controles da música ambiente">
+
     <span class="music-label">Som ambiente</span>
-    <button class="music-control" id="musicPlay" type="button" aria-label="Tocar música" title="Tocar música">▶</button>
-    <button class="music-control" id="musicPause" type="button" aria-label="Pausar música" title="Pausar música">Ⅱ</button>
+
+    <button class="music-control" id="musicPrevious"
+            type="button" aria-label="Música anterior"
+            title="Música anterior">⏮</button>
+
+    <button class="music-control" id="musicPlay"
+            type="button" aria-label="Tocar música"
+            title="Tocar música">▶</button>
+
+    <button class="music-control" id="musicPause"
+            type="button" aria-label="Pausar música"
+            title="Pausar música">Ⅱ</button>
+
+    <button class="music-control" id="musicNext"
+            type="button" aria-label="Próxima música"
+            title="Próxima música">⏭</button>
+
     <span style="font-size:13px" aria-hidden="true">♫</span>
-    <input class="music-volume" id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.35"
+
+    <input class="music-volume" id="musicVolume"
+           type="range" min="0" max="1" step="0.05" value="0.35"
            aria-label="Volume da música" title="Ajustar volume">
+
     <span class="music-status" id="musicStatus">Som pausado</span>
+
 </aside>
 
 <audio id="ambientAudio" preload="none"></audio>
+
 
 <!-- PEDIDO DE ORAÇÃO -->
 
