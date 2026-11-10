@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caça-Palavras Bíblico | Além do Éden</title>
+<style>
+:root{
+ --forest:#2f513e;--moss:#6f8766;--sage:#dce6d5;--cream:#f7f5ec;
+ --paper:#fffdf7;--gold:#b59a61;--ink:#26372d;--muted:#718071;
+ --line:#e3e7dc;--success:#477a54;--shadow:0 14px 40px rgba(43,69,49,.10)
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+ background:radial-gradient(ellipse at 15% 5%,#e5ecdc 0,transparent 34%),linear-gradient(135deg,#f7f5ec,#edf1e8)}
+header{max-width:1100px;margin:auto;padding:24px 22px 10px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:14px;background:var(--forest);color:#fff;display:grid;place-items:center;font-size:23px;box-shadow:0 6px 16px #2f513e30}
+.brand small{display:block;color:var(--moss);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:10px}
+.brand h1{margin:2px 0 0;font-size:clamp(18px,3vw,25px);color:var(--forest)}
+.back{color:var(--forest);text-decoration:none;border:1px solid #cbd7c5;background:#ffffffa8;padding:10px 15px;border-radius:12px;font-weight:700;font-size:13px}
+.back:hover{background:#e2eadb}
+main{max-width:1100px;margin:0 auto;padding:18px 22px 40px}
+.intro{text-align:center;margin:12px auto 24px;max-width:650px}
+.kicker{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+.intro h2{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:8px 0;color:var(--forest)}
+.intro p{color:var(--muted);margin:0;font-size:15px;line-height:1.6}
+.game-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.8fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.topline h3{margin:0;color:var(--forest);font-size:17px}
+.pill{background:#edf2e8;color:var(--forest);padding:7px 11px;border-radius:30px;font-weight:800;font-size:12px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;user-select:none;touch-action:manipulation}
+.cell{aspect-ratio:1;display:grid;place-items:center;border-radius:7px;background:#f0f3e9;border:1px solid #e1e8d9;color:#314735;font-weight:800;font-size:clamp(8px,1.65vw,15px);cursor:pointer;transition:background .12s,transform .12s;min-width:0}
+.cell:hover{background:#e1ead8;transform:scale(1.03)}
+.cell.selected{background:#c5d7b8;border-color:#89a47c;color:#203b29}
+.cell.found{background:#547b58;color:#fff;border-color:#547b58;cursor:default}
+.cell.found:hover{transform:none}
+.grid-note{font-size:12px;color:var(--muted);text-align:center;margin:12px 0 0}
+.words-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.words-head h3{margin:0;font-size:17px;color:var(--forest)}
+.words-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.word{padding:10px 9px;border-radius:10px;background:#f1f4eb;border:1px solid #e5eadf;font-weight:800;letter-spacing:.7px;font-size:12px;text-align:center;color:#3a563f}
+.word.done{text-decoration:line-through;color:#7d9277;background:#e4ecdf;border-color:#d2dfca}
+.status{min-height:45px;padding:11px 13px;margin:14px 0 12px;background:#f8f5e9;border:1px solid #eee4c8;border-radius:12px;color:#75613a;font-size:13px;font-weight:650;line-height:1.4}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+button{font:inherit;border:0;cursor:pointer;border-radius:12px;padding:11px 14px;font-weight:800;font-size:13px;transition:transform .12s,filter .12s}
+button:hover{filter:brightness(.97);transform:translateY(-1px)}
+.primary{background:var(--forest);color:#fff;flex:1}
+.secondary{background:#e7ede1;color:var(--forest)}
+.stats{display:flex;gap:10px;margin-top:15px}
+.stat{flex:1;background:#f6f7f0;border:1px solid var(--line);padding:10px;border-radius:12px;text-align:center}
+.stat strong{display:block;color:var(--forest);font-size:20px}
+.stat span{font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px}
+.success-box{display:none;margin-top:14px;padding:15px;border-radius:14px;background:#e6efe1;border:1px solid #c9dcc1;color:var(--forest);text-align:center}
+.success-box.show{display:block}
+.success-box strong{display:block;font-size:18px;margin-bottom:4px}
+footer{text-align:center;color:#8a9686;font-size:11px;padding:8px 20px 25px}
+@media(max-width:760px){header{padding:16px 14px}main{padding:12px 14px 30px}.game-layout{grid-template-columns:1fr}.panel{padding:15px}.grid{gap:3px}.cell{border-radius:5px}.intro{margin:8px auto 18px}}
+@media(max-width:390px){.grid{gap:2px}.cell{font-size:10px}.words-list{gap:6px}.word{font-size:11px;padding:9px 5px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">✝</div><div><small>Além do Éden</small><h1>Jogos Bíblicos</h1></div></div>
+ <a class="back" href="jogos.html">← Voltar ao menu</a>
+</header>
+<main>
+ <section class="intro">
+  <div class="kicker">Desafio das Escrituras</div>
+  <h2>Caça-Palavras Bíblico</h2>
+  <p>Encontre as palavras escondidas na grade. Elas podem aparecer na horizontal, vertical ou diagonal — inclusive de trás para frente.</p>
+ </section>
+ <div class="game-layout">
+  <section class="panel">
+   <div class="topline"><h3>🔎 Encontre as palavras</h3><select id="difficulty" aria-label="Selecionar dificuldade" style="max-width:170px;border:1px solid #cbd7c5;border-radius:10px;background:#edf2e8;color:#2f513e;padding:8px;font-weight:700"><option value="facil">Fácil · 8×8</option><option value="medio">Médio · 10×10</option><option value="dificil">Difícil · 12×12</option><option value="especialista">Especialista · 15×15</option></select><span class="pill" id="levelLabel">Nível 1 · Fácil</span></div>
+   <div class="grid" id="grid" aria-label="Grade de caça-palavras"></div>
+   <p class="grid-note">Toque na primeira letra e depois na última letra da palavra.</p>
+  </section>
+  <aside class="panel">
+   <div class="words-head"><h3>Palavras para achar</h3><span class="pill" id="count">0 / 10</span></div>
+   <div class="words-list" id="words"></div>
+   <div class="status" id="status" role="status">Escolha a primeira letra de uma palavra para começar.</div>
+   <div class="actions">
+    <button class="primary" id="newGame">Novo desafio</button>
+    <button class="secondary" id="hint">Dica</button>
+   </div>
+   <div class="stats">
+    <div class="stat"><strong id="foundStat">0</strong><span>Encontradas</span></div>
+    <div class="stat"><strong id="remainingStat">10</strong><span>Restantes</span></div>
+   </div>
+   <div class="success-box" id="win"><strong>🎉 Parabéns!</strong>Você encontrou todas as palavras. Que tal jogar novamente?</div>
+  </aside>
+ </div>
+</main>
+<footer>Uma maneira divertida de aprender e recordar a Palavra de Deus.</footer>
+<script src="palavras_biblicas.js"></script>
+<script>
+(() => {
+ const LEVELS = {
+  facil: {label:"Nível 1 · Fácil", size:8, dirs:[[0,1],[1,0]]},
+  medio: {label:"Nível 2 · Médio", size:10, dirs:[[0,1],[1,0],[1,1],[0,-1]]},
+  dificil: {label:"Nível 3 · Difícil", size:12, dirs:[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]]},
+  especialista: {label:"Nível 4 · Especialista", size:15, dirs:[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]]}
+ };
+ let levelKey="facil", SIZE=8, WORDS=[], board=[], placements=[], found=new Set(), start=null, hintUsed=new Set();
+ const gridEl=document.getElementById("grid"), wordsEl=document.getElementById("words");
+ const statusEl=document.getElementById("status");
+ const rand=n=>Math.floor(Math.random()*n);
+ const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+
+ function chooseWords() {
+  const pool = (Array.isArray(PALAVRAS_BIBLICAS)
+    ? PALAVRAS_BIBLICAS
+    : [])
+    .filter(w => w.length <= SIZE && w.length >= 2);
+
+  WORDS = shuffle([...new Set(pool)]).slice(0, 10);
+}
+ function build(){
+  const level=LEVELS[levelKey];SIZE=level.size;
+  document.getElementById("levelLabel").textContent=level.label;
+  chooseWords();
+  board=Array.from({length:SIZE},()=>Array(SIZE).fill(""));
+  placements=[];found.clear();hintUsed.clear();start=null;
+  const sorted=[...WORDS].sort((a,b)=>b.length-a.length);
+  sorted.forEach(word=>{
+   let placed=false;
+   for(let attempt=0;attempt<1500&&!placed;attempt++){
+    const [dr,dc]=level.dirs[rand(level.dirs.length)],r=rand(SIZE),c=rand(SIZE);
+    const endR=r+dr*(word.length-1),endC=c+dc*(word.length-1);
+    if(endR<0||endR>=SIZE||endC<0||endC>=SIZE)continue;
+    let okay=true;
+    for(let k=0;k<word.length;k++){
+     const ch=board[r+dr*k][c+dc*k];
+     if(ch&&ch!==word[k]){okay=false;break}
+    }
+    if(!okay)continue;
+    const cells=[];
+    for(let k=0;k<word.length;k++){
+     const rr=r+dr*k,cc=c+dc*k;board[rr][cc]=word[k];cells.push([rr,cc]);
+    }
+    placements.push({word,cells});placed=true;
+   }
+  });
+  // If a word could not be placed in a rare crowded arrangement, keep only placed words.
+  WORDS=placements.map(p=>p.word);
+  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)if(!board[r][c])board[r][c]="ABCDEFGHIJKLMNOPQRSTUVWXYZ"[rand(26)];
+  gridEl.style.gridTemplateColumns=`repeat(${SIZE},minmax(0,1fr))`;
+  render();updateStats();
+  statusEl.textContent="Escolha a primeira letra de uma palavra para começar.";
+  document.getElementById("win").classList.remove("show");
+ }
+ function render(){
+  gridEl.innerHTML="";
+  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
+   const el=document.createElement("button");el.type="button";el.className="cell";
+   el.textContent=board[r][c];el.dataset.r=r;el.dataset.c=c;
+   el.setAttribute("aria-label",`${board[r][c]}, linha ${r+1}, coluna ${c+1}`);
+   el.addEventListener("click",()=>selectCell(r,c));gridEl.appendChild(el);
+  }
+  wordsEl.innerHTML="";
+  WORDS.forEach(w=>{
+   const el=document.createElement("div");el.className="word"+(found.has(w)?" done":"");
+   el.textContent=w;wordsEl.appendChild(el);
+  });
+  paintFound();updateStats();
+ }
+ function getCell(r,c){return gridEl.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`)}
+ function selectCell(r,c){
+  if(!start){start=[r,c];clearSelection();getCell(r,c).classList.add("selected");statusEl.textContent="Agora toque na última letra da palavra.";return}
+  const [sr,sc]=start;start=null;
+  const dr=r-sr,dc=c-sc;
+  if(!(dr===0||dc===0||Math.abs(dr)===Math.abs(dc))){
+   clearSelection();statusEl.textContent="Seleção inválida. As palavras seguem linhas retas. Tente novamente.";return;
+  }
+  const steps=Math.max(Math.abs(dr),Math.abs(dc)),stepR=Math.sign(dr),stepC=Math.sign(dc);
+  const cells=[];let candidate="";
+  for(let k=0;k<=steps;k++){
+   const rr=sr+stepR*k,cc=sc+stepC*k;cells.push([rr,cc]);candidate+=board[rr][cc];
+  }
+  const reverse=candidate.split("").reverse().join("");
+  const match=placements.find(p=>!found.has(p.word)&&(p.word===candidate||p.word===reverse));
+  clearSelection();
+  if(match){
+   found.add(match.word);match.cells.forEach(([rr,cc])=>getCell(rr,cc)?.classList.add("found"));
+   statusEl.textContent=`Muito bem! Você encontrou ${match.word}.`;renderWordsOnly();updateStats();
+   if(found.size===WORDS.length){
+    document.getElementById("win").classList.add("show");
+    statusEl.textContent="Desafio concluído! Todas as palavras foram encontradas.";
+   }
+  }else{
+   cells.forEach(([rr,cc])=>getCell(rr,cc)?.classList.add("selected"));
+   statusEl.textContent="Essa sequência não corresponde a uma palavra da lista. Tente outra.";
+   setTimeout(clearSelection,650);
+  }
+ }
+ function clearSelection(){gridEl.querySelectorAll(".cell.selected").forEach(el=>el.classList.remove("selected"))}
+ function paintFound(){placements.forEach(p=>{if(found.has(p.word))p.cells.forEach(([r,c])=>getCell(r,c)?.classList.add("found"))})}
+ function renderWordsOnly(){
+  wordsEl.querySelectorAll(".word").forEach(el=>{if(found.has(el.textContent))el.classList.add("done")});
+  document.getElementById("count").textContent=`${found.size} / ${WORDS.length}`;
+ }
+ function updateStats(){
+  document.getElementById("foundStat").textContent=found.size;
+  document.getElementById("remainingStat").textContent=WORDS.length-found.size;
+  document.getElementById("count").textContent=`${found.size} / ${WORDS.length}`;
+ }
+ document.getElementById("newGame").addEventListener("click",build);
+ document.getElementById("difficulty").addEventListener("change",e=>{levelKey=e.target.value;build()});
+ document.getElementById("hint").addEventListener("click",()=>{
+  const next=placements.find(p=>!found.has(p.word)&&!hintUsed.has(p.word));
+  if(!next){statusEl.textContent=found.size===WORDS.length?"Você já encontrou todas!":"Todas as dicas já foram usadas.";return}
+  hintUsed.add(next.word);const [r,c]=next.cells[0];getCell(r,c)?.classList.add("selected");
+  statusEl.textContent=`Dica: a palavra ${next.word} começa na linha ${r+1}, coluna ${c+1}.`;
+  setTimeout(()=>getCell(r,c)?.classList.remove("selected"),1800);
+ });
+ build();
+})();
+</script>
+</body>
+</html>

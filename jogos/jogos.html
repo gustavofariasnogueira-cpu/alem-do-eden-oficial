@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>Jogos | Além do Éden</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #244b38;
+      --forest-dark: #173426;
+      --sage: #dce5d8;
+      --cream: #f6f3eb;
+      --paper: #fffdf8;
+      --ink: #263129;
+      --muted: #69756a;
+      --gold: #b99a61;
+      --line: rgba(36, 75, 56, .13);
+      --shadow: 0 16px 38px rgba(32, 52, 39, .09);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at top left, rgba(220,229,216,.68), transparent 35rem),
+        var(--cream);
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      width: min(1200px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      color: var(--forest);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .brand-mark {
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      color: #fff; background: var(--forest);
+      font-family: serif; font-size: 1.3rem;
+      box-shadow: 0 6px 15px rgba(36,75,56,.18);
+    }
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      color: var(--forest);
+      border: 1px solid var(--line);
+      background: rgba(255,253,248,.88);
+      padding: 11px 17px;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 600;
+      transition: .25s ease;
+    }
+    .back-button:hover {
+      color: #fff; background: var(--forest);
+      border-color: var(--forest); transform: translateY(-2px);
+    }
+    main {
+      width: min(1200px, calc(100% - 48px));
+      margin: auto;
+      padding: 42px 0 76px;
+    }
+    .hero {
+      text-align: center;
+      padding: 18px 20px 50px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--forest);
+      background: rgba(220,229,216,.75);
+      border: 1px solid rgba(36,75,56,.08);
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--forest-dark);
+      font-weight: 600;
+      font-size: clamp(2.5rem, 6vw, 4.3rem);
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 17px;
+    }
+    h1 span { color: var(--gold); }
+    .hero p {
+      max-width: 660px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+      line-height: 1.8;
+    }
+    .divider {
+      width: 64px; height: 3px;
+      background: var(--gold);
+      border-radius: 99px;
+      margin: 28px auto 0;
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 285px;
+      padding: 32px 28px 27px;
+      border-radius: 24px;
+      background: var(--paper);
+      border: 1px solid rgba(36,75,56,.09);
+      box-shadow: 0 5px 18px rgba(32,52,39,.035);
+      text-decoration: none;
+      color: inherit;
+      transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background: rgba(220,229,216,.42);
+      transition: transform .35s ease;
+    }
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow);
+      border-color: rgba(185,154,97,.45);
+    }
+    .card:hover::before { transform: scale(1.3); }
+    .icon-wrap {
+      position: relative;
+      z-index: 1;
+      width: 64px; height: 64px;
+      display: grid; place-items: center;
+      border-radius: 19px;
+      background: var(--sage);
+      color: var(--forest);
+      font-size: 2rem;
+      margin-bottom: 25px;
+    }
+    .card h2 {
+      position: relative;
+      z-index: 1;
+      font-family: 'Playfair Display', serif;
+      color: var(--forest-dark);
+      font-size: 1.65rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .card p {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+    .card-link {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--forest);
+      font-size: .86rem;
+      font-weight: 700;
+    }
+    .card-link span { transition: transform .2s ease; }
+    .card:hover .card-link span { transform: translateX(4px); }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 0 20px 28px;
+      font-size: .82rem;
+    }
+    footer .ornament { color: var(--gold); margin: 0 7px; }
+    @media (max-width: 900px) {
+      .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      main { padding-top: 28px; }
+    }
+    @media (max-width: 600px) {
+      header { width: calc(100% - 32px); padding: 17px 0; }
+      .brand { font-size: 1rem; gap: 8px; }
+      .brand-mark { width: 34px; height: 34px; }
+      .back-button { padding: 10px 13px; font-size: .82rem; }
+      main { width: calc(100% - 32px); padding: 30px 0 55px; }
+      .hero { padding: 12px 8px 34px; }
+      h1 { font-size: 2.65rem; }
+      .hero p { font-size: 1rem; }
+      .menu { grid-template-columns: 1fr; gap: 17px; }
+      .card { min-height: 250px; padding: 27px 24px 23px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="../index.html" aria-label="Além do Éden - página inicial">
+      <span class="brand-mark" aria-hidden="true">✦</span>
+      <span>Além do Éden</span>
+    </a>
+    <a class="back-button" href="../index.html">
+      <span aria-hidden="true">←</span> Voltar ao início
+    </a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Aprenda • Divirta-se • Cresça</div>
+      <h1>Jogos <span>Bíblicos</span></h1>
+      <p>Explore a Palavra de Deus de uma forma interativa. Escolha uma atividade e teste seus conhecimentos.</p>
+      <div class="divider"></div>
+    </section>
+
+    <section class="menu" aria-label="Menu de jogos bíblicos">
+      <a href="forca.html" class="card">
+        <div class="icon-wrap" aria-hidden="true">✝️</div>
+        <h2>Forca Bíblica</h2>
+        <p>Adivinhe palavras bíblicas com base nas dicas e descubra o quanto conhece das Escrituras.</p>
+        <div class="card-link">Começar jogo <span>→</span></div>
+      </a>
+
+      <a href="enem.html" class="card">
+        <div class="icon-wrap" aria-hidden="true">📖</div>
+        <h2>ENEM Bíblico</h2>
+        <p>Teste seu conhecimento com perguntas bíblicas e desafie sua memória sobre a Palavra.</p>
+        <div class="card-link">Responder perguntas <span>→</span></div>
+      </a>
+
+      <a href="caca_palavras.html" class="card">
+        <div class="icon-wrap" aria-hidden="true">📖</div>
+        <h2>Caça Palavras</h2>
+        <p>Encontre palavras bíblicas escondidas, exercite sua memória e descubra nomes e ensinamentos das Escrituras em um desafio de fé e conhecimento!</p>
+        <div class="card-link">Responder perguntas <span>→</span></div>
+      </a>
+
+      <a href="duelo.html" class="card">
+        <div class="icon-wrap" aria-hidden="true">🔥</div>
+        <h2>Duelo Bíblico</h2>
+        <p>Escolha entre personagens bíblicos e compare suas características neste desafio.</p>
+        <div class="card-link">Entrar no duelo <span>→</span></div>
+      </a>
+    </section>
+  </main>
+
+  <footer>Além do Éden <span class="ornament">✦</span> Que aprender também seja uma forma de adorar.</footer>
+</body>
+</html>

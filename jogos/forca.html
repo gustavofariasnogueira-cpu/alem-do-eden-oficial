@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forca Bíblica | Além do Éden</title>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --forest: #244b38; --forest-dark: #173426; --sage: #dce5d8;
+    --cream: #f6f3eb; --paper: #fffdf8; --ink: #263129;
+    --muted: #69756a; --gold: #b99a61; --line: rgba(36,75,56,.13);
+    --error: #b7473b; --success: #3f7d55;
+  }
+  body {
+    font-family: 'Inter', sans-serif; color: var(--ink); min-height: 100vh;
+    padding: 0 24px 32px;
+    background: radial-gradient(ellipse at top left, rgba(220,229,216,.68), transparent 35rem), var(--cream);
+  }
+  header {
+    width: min(1200px, 100%); margin: 0 auto; padding: 20px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+    color: var(--forest); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem;
+  }
+  .brand-mark {
+    width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center;
+    color: white; background: var(--forest); box-shadow: 0 5px 14px rgba(36,75,56,.18);
+  }
+  .header-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .voltar-menu, .voltar-inicio {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    padding: 10px 15px; border-radius: 999px; font-size: .86rem; font-weight: 600;
+    border: 1px solid var(--line); color: var(--forest); background: rgba(255,253,248,.88);
+    transition: .2s ease;
+  }
+  .voltar-menu:hover, .voltar-inicio:hover { color: white; background: var(--forest); border-color: var(--forest); transform: translateY(-1px); }
+  .container {
+    width: min(1200px, 100%); margin: 18px auto 0; background: var(--paper);
+    border: 1px solid var(--line); border-radius: 28px; padding: clamp(18px, 3vw, 32px);
+    box-shadow: 0 16px 40px rgba(32,52,39,.08);
+  }
+  .topo { text-align: center; margin-bottom: 28px; }
+  .topo::before {
+    content: "DESAFIO • PALAVRA • CONHECIMENTO"; display: inline-block;
+    color: var(--forest); background: var(--sage); border: 1px solid rgba(36,75,56,.08);
+    padding: 7px 13px; border-radius: 999px; font-size: .7rem; font-weight: 700;
+    letter-spacing: .12em; margin-bottom: 18px;
+  }
+  .topo h1 {
+    font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.12; color: var(--forest-dark); font-weight: 600; margin-bottom: 12px;
+  }
+  .topo p { color: var(--muted); font-size: .98rem; max-width: 760px; margin: 0 auto; line-height: 1.75; }
+  .jogo { display: grid; grid-template-columns: minmax(260px, .9fr) minmax(0, 1.25fr); gap: 22px; }
+  .card {
+    background: #fbfaf5; border: 1px solid var(--line); border-radius: 22px; padding: clamp(18px, 2.5vw, 25px);
+    box-shadow: 0 4px 15px rgba(32,52,39,.025);
+  }
+  .forca { display: flex; align-items: center; justify-content: center; min-height: 320px; }
+  svg { width: 100%; max-width: 250px; height: auto; }
+  .parte { display: none; stroke: var(--forest); stroke-width: 4; stroke-linecap: round; }
+  .configuracoes h2, .info h2 { color: var(--forest); margin-bottom: 14px; font-family: 'Playfair Display', serif; font-size: 1.35rem; }
+  .painel-config { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .campo label { display: block; font-size: .88rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .campo select {
+    width: 100%; padding: 12px 14px; border-radius: 13px; border: 1px solid var(--line);
+    background: white; color: var(--ink); font: inherit; font-size: .92rem; outline: none;
+  }
+  .campo select:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(36,75,56,.10); }
+  .resumo-config {
+    background: white; border: 1px dashed rgba(36,75,56,.2); color: var(--muted);
+    padding: 12px 14px; border-radius: 14px; line-height: 1.65; margin-bottom: 18px; font-size: .9rem;
+  }
+  .dica { margin-bottom: 18px; color: var(--ink); line-height: 1.75; min-height: 52px; }
+  .palavra { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; min-height: 58px; }
+  .letra {
+    width: 40px; height: 50px; border-bottom: 3px solid var(--gold); display: flex; align-items: center; justify-content: center;
+    font-size: 1.45rem; font-weight: 700; color: var(--forest-dark); text-transform: uppercase;
+    background: white; border-radius: 10px 10px 0 0;
+  }
+  .espaco { width: 20px; border-bottom: none; background: transparent; }
+  .teclado { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 8px; margin-bottom: 20px; }
+  .tecla {
+    background: var(--forest); color: white; border: 0; border-radius: 11px; padding: 12px 0;
+    font-size: .95rem; font-weight: 700; cursor: pointer; transition: .18s ease;
+  }
+  .tecla:hover:not(:disabled) { background: var(--forest-dark); transform: translateY(-2px); }
+  .tecla:disabled { cursor: not-allowed; opacity: .35; }
+  .tecla.correta { background: var(--success); }
+  .tecla.errada { background: var(--error); }
+  .status { display: flex; flex-wrap: wrap; gap: 12px 18px; margin-bottom: 18px; color: var(--muted); font-size: .88rem; line-height: 1.6; }
+  .status strong { color: var(--forest-dark); }
+  .mensagem { min-height: 54px; display: flex; align-items: center; font-size: .98rem; font-weight: 700; color: var(--forest); margin-bottom: 18px; }
+  .acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    border: 0; padding: 12px 18px; border-radius: 12px; font: inherit; font-size: .9rem;
+    font-weight: 700; cursor: pointer; transition: .2s ease;
+  }
+  .btn-principal { background: var(--forest); color: white; }
+  .btn-principal:hover { background: var(--forest-dark); transform: translateY(-1px); }
+  .btn-secundario { background: white; color: var(--forest); border: 1px solid var(--line); }
+  .btn-secundario:hover { background: var(--sage); }
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px;
+    background: white; border: 1px solid var(--line); color: var(--muted); font-size: .82rem; margin-top: 10px;
+  }
+  @media (max-width: 920px) { .jogo { grid-template-columns: 1fr; } .forca { min-height: 270px; } }
+  @media (max-width: 620px) {
+    body { padding: 0 12px 20px; }
+    header { padding: 15px 0; }
+    .brand { font-size: .95rem; }
+    .brand-mark { width: 32px; height: 32px; }
+    .header-actions { gap: 7px; }
+    .voltar-menu, .voltar-inicio { padding: 9px 11px; font-size: .75rem; }
+    .container { margin-top: 8px; padding: 16px; border-radius: 21px; }
+    .painel-config { grid-template-columns: 1fr; }
+    .teclado { grid-template-columns: repeat(5, minmax(0,1fr)); gap: 7px; }
+    .tecla { padding: 12px 0; }
+    .topo h1 { font-size: 2.15rem; }
+    .card { padding: 17px; }
+    .palavra { gap: 6px; }
+    .letra { width: 34px; height: 45px; font-size: 1.2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../index.html" aria-label="Além do Éden - página inicial">
+    <span class="brand-mark" aria-hidden="true">✦</span>
+    <span>Além do Éden</span>
+  </a>
+  <nav class="header-actions" aria-label="Navegação">
+    <a href="jogos.html" class="voltar-menu">← Menu de jogos</a>
+    <a href="../index.html" class="voltar-inicio">⌂ Voltar ao início</a>
+  </nav>
+</header>
+
+  <div class="container">
+    <div class="topo">
+      <h1>Forca Bíblica</h1>
+      <p>Escolha o tema e a dificuldade para jogar em uma versão alinhada à identidade visual do seu site, com fundo claro e detalhes em verde musgo.</p>
+    </div>
+
+    <div class="jogo">
+      <div>
+        <div class="card configuracoes" style="margin-bottom: 24px;">
+          <h2>Configurações do jogo</h2>
+          <div class="painel-config">
+            <div class="campo">
+              <label for="tema">Tema</label>
+              <select id="tema">
+                <option value="personagens">Personagens Bíblicos</option>
+                <option value="lugares">Lugares Bíblicos</option>
+                <option value="livros">Livros da Bíblia</option>
+                <option value="objetos">Objetos e Elementos</option>
+                <option value="todos">Todos os Temas</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="dificuldade">Dificuldade</label>
+              <select id="dificuldade">
+                <option value="facil">Fácil</option>
+                <option value="medio">Médio</option>
+                <option value="dificil">Difícil</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="resumo-config" id="resumoConfig">
+            Tema atual: <strong>Personagens Bíblicos</strong><br>
+            Dificuldade atual: <strong>Fácil</strong>
+          </div>
+
+          <div class="acoes">
+            <button class="btn btn-principal" id="aplicarConfig">Aplicar e iniciar</button>
+          </div>
+        </div>
+
+        <div class="card forca">
+          <svg viewBox="0 0 220 260" aria-label="Desenho da forca">
+            <line x1="30" y1="230" x2="120" y2="230" stroke="#91a57a" stroke-width="5" />
+            <line x1="60" y1="230" x2="60" y2="20" stroke="#91a57a" stroke-width="5" />
+            <line x1="60" y1="20" x2="150" y2="20" stroke="#91a57a" stroke-width="5" />
+            <line x1="150" y1="20" x2="150" y2="45" stroke="#91a57a" stroke-width="5" />
+
+            <circle class="parte" id="cabeca" cx="150" cy="65" r="20" fill="none" />
+            <line class="parte" id="tronco" x1="150" y1="85" x2="150" y2="145" />
+            <line class="parte" id="bracoE" x1="150" y1="100" x2="120" y2="125" />
+            <line class="parte" id="bracoD" x1="150" y1="100" x2="180" y2="125" />
+            <line class="parte" id="pernaE" x1="150" y1="145" x2="125" y2="185" />
+            <line class="parte" id="pernaD" x1="150" y1="145" x2="175" y2="185" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="card info">
+        <h2>Dica</h2>
+        <div class="dica" id="dica">Selecione um tema e uma dificuldade para começar.</div>
+
+        <div class="tag" id="tagAtual">Tema: Personagens Bíblicos • Dificuldade: Fácil</div>
+
+        <div class="palavra" id="palavra"></div>
+
+        <div class="status">
+          <div><strong>Erros:</strong> <span id="erros">0</span>/6</div>
+          <div><strong>Letras usadas:</strong> <span id="usadas">Nenhuma</span></div>
+        </div>
+
+        <div class="mensagem" id="mensagem"></div>
+
+        <div class="teclado" id="teclado"></div>
+
+        <div class="acoes">
+          <button class="btn btn-principal" id="novoJogo">Novo jogo</button>
+          <button class="btn btn-secundario" id="mostrarResposta">Mostrar resposta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bancoDePalavras = {
+      personagens: {
+        facil: [
+  { palavra: 'ADAO', dica: 'Primeiro homem criado por Deus.' },
+  { palavra: 'EVA', dica: 'Primeira mulher criada por Deus.' },
+  { palavra: 'ABEL', dica: 'Filho de Adão que ofereceu um sacrifício agradável a Deus.' },
+  { palavra: 'CAIM', dica: 'Filho de Adão que matou seu irmão.' },
+  { palavra: 'SETE', dica: 'Filho dado a Adão e Eva após a morte de Abel.' },
+  { palavra: 'ENOQUE', dica: 'Homem que andou com Deus.' },
+  { palavra: 'SARA', dica: 'Esposa de Abraão e mãe de Isaque.' },
+  { palavra: 'ABRAAO', dica: 'Chamado para ser pai de muitas nações.' },
+  { palavra: 'ISAQUE', dica: 'Filho da promessa de Abraão.' },
+  { palavra: 'JACO', dica: 'Pai das doze tribos de Israel.' },
+  { palavra: 'JOSE', dica: 'Filho de Jacó vendido por seus irmãos.' },
+  { palavra: 'MIRIAM', dica: 'Irmã de Moisés.' },
+  { palavra: 'ARAO', dica: 'Irmão de Moisés e primeiro sumo sacerdote.' },
+  { palavra: 'JOSUE', dica: 'Liderou o povo após Moisés.' },
+  { palavra: 'CALEBE', dica: 'Espia fiel que confiou na promessa de Deus.' },
+  { palavra: 'GIDEAO', dica: 'Juiz que venceu com poucos homens.' },
+  { palavra: 'ANA', dica: 'Mulher que orou pedindo um filho.' },
+  { palavra: 'SAMUEL', dica: 'Profeta que ungiu reis em Israel.' },
+  { palavra: 'SAUL', dica: 'Primeiro rei de Israel.' },
+  { palavra: 'JONATAS', dica: 'Grande amigo de Davi.' },
+  { palavra: 'SALOMAO', dica: 'Rei conhecido por sua sabedoria.' },
+  { palavra: 'JO', dica: 'Homem que perseverou em meio ao sofrimento.' },
+  { palavra: 'RAABE', dica: 'Ajudou os espias em Jericó.' },
+  { palavra: 'MARTA', dica: 'Irmã de Maria e Lázaro.' },
+  { palavra: 'MARIA', dica: 'Mãe de Jesus.' },
+  { palavra: 'LAZARO', dica: 'Foi ressuscitado por Jesus.' },
+  { palavra: 'TOMAS', dica: 'Discípulo que quis ver para crer.' },
+  { palavra: 'TIAGO', dica: 'Nome de apóstolo e também de um livro bíblico.' },
+  { palavra: 'JOAO', dica: 'Discípulo amado de Jesus.' },
+  { palavra: 'FILIPE', dica: 'Discípulo que apresentou Natanael a Jesus.' }
+],
+
+medio: [
+  { palavra: 'REBECA', dica: 'Esposa de Isaque e mãe de Jacó e Esaú.' },
+  { palavra: 'ESAU', dica: 'Irmão de Jacó que vendeu sua primogenitura.' },
+  { palavra: 'LIA', dica: 'Primeira esposa de Jacó.' },
+  { palavra: 'RAQUEL', dica: 'Esposa amada de Jacó.' },
+  { palavra: 'BENJAMIM', dica: 'Filho mais novo de Jacó.' },
+  { palavra: 'FARAO', dica: 'Título do governante do Egito.' },
+  { palavra: 'BALAO', dica: 'Homem repreendido por sua jumenta.' },
+  { palavra: 'DEBORA', dica: 'Juíza e profetisa de Israel.' },
+  { palavra: 'JEFTE', dica: 'Juiz israelita ligado a um voto marcante.' },
+  { palavra: 'BOAZ', dica: 'Parente remidor de Rute.' },
+  { palavra: 'NATAN', dica: 'Profeta que confrontou Davi.' },
+  { palavra: 'URIAS', dica: 'Marido de Bate-Seba.' },
+  { palavra: 'ELISEU', dica: 'Profeta sucessor de Elias.' },
+  { palavra: 'NAAMA', dica: 'Serva ligada à cura de Naamã.' },
+  { palavra: 'NAAMAO', dica: 'Comandante sírio curado da lepra.' },
+  { palavra: 'JOAS', dica: 'Rei que foi escondido quando criança.' },
+  { palavra: 'EZEQUIAS', dica: 'Rei que orou e teve seus dias acrescentados.' },
+  { palavra: 'JOSIAS', dica: 'Rei que promoveu reformas e restaurou a Lei.' },
+  { palavra: 'DANIEL', dica: 'Foi lançado na cova dos leões.' },
+  { palavra: 'EZEQUIEL', dica: 'Profeta que teve visões marcantes.' },
+  { palavra: 'OSIAS', dica: 'Profeta que viveu uma história simbólica em seu casamento.' },
+  { palavra: 'JOEL', dica: 'Profeta que falou do derramamento do Espírito.' },
+  { palavra: 'AMOS', dica: 'Profeta que denunciou injustiças.' },
+  { palavra: 'MIQUEIAS', dica: 'Profeta que anunciou o nascimento em Belém.' },
+  { palavra: 'ZACARIAS', dica: 'Pai de João Batista.' },
+  { palavra: 'ISABEL', dica: 'Mãe de João Batista.' },
+  { palavra: 'BARNABE', dica: 'Companheiro missionário de Paulo.' },
+  { palavra: 'TIMOTEO', dica: 'Jovem líder orientado por Paulo.' },
+  { palavra: 'TITO', dica: 'Cooperador de Paulo no ministério.' },
+  { palavra: 'SILAS', dica: 'Companheiro de Paulo em viagens e prisões.' }
+],
+
+dificil: [
+  { palavra: 'ABISAI', dica: 'Valente guerreiro ligado a Davi.' },
+  { palavra: 'AMASA', dica: 'Comandante militar mencionado na história de Davi.' },
+  { palavra: 'AHITOFEL', dica: 'Conselheiro conhecido por sua sabedoria.' },
+  { palavra: 'MICAIAS', dica: 'Profeta que falou a verdade diante do rei.' },
+  { palavra: 'ELIABE', dica: 'Irmão mais velho de Davi.' },
+  { palavra: 'ADONIAS', dica: 'Filho de Davi que tentou se exaltar ao trono.' },
+  { palavra: 'ABSALAO', dica: 'Filho de Davi que se rebelou contra o pai.' },
+  { palavra: 'NAABAL', dica: 'Homem insensato que se opôs a Davi.' },
+  { palavra: 'ABIGAIL', dica: 'Mulher sábia que intercedeu diante de Davi.' },
+  { palavra: 'BATESEBA', dica: 'Mulher que se tornou esposa de Davi.' },
+  { palavra: 'ELIASIBE', dica: 'Nome ligado ao sacerdócio e à reconstrução.' },
+  { palavra: 'SEFANIAS', dica: 'Profeta do Antigo Testamento.' },
+  { palavra: 'HABACUQUE', dica: 'Profeta que dialogou com Deus sobre justiça.' },
+  { palavra: 'AGEU', dica: 'Profeta que incentivou a reconstrução do templo.' },
+  { palavra: 'OBADIAS', dica: 'Profeta com um dos livros mais curtos da Bíblia.' },
+  { palavra: 'JOAQUIM', dica: 'Rei mencionado no período de Judá.' },
+  { palavra: 'JEOAQUIM', dica: 'Nome de rei do Antigo Testamento.' },
+  { palavra: 'JEOIAQUIM', dica: 'Forma longa de um nome real de Judá.' },
+  { palavra: 'ASPENAZ', dica: 'Chefe dos oficiais ligado ao exílio babilônico.' },
+  { palavra: 'SADRAC', dica: 'Um dos jovens lançados na fornalha.' },
+  { palavra: 'MESAQUE', dica: 'Companheiro de Sadraque na fornalha.' },
+  { palavra: 'ABEDNEGO', dica: 'Jovem fiel que enfrentou a fornalha ardente.' },
+  { palavra: 'BELSASAR', dica: 'Rei que viu a escrita na parede.' },
+  { palavra: 'ARTAXERXES', dica: 'Rei persa citado na época de Neemias e Esdras.' },
+  { palavra: 'NEEMIAS', dica: 'Liderou a reconstrução dos muros de Jerusalém.' },
+  { palavra: 'ESDRAS', dica: 'Escriba dedicado à Lei de Deus.' },
+  { palavra: 'GAMALIEL', dica: 'Mestre respeitado entre os judeus.' },
+  { palavra: 'ANANIAS', dica: 'Nome ligado à conversão de Paulo em Damasco.' },
+  { palavra: 'SAFIRA', dica: 'Mulher citada com Ananias em Atos.' },
+  { palavra: 'APOLO', dica: 'Pregador eloquente do Novo Testamento.' }
+ ]
+},
+ 
+        lugares: {
+  facil: [
+    { palavra: 'EGITO', dica: 'Lugar onde o povo de Israel foi escravizado.' },
+    { palavra: 'CANAA', dica: 'Terra prometida ao povo de Israel.' },
+    { palavra: 'ARARATE', dica: 'Monte onde a arca repousou.' },
+    { palavra: 'SODOMA', dica: 'Cidade destruída por sua corrupção.' },
+    { palavra: 'GOMORRA', dica: 'Cidade destruída junto com Sodoma.' },
+    { palavra: 'HEBROM', dica: 'Lugar onde Abraão viveu.' },
+    { palavra: 'JORDÃO', dica: 'Rio onde Jesus foi batizado.' },
+    { palavra: 'BETEL', dica: 'Lugar onde Jacó teve um sonho.' },
+    { palavra: 'SILO', dica: 'Local antigo de adoração em Israel.' },
+    { palavra: 'RAMA', dica: 'Cidade associada ao profeta Samuel.' },
+    { palavra: 'NAZARE', dica: 'Cidade onde Jesus cresceu.' },
+    { palavra: 'TIRO', dica: 'Cidade comercial antiga.' },
+    { palavra: 'SIDOM', dica: 'Cidade próxima a Tiro.' },
+    { palavra: 'OFIR', dica: 'Região conhecida por riquezas.' },
+    { palavra: 'DAMASCO', dica: 'Cidade ligada à conversão de Paulo.' },
+    { palavra: 'GERAR', dica: 'Cidade onde Abraão peregrinou.' },
+    { palavra: 'SEQUEM', dica: 'Lugar importante na história de Jacó.' },
+    { palavra: 'MORIA', dica: 'Monte onde Abraão quase sacrificou Isaque.' },
+    { palavra: 'AI', dica: 'Cidade conquistada por Josué.' },
+    { palavra: 'GIBEON', dica: 'Cidade que fez aliança com Israel.' },
+    { palavra: 'ECRON', dica: 'Cidade dos filisteus.' },
+    { palavra: 'ASDODE', dica: 'Cidade filisteia.' },
+    { palavra: 'ASQUELON', dica: 'Outra cidade dos filisteus.' },
+    { palavra: 'SAMARIA', dica: 'Capital do reino do norte.' },
+    { palavra: 'JUDEIA', dica: 'Região do sul de Israel.' },
+    { palavra: 'GALIA', dica: 'Região citada no Novo Testamento.' },
+    { palavra: 'CRETA', dica: 'Ilha mencionada nas cartas.' },
+    { palavra: 'MALTA', dica: 'Ilha onde Paulo naufragou.' },
+    { palavra: 'FILIPOS', dica: 'Cidade visitada por Paulo.' },
+    { palavra: 'CORINTO', dica: 'Cidade importante no Novo Testamento.' }
+  ],
+
+  medio: [
+    { palavra: 'JERUSALEM', dica: 'Cidade central da fé judaica.' },
+    { palavra: 'CAPERNAUM', dica: 'Base do ministério de Jesus.' },
+    { palavra: 'BABILONIA', dica: 'Cidade do exílio de Israel.' },
+    { palavra: 'BERSEBA', dica: 'Cidade ao sul de Israel.' },
+    { palavra: 'TESSALONICA', dica: 'Cidade que recebeu cartas de Paulo.' },
+    { palavra: 'ANTIOQUIA', dica: 'Importante centro missionário.' },
+    { palavra: 'EFESO', dica: 'Cidade com uma carta apostólica.' },
+    { palavra: 'ESMIRNA', dica: 'Uma das igrejas do Apocalipse.' },
+    { palavra: 'PERGAMO', dica: 'Cidade citada no Apocalipse.' },
+    { palavra: 'LAODICEIA', dica: 'Igreja morna mencionada em Apocalipse.' },
+    { palavra: 'SARDES', dica: 'Igreja com fama de viva, mas morta.' },
+    { palavra: 'FILADELFIA', dica: 'Igreja fiel do Apocalipse.' },
+    { palavra: 'ICÔNIO', dica: 'Cidade visitada por Paulo.' },
+    { palavra: 'LISSTRA', dica: 'Cidade onde Paulo fez milagres.' },
+    { palavra: 'DERBE', dica: 'Cidade evangelizada por Paulo.' },
+    { palavra: 'TARSO', dica: 'Cidade natal de Paulo.' },
+    { palavra: 'CESAREIA', dica: 'Cidade onde Paulo foi preso.' },
+    { palavra: 'NINIVE', dica: 'Cidade onde Jonas pregou.' },
+    { palavra: 'UR', dica: 'Cidade de origem de Abraão.' },
+    { palavra: 'HARAN', dica: 'Cidade onde Abraão passou.' },
+    { palavra: 'PADÃ', dica: 'Região associada à família de Jacó.' },
+    { palavra: 'GOSEN', dica: 'Região onde os israelitas viveram no Egito.' },
+    { palavra: 'PIROM', dica: 'Cidade conquistada por Josué.' },
+    { palavra: 'MEGIDO', dica: 'Local de batalhas importantes.' },
+    { palavra: 'BASÃ', dica: 'Região conhecida por seus gigantes.' },
+    { palavra: 'EDOM', dica: 'Terra dos descendentes de Esaú.' },
+    { palavra: 'MOABE', dica: 'Região ligada à história de Rute.' },
+    { palavra: 'AMOM', dica: 'Povo vizinho de Israel.' },
+    { palavra: 'MIDIA', dica: 'Região ligada a Moisés.' },
+    { palavra: 'PERSIA', dica: 'Império de Ester.' }
+  ],
+
+  dificil: [
+    { palavra: 'QUEDES', dica: 'Cidade de refúgio em Israel.' },
+    { palavra: 'HESEBOM', dica: 'Cidade dos amorreus.' },
+    { palavra: 'DEBON', dica: 'Cidade associada a Moabe.' },
+    { palavra: 'BOZRA', dica: 'Cidade importante de Edom.' },
+    { palavra: 'TECOA', dica: 'Cidade do profeta Amós.' },
+    { palavra: 'ANATOTE', dica: 'Cidade natal de Jeremias.' },
+    { palavra: 'BETSAIDA', dica: 'Cidade de alguns discípulos.' },
+    { palavra: 'EMAU', dica: 'Caminho onde Jesus apareceu após ressuscitar.' },
+    { palavra: 'SICAR', dica: 'Cidade da mulher samaritana.' },
+    { palavra: 'PENIEL', dica: 'Lugar onde Jacó lutou com Deus.' },
+    { palavra: 'SUCOTE', dica: 'Lugar onde Jacó acampou.' },
+    { palavra: 'GILGAL', dica: 'Primeiro acampamento em Canaã.' },
+    { palavra: 'ADULAO', dica: 'Caverna onde Davi se escondeu.' },
+    { palavra: 'MAANAIM', dica: 'Cidade associada a Davi.' },
+    { palavra: 'ZICLAGUE', dica: 'Cidade dada a Davi pelos filisteus.' },
+    { palavra: 'QUIRIATE', dica: 'Prefixo de várias cidades bíblicas.' },
+    { palavra: 'TIMNA', dica: 'Lugar ligado à história de Sansão.' },
+    { palavra: 'ENOM', dica: 'Local de muitas águas.' },
+    { palavra: 'BETANIA', dica: 'Cidade de Lázaro, Marta e Maria.' },
+    { palavra: 'GETSEMANI', dica: 'Jardim onde Jesus orou antes da crucificação.' },
+    { palavra: 'GABAA', dica: 'Cidade associada a Saul.' },
+    { palavra: 'RAMOTE', dica: 'Cidade fortificada de Israel.' },
+    { palavra: 'JABES', dica: 'Cidade salva por Saul.' },
+    { palavra: 'GALAAD', dica: 'Região montanhosa a leste do Jordão.' },
+    { palavra: 'TIRSA', dica: 'Antiga capital de Israel.' },
+    { palavra: 'DOTÃ', dica: 'Lugar onde José foi vendido.' },
+    { palavra: 'SAREPTA', dica: 'Cidade da viúva ajudada por Elias.' },
+    { palavra: 'SUNEM', dica: 'Cidade ligada a Eliseu.' },
+    { palavra: 'ELATE', dica: 'Porto importante de Israel.' },
+    { palavra: 'EZIOM', dica: 'Região portuária antiga.' }
+  ]
+},
+      livros: {
+  facil: [
+    { palavra: 'JOEL', dica: 'Livro profético que fala do derramar do Espírito.' },
+    { palavra: 'NAUM', dica: 'Profeta que falou contra Nínive.' },
+    { palavra: 'OBADIAS', dica: 'Um dos livros mais curtos da Bíblia.' },
+    { palavra: 'MIQUEIAS', dica: 'Profeta que anunciou o nascimento em Belém.' },
+    { palavra: 'AGEU', dica: 'Profeta que incentivou a reconstrução do templo.' },
+    { palavra: 'ZACARIAS', dica: 'Profeta com visões simbólicas.' },
+    { palavra: 'MALAQUIAS', dica: 'Último livro do Antigo Testamento.' },
+    { palavra: 'TIAGO', dica: 'Livro prático sobre fé e obras.' },
+    { palavra: 'HEBREUS', dica: 'Livro que fala sobre Cristo como sumo sacerdote.' },
+    { palavra: 'ESDRAS', dica: 'Livro sobre o retorno do exílio.' },
+    { palavra: 'NEEMIAS', dica: 'Livro sobre reconstrução dos muros.' },
+    { palavra: 'ESTER', dica: 'Livro sobre uma rainha corajosa.' },
+    { palavra: 'JONAS', dica: 'Livro sobre um profeta que fugiu.' },
+    { palavra: 'SOFONIAS', dica: 'Profeta que falou do dia do Senhor.' },
+    { palavra: 'HABACUQUE', dica: 'Profeta que dialogou com Deus.' },
+    { palavra: 'FILEMON', dica: 'Carta pessoal de Paulo.' },
+    { palavra: 'EFESIOS', dica: 'Carta sobre a igreja como corpo.' },
+    { palavra: 'COLOSSENSES', dica: 'Carta que exalta Cristo.' },
+    { palavra: 'GALATAS', dica: 'Carta sobre a liberdade em Cristo.' },
+    { palavra: 'TITO', dica: 'Carta pastoral de Paulo.' },
+    { palavra: 'TIMOTEO', dica: 'Cartas direcionadas a um jovem líder.' },
+    { palavra: 'LUCAS', dica: 'Evangelho detalhado sobre Jesus.' },
+    { palavra: 'MARCOS', dica: 'Evangelho mais direto e rápido.' },
+    { palavra: 'JOAO', dica: 'Evangelho com foco na divindade de Cristo.' },
+    { palavra: 'ATOS', dica: 'História da igreja primitiva.' },
+    { palavra: 'RUTE', dica: 'Livro sobre lealdade e redenção.' },
+    { palavra: 'AMOS', dica: 'Profeta que denunciou injustiça.' },
+    { palavra: 'JO', dica: 'Livro sobre sofrimento e fé.' },
+    { palavra: 'SALMOS', dica: 'Livro de louvores.' },
+    { palavra: 'PROVERBIOS', dica: 'Livro de sabedoria prática.' }
+  ],
+
+  medio: [
+    { palavra: 'LEVITICO', dica: 'Livro com leis e sacerdócio.' },
+    { palavra: 'NUMEROS', dica: 'Livro sobre o censo de Israel.' },
+    { palavra: 'JOSUE', dica: 'Livro sobre conquista da terra prometida.' },
+    { palavra: 'JUÍZES', dica: 'Período de líderes antes dos reis.' },
+    { palavra: 'SAMUEL', dica: 'Livro sobre o início da monarquia.' },
+    { palavra: 'REIS', dica: 'História dos reis de Israel.' },
+    { palavra: 'CRONICAS', dica: 'Registro histórico paralelo aos reis.' },
+    { palavra: 'CANTARES', dica: 'Livro poético sobre amor.' },
+    { palavra: 'ISAIAS', dica: 'Profeta messiânico importante.' },
+    { palavra: 'JEREMIAS', dica: 'Profeta que chorou por Jerusalém.' },
+    { palavra: 'EZEQUIEL', dica: 'Profeta de visões simbólicas.' },
+    { palavra: 'DANIEL', dica: 'Livro com histórias e profecias.' },
+    { palavra: 'OSEIAS', dica: 'Profeta que viveu um casamento simbólico.' },
+    { palavra: 'SOFONIAS', dica: 'Profeta do juízo e restauração.' },
+    { palavra: 'AGEU', dica: 'Incentivou a reconstrução do templo.' },
+    { palavra: 'ZACARIAS', dica: 'Profeta de visões e esperança.' },
+    { palavra: 'MATEUS', dica: 'Evangelho focado nos judeus.' },
+    { palavra: 'MARCOS', dica: 'Evangelho objetivo.' },
+    { palavra: 'LUCAS', dica: 'Evangelho detalhado.' },
+    { palavra: 'JOAO', dica: 'Evangelho teológico.' },
+    { palavra: 'ATOS', dica: 'História da igreja.' },
+    { palavra: 'ROMANOS', dica: 'Doutrina da salvação.' },
+    { palavra: 'CORINTIOS', dica: 'Cartas à igreja de Corinto.' },
+    { palavra: 'GALATAS', dica: 'Liberdade em Cristo.' },
+    { palavra: 'EFESIOS', dica: 'Unidade da igreja.' },
+    { palavra: 'FILIPENSES', dica: 'Carta sobre alegria.' },
+    { palavra: 'COLOSSENSES', dica: 'Supremacia de Cristo.' },
+    { palavra: 'TESSALONICENSES', dica: 'Cartas sobre a volta de Cristo.' },
+    { palavra: 'TIMOTEO', dica: 'Cartas pastorais.' },
+    { palavra: 'TITO', dica: 'Instruções ministeriais.' }
+  ],
+
+  dificil: [
+    { palavra: 'DEUTERONOMIO', dica: 'Revisão da lei dada a Israel.' },
+    { palavra: 'LAMENTACOES', dica: 'Lamento pela queda de Jerusalém.' },
+    { palavra: 'ECLESIASTES', dica: 'Reflexões sobre a vida.' },
+    { palavra: 'TESSALONICENSES', dica: 'Cartas escatológicas.' },
+    { palavra: 'APOCALIPSE', dica: 'Livro profético sobre o fim dos tempos.' },
+    { palavra: 'PENTATEUCO', dica: 'Conjunto dos cinco primeiros livros.' },
+    { palavra: 'SAMUEL', dica: 'Dividido em dois livros na Bíblia.' },
+    { palavra: 'CRONICAS', dica: 'Também dividido em dois livros.' },
+    { palavra: 'CORINTIOS', dica: 'Cartas divididas em duas partes.' },
+    { palavra: 'REIS', dica: 'História dividida em dois livros.' },
+    { palavra: 'JOAO', dica: 'Possui três cartas no Novo Testamento.' },
+    { palavra: 'PEDRO', dica: 'Possui duas cartas no Novo Testamento.' },
+    { palavra: 'TIMOTEO', dica: 'Cartas pastorais em duas partes.' },
+    { palavra: 'TESSALONICENSES', dica: 'Cartas em duas partes.' },
+    { palavra: 'MACABEUS', dica: 'Livro presente em algumas tradições.' },
+    { palavra: 'BARUC', dica: 'Livro presente em algumas tradições bíblicas.' },
+    { palavra: 'TOBIAS', dica: 'Livro de tradição deuterocanônica.' },
+    { palavra: 'JUDITE', dica: 'Livro histórico em algumas tradições.' },
+    { palavra: 'SABEDORIA', dica: 'Livro sapiencial de tradição adicional.' },
+    { palavra: 'ECLESIASTICO', dica: 'Outro livro sapiencial.' },
+    { palavra: 'GENESIS', dica: 'Livro das origens.' },
+    { palavra: 'EXODO', dica: 'Saída do Egito.' },
+    { palavra: 'LEVITICO', dica: 'Leis sacerdotais.' },
+    { palavra: 'NUMEROS', dica: 'Contagem do povo.' },
+    { palavra: 'JOSUE', dica: 'Conquista da terra.' },
+    { palavra: 'JUÍZES', dica: 'Período antes dos reis.' },
+    { palavra: 'RUTE', dica: 'História de redenção.' },
+    { palavra: 'ISAIAS', dica: 'Grande profeta messiânico.' },
+    { palavra: 'JEREMIAS', dica: 'Profeta do exílio.' },
+    { palavra: 'EZEQUIEL', dica: 'Profeta de visões.' }
+  ]
+ },
+      objetos: {
+  facil: [
+    { palavra: 'PAO', dica: 'Alimento básico muito citado na Bíblia.' },
+    { palavra: 'PEIXE', dica: 'Alimento multiplicado por Jesus.' },
+    { palavra: 'AGUA', dica: 'Elemento essencial usado em milagres.' },
+    { palavra: 'VESTE', dica: 'Roupa usada pelas pessoas.' },
+    { palavra: 'ANEL', dica: 'Objeto usado como símbolo de autoridade.' },
+    { palavra: 'BOLSA', dica: 'Objeto usado para carregar coisas.' },
+    { palavra: 'CINTO', dica: 'Peça usada na vestimenta.' },
+    { palavra: 'CAPA', dica: 'Roupa usada para se cobrir.' },
+    { palavra: 'ESPADA', dica: 'Arma comum em batalhas.' },
+    { palavra: 'ESCUDO', dica: 'Usado para defesa em guerras.' },
+    { palavra: 'LIVRO', dica: 'Objeto usado para escrita e leitura.' },
+    { palavra: 'ROLO', dica: 'Forma antiga de escrita.' },
+    { palavra: 'LAMPADA', dica: 'Usada para iluminar ambientes.' },
+    { palavra: 'CORDA', dica: 'Objeto usado para prender ou puxar.' },
+    { palavra: 'VASO', dica: 'Recipiente usado no dia a dia.' },
+    { palavra: 'JARRA', dica: 'Usada para guardar líquidos.' },
+    { palavra: 'TAÇA', dica: 'Objeto usado para beber.' },
+    { palavra: 'CAMA', dica: 'Objeto para descanso.' },
+    { palavra: 'PORTA', dica: 'Entrada de casas e cidades.' },
+    { palavra: 'CHAVE', dica: 'Usada para abrir portas.' },
+    { palavra: 'POTE', dica: 'Recipiente para guardar mantimentos.' },
+    { palavra: 'TRIGO', dica: 'Grão usado para fazer pão.' },
+    { palavra: 'CESTA', dica: 'Usada para carregar alimentos.' },
+    { palavra: 'PEDRA', dica: 'Objeto usado por Davi contra Golias.' },
+    { palavra: 'REDE', dica: 'Usada por pescadores.' },
+    { palavra: 'BARCO', dica: 'Meio de transporte nas águas.' },
+    { palavra: 'MOEDA', dica: 'Objeto usado em transações.' },
+    { palavra: 'SAL', dica: 'Elemento usado como tempero e símbolo.' },
+    { palavra: 'FOGO', dica: 'Elemento usado para aquecer e iluminar.' },
+    { palavra: 'LENHA', dica: 'Usada para fazer fogo.' }
+  ],
+
+  medio: [
+    { palavra: 'ARPA', dica: 'Instrumento musical usado por Davi.' },
+    { palavra: 'CETRO', dica: 'Símbolo de autoridade real.' },
+    { palavra: 'TRONO', dica: 'Assento de reis.' },
+    { palavra: 'ESCADA', dica: 'Ligada ao sonho de Jacó.' },
+    { palavra: 'CARRO', dica: 'Veículo usado em batalhas.' },
+    { palavra: 'LANCA', dica: 'Arma usada por soldados.' },
+    { palavra: 'ARMADURA', dica: 'Proteção usada em guerra.' },
+    { palavra: 'TABERNACULO', dica: 'Local móvel de adoração.' },
+    { palavra: 'CORTINA', dica: 'Separava o Santo dos Santos.' },
+    { palavra: 'COLUNA', dica: 'Estrutura de sustentação.' },
+    { palavra: 'INCENSO', dica: 'Usado em rituais de adoração.' },
+    { palavra: 'PERGAMINHO', dica: 'Material antigo de escrita.' },
+    { palavra: 'SELO', dica: 'Marca de autoridade.' },
+    { palavra: 'MOEDAS', dica: 'Plural de dinheiro antigo.' },
+    { palavra: 'BALANCA', dica: 'Usada para pesar.' },
+    { palavra: 'FORNALHA', dica: 'Local de fogo intenso.' },
+    { palavra: 'MANTO', dica: 'Roupa de autoridade ou profética.' },
+    { palavra: 'CAJADO', dica: 'Usado por pastores.' },
+    { palavra: 'ARADO', dica: 'Ferramenta agrícola.' },
+    { palavra: 'PRATO', dica: 'Objeto para servir comida.' },
+    { palavra: 'COPOS', dica: 'Recipientes para bebida.' },
+    { palavra: 'CANDEIA', dica: 'Tipo de lâmpada antiga.' },
+    { palavra: 'TOCHA', dica: 'Usada para iluminar no escuro.' },
+    { palavra: 'ESCADAO', dica: 'Estrutura de acesso elevado.' },
+    { palavra: 'TABUA', dica: 'Peça de madeira plana.' },
+    { palavra: 'COROADEOURO', dica: 'Símbolo de realeza.' },
+    { palavra: 'ESCUDOREDONDO', dica: 'Tipo de escudo usado em batalhas.' },
+    { palavra: 'CINTURAO', dica: 'Peça da vestimenta.' },
+    { palavra: 'SANDALIA', dica: 'Calçado comum.' },
+    { palavra: 'REDEDEPESCA', dica: 'Usada por pescadores.' }
+  ],
+
+  dificil: [
+    { palavra: 'PROPICIATORIO', dica: 'Tampa da arca da aliança.' },
+    { palavra: 'ESTOLA', dica: 'Veste sacerdotal especial.' },
+    { palavra: 'INCENSARIO', dica: 'Objeto para queimar incenso.' },
+    { palavra: 'EFODE', dica: 'Veste usada pelos sacerdotes.' },
+    { palavra: 'FILACTERIAS', dica: 'Usadas pelos judeus em orações.' },
+    { palavra: 'MENORA', dica: 'Candelabro de sete braços.' },
+    { palavra: 'URIM', dica: 'Objeto usado para decisões espirituais.' },
+    { palavra: 'TUMIM', dica: 'Relacionado ao Urim para consultas.' },
+    { palavra: 'ALTARDEBRONZE', dica: 'Usado para sacrifícios.' },
+    { palavra: 'ALTARDEOURO', dica: 'Usado para incenso.' },
+    { palavra: 'ARCAALIANCA', dica: 'Objeto sagrado de Israel.' },
+    { palavra: 'TABUASDALEI', dica: 'Onde estavam os mandamentos.' },
+    { palavra: 'CORTINASANTOS', dica: 'Separava o lugar santo.' },
+    { palavra: 'BACIADEBRONZE', dica: 'Usada para purificação.' },
+    { palavra: 'MESADOSPAES', dica: 'Mesa do pão da proposição.' },
+    { palavra: 'CANDIERO', dica: 'Tipo de iluminação do templo.' },
+    { palavra: 'SACRIFICIO', dica: 'Oferta feita a Deus.' },
+    { palavra: 'HOLOCAUSTO', dica: 'Tipo de sacrifício queimado.' },
+    { palavra: 'OFERENDA', dica: 'Entrega dedicada a Deus.' },
+    { palavra: 'PRIMICIAS', dica: 'Primeiros frutos oferecidos.' },
+    { palavra: 'DIZIMO', dica: 'Décima parte oferecida.' },
+    { palavra: 'TURIBULO', dica: 'Objeto usado com incenso.' },
+    { palavra: 'LAMINADEOURO', dica: 'Usada na cabeça do sacerdote.' },
+    { palavra: 'MITRA', dica: 'Parte da vestimenta sacerdotal.' },
+    { palavra: 'CINTODELINHO', dica: 'Peça do sacerdote.' },
+    { palavra: 'COROAESPINHOS', dica: 'Colocada em Jesus.' },
+    { palavra: 'CRUZ', dica: 'Instrumento da crucificação.' },
+    { palavra: 'VINHO', dica: 'Elemento usado na ceia.' },
+    { palavra: 'CALICE', dica: 'Copo usado na ceia.' },
+    { palavra: 'LANCASAGRADA', dica: 'Arma usada na crucificação.' }
+  ],
+ }
+};
+
+    const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const partes = ['cabeca', 'tronco', 'bracoE', 'bracoD', 'pernaE', 'pernaD'];
+    const nomesTema = {
+      personagens: 'Personagens Bíblicos',
+      lugares: 'Lugares Bíblicos',
+      livros: 'Livros da Bíblia',
+      objetos: 'Objetos e Elementos',
+      todos: 'Todos os Temas'
+    };
+    const nomesDificuldade = {
+      facil: 'Fácil',
+      medio: 'Médio',
+      dificil: 'Difícil'
+    };
+
+    let palavraAtual = '';
+    let dicaAtual = '';
+    let letrasCorretas = [];
+    let letrasErradas = [];
+    let jogoFinalizado = false;
+
+    const temaEl = document.getElementById('tema');
+    const dificuldadeEl = document.getElementById('dificuldade');
+    const aplicarConfigBtn = document.getElementById('aplicarConfig');
+    const resumoConfigEl = document.getElementById('resumoConfig');
+    const tagAtualEl = document.getElementById('tagAtual');
+    const dicaEl = document.getElementById('dica');
+    const palavraEl = document.getElementById('palavra');
+    const tecladoEl = document.getElementById('teclado');
+    const errosEl = document.getElementById('erros');
+    const usadasEl = document.getElementById('usadas');
+    const mensagemEl = document.getElementById('mensagem');
+    const novoJogoBtn = document.getElementById('novoJogo');
+    const mostrarRespostaBtn = document.getElementById('mostrarResposta');
+
+    function atualizarResumoConfig() {
+      const tema = temaEl.value;
+      const dificuldade = dificuldadeEl.value;
+      resumoConfigEl.innerHTML = `Tema atual: <strong>${nomesTema[tema]}</strong><br>Dificuldade atual: <strong>${nomesDificuldade[dificuldade]}</strong>`;
+      tagAtualEl.textContent = `Tema: ${nomesTema[tema]} • Dificuldade: ${nomesDificuldade[dificuldade]}`;
+    }
+
+    function obterListaAtual() {
+      const tema = temaEl.value;
+      const dificuldade = dificuldadeEl.value;
+
+      if (tema === 'todos') {
+        return [
+          ...bancoDePalavras.personagens[dificuldade],
+          ...bancoDePalavras.lugares[dificuldade],
+          ...bancoDePalavras.livros[dificuldade],
+          ...bancoDePalavras.objetos[dificuldade]
+        ];
+      }
+
+      return bancoDePalavras[tema][dificuldade];
+    }
+
+    function escolherPalavra() {
+      const lista = obterListaAtual();
+      const item = lista[Math.floor(Math.random() * lista.length)];
+      palavraAtual = item.palavra.toUpperCase();
+      dicaAtual = item.dica;
+      letrasCorretas = [];
+      letrasErradas = [];
+      jogoFinalizado = false;
+    }
+
+    function atualizarDica() {
+      dicaEl.textContent = dicaAtual;
+    }
+
+    function renderizarPalavra(revelar = false) {
+      palavraEl.innerHTML = '';
+
+      palavraAtual.split('').forEach((char) => {
+        const span = document.createElement('div');
+
+        if (char === ' ') {
+          span.className = 'letra espaco';
+          span.textContent = '';
+        } else {
+          span.className = 'letra';
+          span.textContent = letrasCorretas.includes(char) || revelar || (jogoFinalizado && letrasErradas.length >= 6) ? char : '';
+        }
+
+        palavraEl.appendChild(span);
+      });
+    }
+
+    function renderizarTeclado() {
+      tecladoEl.innerHTML = '';
+
+      alfabeto.forEach((letra) => {
+        const btn = document.createElement('button');
+        btn.className = 'tecla';
+        btn.textContent = letra;
+
+        if (letrasCorretas.includes(letra)) {
+          btn.classList.add('correta');
+          btn.disabled = true;
+        } else if (letrasErradas.includes(letra)) {
+          btn.classList.add('errada');
+          btn.disabled = true;
+        }
+
+        if (jogoFinalizado) btn.disabled = true;
+
+        btn.addEventListener('click', () => tentarLetra(letra));
+        tecladoEl.appendChild(btn);
+      });
+    }
+
+    function atualizarStatus() {
+      errosEl.textContent = letrasErradas.length;
+      const usadas = [...letrasCorretas, ...letrasErradas].sort();
+      usadasEl.textContent = usadas.length ? usadas.join(', ') : 'Nenhuma';
+
+      partes.forEach((parte, index) => {
+        document.getElementById(parte).style.display = index < letrasErradas.length ? 'block' : 'none';
+      });
+    }
+
+    function verificarVitoria() {
+      const letrasUnicas = [...new Set(palavraAtual.replace(/\s/g, '').split(''))];
+      return letrasUnicas.every((letra) => letrasCorretas.includes(letra));
+    }
+
+    function tentarLetra(letra) {
+      if (jogoFinalizado) return;
+      if (letrasCorretas.includes(letra) || letrasErradas.includes(letra)) return;
+
+      if (palavraAtual.includes(letra)) {
+        letrasCorretas.push(letra);
+
+        if (verificarVitoria()) {
+          jogoFinalizado = true;
+          mensagemEl.textContent = 'Parabéns! Você acertou a palavra bíblica.';
+        } else {
+          mensagemEl.textContent = 'Boa! Essa letra está na palavra.';
+        }
+      } else {
+        letrasErradas.push(letra);
+
+        if (letrasErradas.length >= 6) {
+          jogoFinalizado = true;
+          mensagemEl.textContent = `Fim de jogo! A resposta era: ${palavraAtual}`;
+        } else {
+          mensagemEl.textContent = 'Essa letra não está na palavra.';
+        }
+      }
+
+      atualizarTela();
+    }
+
+    function mostrarResposta() {
+      if (jogoFinalizado) return;
+      jogoFinalizado = true;
+      mensagemEl.textContent = `Resposta revelada: ${palavraAtual}`;
+      atualizarTela(true);
+    }
+
+    function atualizarTela(revelar = false) {
+      atualizarResumoConfig();
+      atualizarDica();
+      renderizarPalavra(revelar);
+      renderizarTeclado();
+      atualizarStatus();
+    }
+
+    function iniciarJogo() {
+      escolherPalavra();
+      mensagemEl.textContent = 'Escolha uma letra para começar.';
+      atualizarTela();
+    }
+
+    aplicarConfigBtn.addEventListener('click', iniciarJogo);
+    novoJogoBtn.addEventListener('click', iniciarJogo);
+    mostrarRespostaBtn.addEventListener('click', mostrarResposta);
+    temaEl.addEventListener('change', atualizarResumoConfig);
+    dificuldadeEl.addEventListener('change', atualizarResumoConfig);
+
+    document.addEventListener('keydown', (e) => {
+      const tecla = e.key.toUpperCase();
+      if (/^[A-Z]$/.test(tecla)) {
+        tentarLetra(tecla);
+      }
+    });
+
+    atualizarResumoConfig();
+    iniciarJogo();
+  </script>
+</body>
+</html>

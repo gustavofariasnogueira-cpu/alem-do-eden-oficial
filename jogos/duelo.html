@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duelo Bíblico - Estilo Batalha</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+
+    :root {
+      --verde: #556b2f;
+      --verde-escuro: #3f5221;
+      --verde-claro: #eef4e7;
+      --fundo: #f8fbf4;
+      --card: #ffffff;
+      --borda: #dbe7ce;
+      --texto: #2d3a1f;
+      --texto-suave: #6b7c57;
+      --sombra: rgba(85, 107, 47, 0.12);
+      --vida: #5da13e;
+      --vida-baixa: #d28b2d;
+      --vida-critica: #b44735;
+      --ataque: #a24b2a;
+      --defesa: #2f5f8a;
+      --energia: #8b6f2a;
+    }
+
+    body {
+      background: linear-gradient(180deg, #ffffff 0%, var(--fundo) 100%);
+      color: var(--texto);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    .topo {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .topo h1 {
+      color: var(--verde);
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+    }
+
+    .topo p {
+      color: var(--texto-suave);
+      line-height: 1.6;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .arena-principal {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .box {
+      background: var(--card);
+      border: 1px solid var(--borda);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 12px 28px var(--sombra);
+    }
+
+    .arena {
+      background: linear-gradient(180deg, #f7fbf2 0%, #edf5e3 100%);
+      border: 1px solid var(--borda);
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 580px;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .arena::after {
+      content: '';
+      position: absolute;
+      inset: auto 8% 22% 8%;
+      height: 120px;
+      background: radial-gradient(circle, rgba(85,107,47,0.11) 0%, rgba(85,107,47,0.03) 45%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .painel-combatente {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      z-index: 1;
+    }
+
+    .painel-combatente.inimigo {
+      justify-self: start;
+      width: 78%;
+    }
+
+    .painel-combatente.jogador {
+      justify-self: end;
+      width: 78%;
+    }
+
+    .nome-bloco h2 {
+      font-size: 1.2rem;
+      color: var(--verde-escuro);
+      margin-bottom: 6px;
+    }
+
+    .subinfo {
+      color: var(--texto-suave);
+      font-size: 0.92rem;
+    }
+
+    .hp-area {
+      min-width: 210px;
+    }
+
+    .hp-linha {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--texto-suave);
+      margin-bottom: 6px;
+      gap: 10px;
+    }
+
+    .barra-externa {
+      width: 100%;
+      height: 16px;
+      background: #e6efdb;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--borda);
+    }
+
+    .barra-interna {
+      height: 100%;
+      width: 100%;
+      background: var(--vida);
+      transition: width 0.35s ease;
+    }
+
+    .sprites {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      min-height: 260px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .sprite-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 210px;
+    }
+
+    .sprite-carta {
+      width: 220px;
+      min-height: 250px;
+      background: linear-gradient(180deg, #ffffff 0%, #eff6e8 100%);
+      border: 1px solid var(--borda);
+      border-radius: 24px;
+      padding: 16px;
+      box-shadow: 0 14px 28px var(--sombra);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .sprite-carta.inimigo {
+      transform: scale(0.95);
+    }
+
+    .sprite-carta.jogador {
+      transform: scale(1.02);
+    }
+
+    .sprite-carta.nocauteada {
+      opacity: 0.45;
+      transform: translateY(12px) rotate(-5deg);
+    }
+
+    .sprite-topo {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .sprite-nome {
+      color: var(--verde-escuro);
+      font-size: 1.05rem;
+      font-weight: bold;
+    }
+
+    .tipo {
+      font-size: 0.76rem;
+      color: white;
+      background: var(--verde);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .icone {
+      height: 84px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #dde8cf, #f9fcf6);
+      border: 1px solid var(--borda);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--verde);
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .mini-stats .item {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      text-align: center;
+      padding: 8px 6px;
+    }
+
+    .mini-stats strong {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--texto-suave);
+      margin-bottom: 4px;
+    }
+
+    .mini-stats span {
+      font-weight: bold;
+      font-size: 0.98rem;
+    }
+
+    .atk span { color: var(--ataque); }
+    .def span { color: var(--defesa); }
+    .eng span { color: var(--energia); }
+
+    .acoes-box {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .turno {
+      text-align: center;
+      color: var(--verde);
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .caixa-acoes h3,
+    .reserva h3,
+    .log h3,
+    .resumo h3 {
+      color: var(--verde);
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .botoes-ataque {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-ataque,
+    .btn-padrao {
+      border: none;
+      border-radius: 14px;
+      padding: 13px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .btn-ataque {
+      background: var(--verde-musgo, #556b2f);
+      color: white;
+      text-align: left;
+      min-height: 86px;
+    }
+
+    .btn-ataque:hover:not(:disabled),
+    .btn-padrao:hover:not(:disabled) {
+      transform: translateY(-2px);
+      filter: brightness(0.97);
+    }
+
+    .btn-ataque:disabled,
+    .btn-padrao:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-ataque small {
+      display: block;
+      margin-top: 6px;
+      font-weight: normal;
+      opacity: 0.95;
+      line-height: 1.45;
+    }
+
+    .btn-padrao {
+      background: white;
+      border: 1px solid var(--borda);
+      color: var(--verde-escuro);
+    }
+
+    .linha-botoes {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .reserva-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-carta {
+      background: linear-gradient(180deg, #ffffff 0%, #f2f8ea 100%);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .mini-carta:hover:not(.desabilitada) {
+      transform: translateY(-3px);
+      border-color: var(--verde);
+    }
+
+    .mini-carta.ativa {
+      border: 2px solid var(--verde);
+    }
+
+    .mini-carta.desabilitada {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+    .mini-carta-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .mini-carta-topo strong {
+      color: var(--verde-escuro);
+      font-size: 0.95rem;
+    }
+
+    .mini-carta p {
+      color: var(--texto-suave);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      margin-top: 8px;
+    }
+
+    .detalhes-escolha {
+      margin-top: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f3f8ec 100%);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .detalhes-escolha h4 {
+      color: var(--verde);
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .detalhes-vazio {
+      color: var(--texto-suave);
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    .detalhes-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .detalhes-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .detalhes-topo strong {
+      color: var(--verde-escuro);
+      font-size: 1rem;
+    }
+
+    .detalhes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .detalhes-item {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .detalhes-item strong {
+      display: block;
+      color: var(--texto-suave);
+      font-size: 0.72rem;
+      margin-bottom: 4px;
+    }
+
+    .detalhes-item span {
+      color: var(--verde-escuro);
+      font-weight: bold;
+    }
+
+    .lista-golpes {
+      display: grid;
+      gap: 8px;
+    }
+
+    .golpe-preview {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .golpe-preview strong {
+      color: var(--verde-escuro);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.92rem;
+    }
+
+    .golpe-preview span {
+      color: var(--texto-suave);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .mini-carta p {
+      color: var(--texto-suave);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      margin-top: 8px;
+    }
+
+    .log-lista {
+      display: grid;
+      gap: 8px;
+      max-height: 260px;
+      overflow: auto;
+      color: var(--texto-suave);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .resumo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .resumo-item {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .resumo-item strong {
+      display: block;
+      color: var(--texto-suave);
+      font-size: 0.84rem;
+      margin-bottom: 5px;
+    }
+
+    .resumo-item span {
+      color: var(--verde-escuro);
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    @media (max-width: 1080px) {
+      .arena-principal { grid-template-columns: 1fr; }
+      .painel-combatente.inimigo, .painel-combatente.jogador { width: 100%; }
+    }
+
+    @media (max-width: 760px) {
+      .sprites, .resumo-grid, .botoes-ataque, .reserva-grid { grid-template-columns: 1fr; }
+      .hp-area { min-width: 100%; }
+      .painel-combatente { flex-direction: column; align-items: flex-start; }
+      .sprite-carta { width: 100%; max-width: 260px; }
+      .arena { min-height: auto; }
+      .topo h1 { font-size: 1.9rem; }
+    }
+
+    /* Identidade visual Além do Éden */
+    :root {
+      --verde: #496b46;
+      --verde-escuro: #2f4d32;
+      --verde-claro: #e8efe2;
+      --fundo: #f5f4ec;
+      --card: #fffdf8;
+      --borda: #d9dfcf;
+      --texto: #303b2e;
+      --texto-suave: #71806b;
+      --sombra: rgba(49, 77, 50, 0.13);
+      --vida: #6e9b58;
+      --vida-baixa: #c49a4b;
+      --vida-critica: #b85d4d;
+      --ataque: #a65d43;
+      --defesa: #557b9b;
+      --energia: #a58a43;
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse at top left, rgba(217, 228, 204, .52), transparent 42%),
+        linear-gradient(180deg, #fbfaf5 0%, var(--fundo) 100%);
+      color: var(--texto);
+    }
+
+    header {
+      max-width: 1260px;
+      margin: 0 auto 14px;
+    }
+
+    .voltar-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid var(--borda);
+      border-radius: 999px;
+      color: var(--verde-escuro);
+      background: rgba(255, 253, 248, .9);
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 4px 14px var(--sombra);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .voltar-menu:hover {
+      background: var(--verde-claro);
+      transform: translateY(-2px);
+    }
+
+    .topo h1 {
+      letter-spacing: -.035em;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      text-shadow: 0 2px 0 rgba(255,255,255,.65);
+    }
+
+    .topo p {
+      font-size: 1rem;
+    }
+
+    .box, .arena {
+      border-radius: 22px;
+      border-color: rgba(191, 205, 178, .8);
+      box-shadow: 0 10px 26px var(--sombra);
+    }
+
+    .arena {
+      background: linear-gradient(155deg, #f7f8f0 0%, #eaf0e2 100%);
+    }
+
+    .painel-combatente {
+      background: rgba(255, 253, 248, .96);
+      border-radius: 16px;
+      box-shadow: 0 5px 14px rgba(49, 77, 50, .07);
+    }
+
+    .sprite-carta {
+      background: linear-gradient(160deg, #fffdf8 0%, #edf3e7 100%);
+      border-color: #d2ddc6;
+      box-shadow: 0 12px 24px rgba(49, 77, 50, .14);
+    }
+
+    .icone {
+      background: linear-gradient(135deg, #dce7d1, #fafbf5);
+    }
+
+    .barra-externa {
+      background: #e5ebdc;
+    }
+
+    .btn-ataque {
+      background: linear-gradient(135deg, #496b46, #354f35);
+      border: 1px solid rgba(47, 77, 50, .18);
+      box-shadow: 0 5px 12px rgba(49, 77, 50, .12);
+    }
+
+    .btn-ataque:hover:not(:disabled) {
+      filter: brightness(1.06);
+      box-shadow: 0 8px 16px rgba(49, 77, 50, .17);
+    }
+
+    .btn-padrao {
+      background: #fffdf8;
+      border-color: #d4ddc9;
+      box-shadow: 0 3px 8px rgba(49, 77, 50, .06);
+    }
+
+    .mini-carta {
+      background: linear-gradient(160deg, #fffdf8, #f0f4e9);
+      border-color: #d7e0cc;
+    }
+
+    .mini-carta.ativa {
+      border: 2px solid #66865a;
+      box-shadow: 0 0 0 3px rgba(102, 134, 90, .12);
+    }
+
+    .detalhes-escolha {
+      background: linear-gradient(160deg, #fffdf8, #f1f5e9);
+    }
+
+    .mini-stats .item, .detalhes-item, .golpe-preview, .resumo-item {
+      background: #fffdf8;
+      border-color: #dce3d3;
+    }
+
+    .log-lista {
+      scrollbar-color: #bdcdb0 transparent;
+      scrollbar-width: thin;
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 12px; }
+      header { margin-bottom: 12px; }
+      .box, .arena { padding: 14px; border-radius: 18px; }
+      .painel-combatente { gap: 10px; }
+      .detalhes-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+    <a href="jogos.html" class="voltar-menu">← Voltar ao menu</a>
+</header>
+
+  <div class="container">
+    <div class="topo">
+      <h1>Duelo Bíblico</h1>
+      <p>
+        Agora no formato inspirado em batalhas por turnos: cada lado entra com um personagem ativo, usa golpes com dano fixo,
+        troca de personagem quando necessário e vence quem derrotar toda a equipe adversária.
+      </p>
+    </div>
+
+    <div class="arena-principal">
+      <div class="box arena">
+        <div class="painel-combatente inimigo" id="painelInimigo"></div>
+
+        <div class="sprites">
+          <div class="sprite-slot" id="slotInimigo"></div>
+          <div class="sprite-slot" id="slotJogador"></div>
+        </div>
+
+        <div class="painel-combatente jogador" id="painelJogador"></div>
+
+        <div class="turno" id="turnoTexto">Seu turno: escolha um golpe.</div>
+      </div>
+
+      <div class="acoes-box">
+        <div class="box caixa-acoes">
+          <h3>Ações</h3>
+          <div class="botoes-ataque" id="botoesAtaque"></div>
+          <div class="linha-botoes" style="margin-top: 12px;">
+            <button class="btn-padrao" id="btnTrocar">Trocar personagem</button>
+            <button class="btn-padrao" id="btnNovoJogo">Novo duelo</button>
+          </div>
+        </div>
+
+        <div class="box reserva">
+          <h3>Sua equipe</h3>
+          <div class="reserva-grid" id="reservaJogador"></div>
+          <div class="detalhes-escolha">
+            <h4>Informações da carta</h4>
+            <div id="detalhesCartaReserva" class="detalhes-vazio">Passe o mouse sobre uma carta da sua equipe para ver os atributos e golpes antes de escolher.</div>
+          </div>
+        </div>
+
+        <div class="box resumo">
+          <h3>Resumo</h3>
+          <div class="resumo-grid">
+            <div class="resumo-item"><strong>Seu time vivo</strong><span id="timeJogadorVivo">0</span></div>
+            <div class="resumo-item"><strong>Time inimigo vivo</strong><span id="timeInimigoVivo">0</span></div>
+            <div class="resumo-item"><strong>Personagem ativo</strong><span id="nomeAtivo">-</span></div>
+            <div class="resumo-item"><strong>Turno atual</strong><span id="resumoTurno">-</span></div>
+          </div>
+        </div>
+
+        <div class="box log">
+          <h3>Registro da batalha</h3>
+          <div class="log-lista" id="logLista"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const personagensBase = [
+      {
+  nome: 'JESUS', tipo: 'Messias', icone: '✝️', ataque: 20, defesa: 20, hpMax: 40,
+  golpes: [
+    { nome: 'Amor Infinito', dano: 20, texto: 'Ataque poderoso com compaixão e autoridade.' },
+    { nome: 'Palavra Viva', dano: 20, texto: 'Golpe supremo que supera qualquer resistência.' }
+  ]
+},
+{
+  nome: 'JOAO', tipo: 'Apostolo', icone: '❤️', ataque: 6, defesa: 7, hpMax: 30,
+  golpes: [
+    { nome: 'Amor Verdadeiro', dano: 6, texto: 'Ataque constante e firme.' },
+    { nome: 'Revelacao', dano: 7, texto: 'Golpe espiritual profundo.' }
+  ]
+},
+{
+  nome: 'TIAGO', tipo: 'Apostolo', icone: '⚔️', ataque: 7, defesa: 6, hpMax: 29,
+  golpes: [
+    { nome: 'Fe em Acao', dano: 7, texto: 'Ataque direto e prático.' },
+    { nome: 'Conviccao', dano: 6, texto: 'Golpe firme e seguro.' }
+  ]
+},
+{
+  nome: 'ANDRE', tipo: 'Apostolo', icone: '🎣', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Chamado', dano: 6, texto: 'Atrai e ataca.' },
+    { nome: 'Evangelho Simples', dano: 5, texto: 'Golpe constante.' }
+  ]
+},
+{
+  nome: 'FILIPE', tipo: 'Apostolo', icone: '📖', ataque: 6, defesa: 5, hpMax: 28,
+  golpes: [
+    { nome: 'Apresentacao', dano: 6, texto: 'Mostra o caminho e ataca.' },
+    { nome: 'Busca Pela Verdade', dano: 7, texto: 'Golpe investigativo.' }
+  ]
+},
+{
+  nome: 'BARTOLOMEU', tipo: 'Apostolo', icone: '🌿', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Integridade', dano: 6, texto: 'Ataque puro e firme.' },
+    { nome: 'Verdade Sem Engano', dano: 7, texto: 'Golpe direto.' }
+  ]
+},
+{
+  nome: 'MATEUS', tipo: 'Apostolo', icone: '💰', ataque: 6, defesa: 6, hpMax: 29,
+  golpes: [
+    { nome: 'Transformacao', dano: 6, texto: 'Ataque equilibrado.' },
+    { nome: 'Registro Fiel', dano: 7, texto: 'Golpe preciso.' }
+  ]
+},
+{
+  nome: 'TOMAS', tipo: 'Apostolo', icone: '🔍', ataque: 7, defesa: 5, hpMax: 28,
+  golpes: [
+    { nome: 'Duvida Superada', dano: 7, texto: 'Ataque forte.' },
+    { nome: 'Fe Confirmada', dano: 6, texto: 'Golpe firme.' }
+  ]
+},
+{
+  nome: 'SIMAO', tipo: 'Apostolo', icone: '🔥', ataque: 7, defesa: 5, hpMax: 28,
+  golpes: [
+    { nome: 'Zelo Ardente', dano: 8, texto: 'Ataque intenso.' },
+    { nome: 'Conviccao Firme', dano: 6, texto: 'Golpe constante.' }
+  ]
+},
+{
+  nome: 'JUDAS_TADEU', tipo: 'Apostolo', icone: '🛡️', ataque: 6, defesa: 7, hpMax: 29,
+  golpes: [
+    { nome: 'Coragem Silenciosa', dano: 6, texto: 'Ataque discreto.' },
+    { nome: 'Fidelidade', dano: 7, texto: 'Golpe resistente.' }
+  ]
+},
+{
+  nome: 'MATIAS', tipo: 'Apostolo', icone: '📜', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Escolhido', dano: 6, texto: 'Ataque equilibrado.' },
+    { nome: 'Continuidade', dano: 7, texto: 'Golpe firme.' }
+  ]
+},
+
+// OUTROS IMPORTANTES
+
+{
+  nome: 'LUCAS', tipo: 'Mensageiro', icone: '🩺', ataque: 5, defesa: 7, hpMax: 30,
+  golpes: [
+    { nome: 'Cuidado', dano: 5, texto: 'Ataque leve e constante.' },
+    { nome: 'Detalhe Preciso', dano: 6, texto: 'Golpe estratégico.' }
+  ]
+},
+{
+  nome: 'MARCOS', tipo: 'Mensageiro', icone: '✍️', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Narrativa Rapida', dano: 6, texto: 'Ataque direto.' },
+    { nome: 'Registro Dinamico', dano: 7, texto: 'Golpe ágil.' }
+  ]
+},
+{
+  nome: 'TIMOTEO', tipo: 'Lider', icone: '👦', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Juventude Forte', dano: 6, texto: 'Ataque equilibrado.' },
+    { nome: 'Instrucao', dano: 7, texto: 'Golpe firme.' }
+  ]
+},
+{
+  nome: 'TITO', tipo: 'Lider', icone: '📘', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Organizacao', dano: 6, texto: 'Ataque estável.' },
+    { nome: 'Correção', dano: 7, texto: 'Golpe direto.' }
+  ]
+},
+{
+  nome: 'BARNABE', tipo: 'Encorajador', icone: '🤝', ataque: 6, defesa: 7, hpMax: 30,
+  golpes: [
+    { nome: 'Encorajamento', dano: 6, texto: 'Fortalece e ataca.' },
+    { nome: 'Apoio', dano: 5, texto: 'Golpe constante.' }
+  ]
+},
+{
+  nome: 'APOLO', tipo: 'Pregador', icone: '🔥', ataque: 7, defesa: 5, hpMax: 28,
+  golpes: [
+    { nome: 'Oratoria', dano: 7, texto: 'Ataque eloquente.' },
+    { nome: 'Conhecimento', dano: 6, texto: 'Golpe preciso.' }
+  ]
+},
+{
+  nome: 'GAMALIEL', tipo: 'Mestre', icone: '📚', ataque: 5, defesa: 8, hpMax: 31,
+  golpes: [
+    { nome: 'Sabedoria', dano: 5, texto: 'Ataque calculado.' },
+    { nome: 'Ensino', dano: 6, texto: 'Golpe estratégico.' }
+  ]
+},
+{
+  nome: 'ANANIAS', tipo: 'Servo', icone: '🙏', ataque: 5, defesa: 6, hpMax: 27,
+  golpes: [
+    { nome: 'Obediencia', dano: 5, texto: 'Ataque leve.' },
+    { nome: 'Restauracao', dano: 6, texto: 'Golpe equilibrado.' }
+  ]
+},
+{
+  nome: 'ESTEVAO', tipo: 'Martir', icone: '💎', ataque: 7, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Testemunho', dano: 7, texto: 'Ataque firme.' },
+    { nome: 'Fe Ate o Fim', dano: 8, texto: 'Golpe poderoso.' }
+  ]
+},
+{
+  nome: 'FILIPE_EVANGELISTA', tipo: 'Evangelista', icone: '📢', ataque: 6, defesa: 5, hpMax: 28,
+  golpes: [
+    { nome: 'Boa Nova', dano: 6, texto: 'Ataque direto.' },
+    { nome: 'Explicacao', dano: 7, texto: 'Golpe claro.' }
+  ]
+},
+{
+  nome: 'SANGAR', tipo: 'Guerreiro', icone: '📢', ataque: 15, defesa: 10, hpMax: 30,
+  golpes: [
+    { nome: 'Lança', dano: 15, texto: 'Ataque direto.' },
+    { nome: 'Justiça', dano: 10, texto: 'Golpe claro.' }
+  ]
+},
+{
+  nome: 'CORNELIO', tipo: 'Gentio', icone: '🛐', ataque: 6, defesa: 6, hpMax: 29,
+  golpes: [
+    { nome: 'Temor', dano: 6, texto: 'Ataque respeitoso.' },
+    { nome: 'Fe Gentil', dano: 7, texto: 'Golpe firme.' }
+  ]
+},
+
+{
+  nome: 'LIDIA', tipo: 'Serva', icone: '🧵', ataque: 5, defesa: 7, hpMax: 29,
+  golpes: [
+    { nome: 'Hospitalidade', dano: 5, texto: 'Ataque leve.' },
+    { nome: 'Generosidade', dano: 6, texto: 'Golpe constante.' }
+  ]
+},
+{
+  nome: 'PRISCILA', tipo: 'Mestra', icone: '📖', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Ensino', dano: 6, texto: 'Ataque equilibrado.' },
+    { nome: 'Discipulado', dano: 7, texto: 'Golpe firme.' }
+  ]
+},
+{
+  nome: 'AQUILA', tipo: 'Servo', icone: '🛠️', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Trabalho', dano: 6, texto: 'Ataque constante.' },
+    { nome: 'Parceria', dano: 7, texto: 'Golpe forte.' }
+  ]
+},
+{
+  nome: 'ABRAAO', tipo: 'Patriarca', icone: '⭐', ataque: 5, defesa: 6, hpMax: 30,
+  golpes: [
+    { nome: 'Promessa Eterna', dano: 6, texto: 'Ataca com fé firme.' },
+    { nome: 'Alianca Sagrada', dano: 5, texto: 'Resiste enquanto avança.' }
+  ]
+},
+{
+  nome: 'ISAQUE', tipo: 'Patriarca', icone: '🔥', ataque: 5, defesa: 5, hpMax: 29,
+  golpes: [
+    { nome: 'Sacrificio Silencioso', dano: 6, texto: 'Ataque obediente.' },
+    { nome: 'Herdeiro da Promessa', dano: 5, texto: 'Golpe equilibrado.' }
+  ]
+},
+{
+  nome: 'JACO', tipo: 'Patriarca', icone: '🌙', ataque: 6, defesa: 5, hpMax: 28,
+  golpes: [
+    { nome: 'Luta Espiritual', dano: 7, texto: 'Conflito intenso.' },
+    { nome: 'Nome Transformado', dano: 5, texto: 'Ataque persistente.' }
+  ]
+},
+{
+  nome: 'JOSE', tipo: 'Governante', icone: '🌾', ataque: 6, defesa: 6, hpMax: 29,
+  golpes: [
+    { nome: 'Interpretacao de Sonhos', dano: 6, texto: 'Golpe estratégico.' },
+    { nome: 'Sabedoria do Egito', dano: 7, texto: 'Ataque preciso.' }
+  ]
+},
+{
+  nome: 'ARAO', tipo: 'Sacerdote', icone: '⛪', ataque: 5, defesa: 7, hpMax: 30,
+  golpes: [
+    { nome: 'Uncao Sagrada', dano: 5, texto: 'Ataque espiritual.' },
+    { nome: 'Autoridade Sacerdotal', dano: 6, texto: 'Defesa fortalecida.' }
+  ]
+},
+{
+  nome: 'MIRIAM', tipo: 'Profetisa', icone: '🎶', ataque: 6, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Canto de Vitoria', dano: 6, texto: 'Inspira e ataca.' },
+    { nome: 'Danca Profetica', dano: 5, texto: 'Movimento leve e rápido.' }
+  ]
+},
+{
+  nome: 'CALEBE', tipo: 'Guerreiro', icone: '🛡️', ataque: 7, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Espia Fiel', dano: 7, texto: 'Ataque confiante.' },
+    { nome: 'Coragem Inabalavel', dano: 6, texto: 'Resiste e contra-ataca.' }
+  ]
+},
+{
+  nome: 'GIDEAO', tipo: 'Juiz', icone: '🏺', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Ataque Surpresa', dano: 8, texto: 'Golpe inesperado.' },
+    { nome: 'Exercito Reduzido', dano: 6, texto: 'Eficiência máxima.' }
+  ]
+},
+{
+  nome: 'SAMUEL', tipo: 'Profeta', icone: '📯', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Chamado Divino', dano: 6, texto: 'Ataque espiritual.' },
+    { nome: 'Uncao Real', dano: 7, texto: 'Fortalece o golpe.' }
+  ]
+},
+{
+  nome: 'SAUL', tipo: 'Rei', icone: '⚔️', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Furia Real', dano: 8, texto: 'Ataque agressivo.' },
+    { nome: 'Orgulho Ferido', dano: 6, texto: 'Golpe instável.' }
+  ]
+},
+{
+  nome: 'JONATAS', tipo: 'Guerreiro', icone: '🤝', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Amizade Leal', dano: 6, texto: 'Ataque fiel.' },
+    { nome: 'Ataque Coordenado', dano: 7, texto: 'Golpe estratégico.' }
+  ]
+},
+{
+  nome: 'BATESEBA', tipo: 'Rainha', icone: '💧', ataque: 5, defesa: 6, hpMax: 27,
+  golpes: [
+    { nome: 'Influencia Real', dano: 6, texto: 'Ataque indireto.' },
+    { nome: 'Presenca Marcante', dano: 5, texto: 'Golpe constante.' }
+  ]
+},
+{
+  nome: 'ELISEU', tipo: 'Profeta', icone: '🌊', ataque: 7, defesa: 5, hpMax: 28,
+  golpes: [
+    { nome: 'Milagre Duplo', dano: 8, texto: 'Ataque poderoso.' },
+    { nome: 'Agua Purificada', dano: 6, texto: 'Golpe contínuo.' }
+  ]
+},
+{
+  nome: 'JONAS', tipo: 'Profeta', icone: '🐟', ataque: 6, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Chamado Recusado', dano: 6, texto: 'Ataque hesitante.' },
+    { nome: 'Arrependimento', dano: 7, texto: 'Golpe renovado.' }
+  ]
+},
+{
+  nome: 'SANSÃO', tipo: 'Nazireu', icone: '🌾', ataque: 15, defesa: 10, hpMax: 30,
+  golpes: [
+    { nome: 'Força Bruta', dano: 15, texto: 'Ataque leve.' },
+    { nome: 'Estratégia', dano: 10, texto: 'Proteção constante.' }
+  ]
+},
+{
+  nome: 'BOAZ', tipo: 'Protetor', icone: '🌿', ataque: 6, defesa: 7, hpMax: 30,
+  golpes: [
+    { nome: 'Redentor', dano: 6, texto: 'Golpe firme.' },
+    { nome: 'Protecao Justa', dano: 5, texto: 'Defende e ataca.' }
+  ]
+},
+{
+  nome: 'ISAIAS', tipo: 'Profeta', icone: '📖', ataque: 7, defesa: 6, hpMax: 29,
+  golpes: [
+    { nome: 'Visao Profetica', dano: 7, texto: 'Ataque claro.' },
+    { nome: 'Mensagem Messianica', dano: 6, texto: 'Golpe preciso.' }
+  ]
+},
+{
+  nome: 'JEREMIAS', tipo: 'Profeta', icone: '😢', ataque: 6, defesa: 7, hpMax: 30,
+  golpes: [
+    { nome: 'Lagrimas de Profeta', dano: 6, texto: 'Ataque emocional.' },
+    { nome: 'Advertencia Divina', dano: 7, texto: 'Golpe firme.' }
+  ]
+},
+{
+  nome: 'EZEQUIEL', tipo: 'Profeta', icone: '⚡', ataque: 7, defesa: 6, hpMax: 29,
+  golpes: [
+    { nome: 'Visoes Celestiais', dano: 7, texto: 'Ataque poderoso.' },
+    { nome: 'Roda de Fogo', dano: 8, texto: 'Golpe intenso.' }
+  ]
+},
+{
+  nome: 'OSEIAS', tipo: 'Profeta', icone: '❤️', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Amor Persistente', dano: 6, texto: 'Ataque contínuo.' },
+    { nome: 'Restauracao', dano: 5, texto: 'Golpe equilibrado.' }
+  ]
+},
+{
+  nome: 'JOEL', tipo: 'Profeta', icone: '🌧️', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Derramar do Espirito', dano: 7, texto: 'Ataque espiritual.' },
+    { nome: 'Chamado ao Arrependimento', dano: 6, texto: 'Golpe firme.' }
+  ]
+},
+{
+  nome: 'AMOS', tipo: 'Profeta', icone: '⚖️', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Justica Divina', dano: 8, texto: 'Ataque direto.' },
+    { nome: 'Denuncia', dano: 6, texto: 'Golpe forte.' }
+  ]
+},
+{
+  nome: 'MIQUEIAS', tipo: 'Profeta', icone: '🏙️', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Profecia de Belem', dano: 6, texto: 'Ataque certeiro.' },
+    { nome: 'Juizo', dano: 7, texto: 'Golpe firme.' }
+  ]
+},
+{
+  nome: 'NAUM', tipo: 'Profeta', icone: '🔥', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Queda de Ninive', dano: 8, texto: 'Ataque destrutivo.' },
+    { nome: 'Juizo Final', dano: 6, texto: 'Golpe pesado.' }
+  ]
+},
+{
+  nome: 'HABACUQUE', tipo: 'Profeta', icone: '⛰️', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Clamor', dano: 6, texto: 'Ataque reflexivo.' },
+    { nome: 'Resposta Divina', dano: 7, texto: 'Golpe firme.' }
+  ]
+},
+{
+  nome: 'SOFONIAS', tipo: 'Profeta', icone: '⚡', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Dia do Senhor', dano: 8, texto: 'Ataque poderoso.' },
+    { nome: 'Advertencia', dano: 6, texto: 'Golpe direto.' }
+  ]
+},
+{
+  nome: 'AGEU', tipo: 'Profeta', icone: '🏗️', ataque: 6, defesa: 6, hpMax: 28,
+  golpes: [
+    { nome: 'Reconstrucao', dano: 6, texto: 'Ataque firme.' },
+    { nome: 'Exortacao', dano: 7, texto: 'Golpe motivador.' }
+  ]
+},
+{
+  nome: 'ZACARIAS', tipo: 'Profeta', icone: '🌙', ataque: 7, defesa: 6, hpMax: 29,
+  golpes: [
+    { nome: 'Visao Noturna', dano: 7, texto: 'Ataque preciso.' },
+    { nome: 'Esperanca', dano: 6, texto: 'Golpe equilibrado.' }
+  ]
+},
+{
+  nome: 'MALAQUIAS', tipo: 'Profeta', icone: '🔥', ataque: 7, defesa: 5, hpMax: 27,
+  golpes: [
+    { nome: 'Ultima Palavra', dano: 7, texto: 'Ataque final.' },
+    { nome: 'Advertencia Final', dano: 6, texto: 'Golpe firme.' }
+  ]
+      }
+    ];
+
+    let timeJogador = [];
+    let timeInimigo = [];
+    let ativoJogador = 0;
+    let ativoInimigo = 0;
+    let turnoJogador = true;
+    let batalhaEncerrada = false;
+    let modoTroca = false;
+    let aguardandoEscolhaForcada = false;
+    let cartaEmPreview = null;
+
+    const painelInimigoEl = document.getElementById('painelInimigo');
+    const painelJogadorEl = document.getElementById('painelJogador');
+    const slotInimigoEl = document.getElementById('slotInimigo');
+    const slotJogadorEl = document.getElementById('slotJogador');
+    const botoesAtaqueEl = document.getElementById('botoesAtaque');
+    const btnTrocar = document.getElementById('btnTrocar');
+    const btnNovoJogo = document.getElementById('btnNovoJogo');
+    const reservaJogadorEl = document.getElementById('reservaJogador');
+    const detalhesCartaReservaEl = document.getElementById('detalhesCartaReserva');
+    const logListaEl = document.getElementById('logLista');
+    const turnoTextoEl = document.getElementById('turnoTexto');
+    const timeJogadorVivoEl = document.getElementById('timeJogadorVivo');
+    const timeInimigoVivoEl = document.getElementById('timeInimigoVivo');
+    const nomeAtivoEl = document.getElementById('nomeAtivo');
+    const resumoTurnoEl = document.getElementById('resumoTurno');
+
+    function clonarCarta(carta, id) {
+      return {
+        ...carta,
+        id,
+        hpAtual: carta.hpMax,
+        viva: true
+      };
+    }
+
+    function embaralhar(lista) {
+      return [...lista].sort(() => Math.random() - 0.5);
+    }
+
+    function adicionarLog(texto) {
+      const item = document.createElement('div');
+      item.textContent = texto;
+      logListaEl.prepend(item);
+    }
+
+    function obterAtivoJogador() {
+      return timeJogador[ativoJogador];
+    }
+
+    function obterAtivoInimigo() {
+      return timeInimigo[ativoInimigo];
+    }
+
+    function porcentagemVida(carta) {
+      return Math.max(0, (carta.hpAtual / carta.hpMax) * 100);
+    }
+
+    function corVida(carta) {
+      const pct = porcentagemVida(carta);
+      if (pct <= 25) return 'var(--vida-critica)';
+      if (pct <= 55) return 'var(--vida-baixa)';
+      return 'var(--vida)';
+    }
+
+    function painelCombatenteHTML(carta, lado) {
+      return `
+        <div class="nome-bloco">
+          <h2>${carta.nome}</h2>
+          <div class="subinfo">${carta.tipo} • Defesa base ${carta.defesa}</div>
+        </div>
+        <div class="hp-area">
+          <div class="hp-linha">
+            <span>${lado === 'jogador' ? 'Seu personagem' : 'Personagem inimigo'}</span>
+            <strong>${carta.hpAtual}/${carta.hpMax}</strong>
+          </div>
+          <div class="barra-externa">
+            <div class="barra-interna" style="width:${porcentagemVida(carta)}%; background:${corVida(carta)}"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function spriteCartaHTML(carta, classeExtra = '') {
+      return `
+        <div class="sprite-carta ${classeExtra} ${carta.viva ? '' : 'nocauteada'}">
+          <div class="sprite-topo">
+            <div class="sprite-nome">${carta.nome}</div>
+            <div class="tipo">${carta.tipo}</div>
+          </div>
+          <div class="icone">${carta.icone}</div>
+          <div class="mini-stats">
+            <div class="item atk"><strong>ATQ</strong><span>${carta.ataque}</span></div>
+            <div class="item def"><strong>DEF</strong><span>${carta.defesa}</span></div>
+            <div class="item eng"><strong>HP</strong><span>${carta.hpAtual}</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPaineis() {
+      const jogador = obterAtivoJogador();
+      const inimigo = obterAtivoInimigo();
+      painelJogadorEl.innerHTML = painelCombatenteHTML(jogador, 'jogador');
+      painelInimigoEl.innerHTML = painelCombatenteHTML(inimigo, 'inimigo');
+      slotJogadorEl.innerHTML = spriteCartaHTML(jogador, 'jogador');
+      slotInimigoEl.innerHTML = spriteCartaHTML(inimigo, 'inimigo');
+    }
+
+    function renderAtaques() {
+      const jogador = obterAtivoJogador();
+      botoesAtaqueEl.innerHTML = '';
+
+      jogador.golpes.forEach((golpe, indice) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-ataque';
+        btn.disabled = !turnoJogador || batalhaEncerrada || modoTroca || aguardandoEscolhaForcada || !jogador.viva;
+        btn.innerHTML = `${golpe.nome}<small>Dano base: ${golpe.dano}<br>${golpe.texto}</small>`;
+        btn.addEventListener('click', () => usarGolpe(indice));
+        botoesAtaqueEl.appendChild(btn);
+      });
+    }
+
+    function renderDetalhesCarta(carta) {
+      if (!carta) {
+        detalhesCartaReservaEl.className = 'detalhes-vazio';
+        detalhesCartaReservaEl.innerHTML = 'Passe o mouse sobre uma carta da sua equipe para ver os atributos e golpes antes de escolher.';
+        return;
+      }
+
+      detalhesCartaReservaEl.className = 'detalhes-card';
+      detalhesCartaReservaEl.innerHTML = `
+        <div class="detalhes-topo">
+          <strong>${carta.nome}</strong>
+          <span class="tipo">${carta.tipo}</span>
+        </div>
+        <div class="detalhes-grid">
+          <div class="detalhes-item"><strong>ATQ</strong><span>${carta.ataque}</span></div>
+          <div class="detalhes-item"><strong>DEF</strong><span>${carta.defesa}</span></div>
+          <div class="detalhes-item"><strong>HP</strong><span>${carta.hpAtual}/${carta.hpMax}</span></div>
+          <div class="detalhes-item"><strong>ÍCONE</strong><span>${carta.icone}</span></div>
+        </div>
+        <div class="lista-golpes">
+          ${carta.golpes.map(g => `<div class="golpe-preview"><strong>${g.nome} • Dano ${g.dano}</strong><span>${g.texto}</span></div>`).join('')}
+        </div>
+      `;
+    }
+
+    function renderReserva() {
+      reservaJogadorEl.innerHTML = '';
+
+      timeJogador.forEach((carta, indice) => {
+        const div = document.createElement('div');
+        div.className = `mini-carta ${indice === ativoJogador ? 'ativa' : ''} ${!carta.viva ? 'desabilitada' : ''}`;
+        div.innerHTML = `
+          <div class="mini-carta-topo">
+            <strong>${carta.nome}</strong>
+            <span>${carta.icone}</span>
+          </div>
+          <div class="barra-externa"><div class="barra-interna" style="width:${porcentagemVida(carta)}%; background:${corVida(carta)}"></div></div>
+          <p>HP ${carta.hpAtual}/${carta.hpMax} • ${carta.tipo}</p>
+        `;
+
+        div.addEventListener('mouseenter', () => {
+          cartaEmPreview = carta;
+          renderDetalhesCarta(carta);
+        });
+
+        div.addEventListener('focus', () => {
+          cartaEmPreview = carta;
+          renderDetalhesCarta(carta);
+        });
+
+        div.addEventListener('click', () => trocarPersonagem(indice));
+        reservaJogadorEl.appendChild(div);
+      });
+
+      renderDetalhesCarta(cartaEmPreview || timeJogador[ativoJogador] || null);
+    }
+
+    function renderResumo() {
+      const vivosJogador = timeJogador.filter(c => c.viva).length;
+      const vivosInimigo = timeInimigo.filter(c => c.viva).length;
+      const atual = obterAtivoJogador();
+      timeJogadorVivoEl.textContent = vivosJogador;
+      timeInimigoVivoEl.textContent = vivosInimigo;
+      nomeAtivoEl.textContent = atual.nome;
+      resumoTurnoEl.textContent = batalhaEncerrada ? 'Encerrado' : (aguardandoEscolhaForcada ? 'Escolher substituto' : (turnoJogador ? 'Jogador' : 'Inimigo'));
+      btnTrocar.disabled = batalhaEncerrada || aguardandoEscolhaForcada || !turnoJogador || timeJogador.filter(c => c.viva).length <= 1;
+    }
+
+    function renderTudo() {
+      renderPaineis();
+      renderAtaques();
+      renderReserva();
+      renderResumo();
+    }
+
+    function calcularDano(atacante, golpe, defensor) {
+      return Math.max(2, golpe.dano + Math.floor(atacante.ataque / 2) - Math.floor(defensor.defesa / 2));
+    }
+
+    function encontrarProximoVivo(time) {
+      return time.findIndex(c => c.viva);
+    }
+
+    function verificarVencedor() {
+      const vivosJogador = timeJogador.some(c => c.viva);
+      const vivosInimigo = timeInimigo.some(c => c.viva);
+
+      if (!vivosInimigo) {
+        batalhaEncerrada = true;
+        aguardandoEscolhaForcada = false;
+        turnoTextoEl.textContent = 'Vitória! Seu time venceu a batalha.';
+        adicionarLog('Seu time venceu ao derrotar todos os adversários.');
+        renderTudo();
+        return true;
+      }
+
+      if (!vivosJogador) {
+        batalhaEncerrada = true;
+        aguardandoEscolhaForcada = false;
+        turnoTextoEl.textContent = 'Derrota! O inimigo venceu a batalha.';
+        adicionarLog('Seu time foi derrotado.');
+        renderTudo();
+        return true;
+      }
+
+      return false;
+    }
+
+    function processarNocaute(alvo, lado) {
+      alvo.hpAtual = 0;
+      alvo.viva = false;
+      adicionarLog(`${alvo.nome} foi derrotado.`);
+
+      if (lado === 'inimigo') {
+        const prox = encontrarProximoVivo(timeInimigo);
+        if (prox !== -1) {
+          ativoInimigo = prox;
+          adicionarLog(`${timeInimigo[ativoInimigo].nome} entrou no lugar do adversário.`);
+        }
+      } else {
+        aguardandoEscolhaForcada = true;
+      }
+    }
+
+    function usarGolpe(indiceGolpe) {
+      if (!turnoJogador || batalhaEncerrada || modoTroca || aguardandoEscolhaForcada) return;
+
+      const atacante = obterAtivoJogador();
+      const defensor = obterAtivoInimigo();
+      const golpe = atacante.golpes[indiceGolpe];
+      const dano = calcularDano(atacante, golpe, defensor);
+
+      defensor.hpAtual -= dano;
+      adicionarLog(`${atacante.nome} usou ${golpe.nome} e causou ${dano} de dano em ${defensor.nome}.`);
+
+      if (defensor.hpAtual <= 0) {
+        processarNocaute(defensor, 'inimigo');
+        renderTudo();
+        if (verificarVencedor()) return;
+      }
+
+      turnoJogador = false;
+      turnoTextoEl.textContent = 'Turno do inimigo...';
+      renderTudo();
+      setTimeout(turnoInimigo, 900);
+    }
+
+    function turnoInimigo() {
+      if (batalhaEncerrada || aguardandoEscolhaForcada) return;
+
+      const atacante = obterAtivoInimigo();
+      const defensor = obterAtivoJogador();
+      const golpe = atacante.golpes[Math.floor(Math.random() * atacante.golpes.length)];
+      const dano = calcularDano(atacante, golpe, defensor);
+
+      defensor.hpAtual -= dano;
+      adicionarLog(`${atacante.nome} usou ${golpe.nome} e causou ${dano} de dano em ${defensor.nome}.`);
+
+      if (defensor.hpAtual <= 0) {
+        processarNocaute(defensor, 'jogador');
+        renderTudo();
+        if (verificarVencedor()) return;
+        turnoJogador = true;
+        modoTroca = false;
+        turnoTextoEl.textContent = 'Seu personagem foi derrotado. Escolha quem vai entrar em campo.';
+        renderTudo();
+        return;
+      }
+
+      turnoTextoEl.textContent = 'Seu turno: escolha um golpe.';
+      turnoJogador = true;
+      modoTroca = false;
+      renderTudo();
+    }
+
+    function trocarPersonagem(indice) {
+      if (batalhaEncerrada) return;
+      if (!timeJogador[indice].viva) return;
+
+      if (aguardandoEscolhaForcada) {
+        ativoJogador = indice;
+        aguardandoEscolhaForcada = false;
+        modoTroca = false;
+        adicionarLog(`${obterAtivoJogador().nome} foi escolhido para entrar em campo.`);
+        turnoJogador = true;
+        turnoTextoEl.textContent = 'Seu turno: escolha um golpe.';
+        renderTudo();
+        return;
+      }
+
+      if (!turnoJogador) return;
+      if (indice === ativoJogador) return;
+
+      const atual = obterAtivoJogador();
+      ativoJogador = indice;
+      modoTroca = false;
+      adicionarLog(`${atual.nome} recuou e ${obterAtivoJogador().nome} entrou em campo.`);
+      turnoJogador = false;
+      turnoTextoEl.textContent = 'Você trocou de personagem. Turno do inimigo...';
+      renderTudo();
+      setTimeout(turnoInimigo, 900);
+    }
+
+    function iniciarJogo() {
+      const embaralhados = embaralhar(personagensBase);
+      timeJogador = embaralhados.slice(0, 3).map((c, i) => clonarCarta(c, 'j' + i));
+      timeInimigo = embaralhados.slice(3, 6).map((c, i) => clonarCarta(c, 'i' + i));
+      ativoJogador = 0;
+      ativoInimigo = 0;
+      turnoJogador = true;
+      batalhaEncerrada = false;
+      modoTroca = false;
+      aguardandoEscolhaForcada = false;
+      cartaEmPreview = null;
+      logListaEl.innerHTML = '';
+      turnoTextoEl.textContent = 'Seu turno: escolha um golpe.';
+      adicionarLog(`Batalha iniciada. ${obterAtivoJogador().nome} entrou em campo.`);
+      adicionarLog(`${obterAtivoInimigo().nome} é o primeiro adversário.`);
+      renderTudo();
+    }
+
+    btnTrocar.addEventListener('click', () => {
+      if (batalhaEncerrada || !turnoJogador) return;
+      modoTroca = true;
+      turnoTextoEl.textContent = 'Escolha na sua equipe quem vai entrar em campo.';
+      renderTudo();
+    });
+
+    btnNovoJogo.addEventListener('click', iniciarJogo);
+
+    iniciarJogo();
+  </script>
+</body>
+</html>
