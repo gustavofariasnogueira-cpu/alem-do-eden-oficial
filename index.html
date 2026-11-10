@@ -1,0 +1,1187 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Além do Éden | Um lugar de descanso para a alma</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --green: #263e30;
+    --green-dark: #182b20;
+    --sage: #a8b5a0;
+    --cream: #f8f7f1;
+    --white: #ffffff;
+    --gold: #c7a66a;
+    --text: #29352d;
+    --muted: #7a827a;
+    --radius: 22px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* HEADER */
+
+header {
+    height: 82px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(248,247,241,0.96);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #e9e8df;
+}
+
+.brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 27px;
+    color: var(--green);
+    font-weight: 600;
+}
+
+.brand span {
+    color: var(--gold);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav a {
+    font-size: 14px;
+    color: #59665b;
+    transition: .3s;
+}
+
+.nav a:hover {
+    color: var(--gold);
+}
+
+.nav .bible-link {
+    background: var(--green);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 30px;
+}
+
+.menu-btn {
+    display: none;
+    border: none;
+    background: none;
+    font-size: 28px;
+    color: var(--green);
+    cursor: pointer;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 590px;
+    margin: 25px 4%;
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 7%;
+    color: white;
+
+    background:
+    linear-gradient(90deg, rgba(18,39,27,.85), rgba(18,39,27,.25)),
+    url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=90')
+    center/cover;
+}
+
+.hero-content {
+    max-width: 650px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-label {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    padding: 9px 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 6vw, 76px);
+    line-height: 1.12;
+    font-weight: 500;
+    margin-bottom: 22px;
+}
+
+.hero h1 span {
+    color: #d8c398;
+}
+
+.hero p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #e3e9e2;
+    max-width: 480px;
+    margin-bottom: 32px;
+}
+
+.hero-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #f4f1e8;
+    color: var(--green);
+    padding: 15px 25px;
+    border-radius: 40px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.hero-button:hover {
+    background: var(--gold);
+    transform: translateY(-3px);
+}
+
+/* PALAVRA DO DIA */
+
+.daily-section {
+    padding: 65px 8%;
+}
+
+.daily-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(35,50,35,.05);
+}
+
+.daily-content {
+    padding: 55px;
+}
+
+.eyebrow {
+    color: #9b8358;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.daily-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: var(--green);
+    margin-bottom: 25px;
+}
+
+.verse {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    line-height: 1.6;
+    color: var(--green);
+    margin-bottom: 12px;
+}
+
+.verse-reference {
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.daily-text {
+    color: #6e776e;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.daily-image {
+    min-height: 420px;
+    background:
+    linear-gradient(0deg, rgba(20,40,25,.1), transparent),
+    url('https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1000&q=85')
+    center/cover;
+}
+
+/* SEÇÕES */
+
+.section {
+    padding: 75px 8%;
+}
+
+.section-heading {
+    margin-bottom: 40px;
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: var(--green);
+    margin-bottom: 12px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.section-heading.center {
+    text-align: center;
+}
+
+/* CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.tile {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: .35s;
+    border: 1px solid #eeeee7;
+}
+
+.tile:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(30,50,30,.1);
+}
+
+.tile-image {
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+}
+
+.tile:hover .tile-image img {
+    transform: scale(1.06);
+}
+
+.tile-content {
+    padding: 25px;
+}
+
+.tile-category {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.tile-content h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--green);
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.tile-content p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.tile-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.tile-footer span {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf1e9;
+    font-size: 18px;
+}
+
+/* BÍBLIA */
+
+.bible-banner {
+    margin: 20px 8% 80px;
+    background: var(--green);
+    border-radius: 25px;
+    padding: 50px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    gap: 25px;
+}
+
+.bible-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bible-banner p {
+    color: #d3ddd2;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.bible-banner a {
+    background: #d3bd91;
+    color: var(--green-dark);
+    padding: 15px 25px;
+    border-radius: 40px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: .3s;
+}
+
+.bible-banner a:hover {
+    background: white;
+}
+
+/* FOOTER */
+
+footer {
+    background: var(--green-dark);
+    color: white;
+    padding: 60px 8% 30px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.footer-content p {
+    color: #aebcaf;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #d7dfd5;
+    font-size: 13px;
+}
+
+.footer-bottom {
+    border-top: 1px solid #344739;
+    padding-top: 25px;
+    text-align: center;
+    font-size: 12px;
+    color: #93a294;
+}
+
+/* BOTÃO ORAÇÃO */
+
+.prayer-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 150;
+    background: #c4a46b;
+    color: #17291e;
+    border: none;
+    border-radius: 50px;
+    padding: 16px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0,0,0,.15);
+    transition: .3s;
+}
+
+.prayer-button:hover {
+    transform: translateY(-4px);
+    background: #d8bd8c;
+}
+
+/* MODAL */
+
+.prayer-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,25,15,.7);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.prayer-modal.open {
+    display: flex;
+}
+
+.modal-card {
+    background: var(--cream);
+    padding: 35px;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 22px;
+}
+
+.modal-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: var(--green);
+    margin-bottom: 12px;
+}
+
+.modal-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.modal-card textarea {
+    width: 100%;
+    height: 150px;
+    resize: vertical;
+    border: 1px solid #dce1d8;
+    border-radius: 12px;
+    padding: 15px;
+    font-family: inherit;
+    font-size: 14px;
+    background: white;
+    outline: none;
+}
+
+.modal-card textarea:focus {
+    border-color: var(--sage);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: #e8e9e1;
+    color: var(--text);
+}
+
+.send-btn {
+    background: var(--green);
+    color: white;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 900px) {
+    .nav {
+        gap: 15px;
+    }
+
+    .daily-card {
+        grid-template-columns: 1fr;
+    }
+
+    .daily-image {
+        min-height: 300px;
+        order: -1;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bible-banner {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 650px) {
+    header {
+        height: 70px;
+        padding: 0 5%;
+    }
+
+    .brand {
+        font-size: 23px;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--cream);
+        padding: 25px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        border-bottom: 1px solid #e5e5dc;
+    }
+
+    .nav.open {
+        display: flex;
+    }
+
+    .nav a {
+        padding: 10px;
+    }
+
+    .nav .bible-link {
+        text-align: center;
+    }
+
+    .hero {
+        min-height: 480px;
+        margin: 12px 3%;
+        padding: 8%;
+        border-radius: 20px;
+    }
+
+    .hero h1 {
+        font-size: 47px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .daily-section,
+    .section {
+        padding: 45px 5%;
+    }
+
+    .daily-content {
+        padding: 30px;
+    }
+
+    .daily-content h2 {
+        font-size: 32px;
+    }
+
+    .verse {
+        font-size: 22px;
+    }
+
+    .section-heading h2 {
+        font-size: 34px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .tile-image {
+        height: 230px;
+    }
+
+    .bible-banner {
+        margin: 10px 5% 60px;
+        padding: 35px 25px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .bible-banner h2 {
+        font-size: 30px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .prayer-button {
+        bottom: 15px;
+        right: 15px;
+        padding: 14px 18px;
+        font-size: 12px;
+    }
+
+    .modal-card {
+        padding: 25px;
+    }
+}
+
+/* PLAYER DE MÚSICA AMBIENTE — controles flutuantes discretos */
+.music-player {
+    position: fixed;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 140;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 9px;
+    border: 1px solid rgba(255,255,255,.48);
+    border-radius: 18px;
+    background: rgba(38,62,48,.78);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgba(15,30,20,.13);
+    color: #f8f7f1;
+}
+.music-player .music-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: #d8c398;
+    margin: 2px 0 4px;
+}
+.music-control {
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.09);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+.music-control:hover { background: rgba(199,166,106,.35); transform: scale(1.06); }
+.music-control:focus-visible { outline: 2px solid #d8c398; outline-offset: 2px; }
+.music-volume {
+    width: 72px;
+    height: 4px;
+    accent-color: #d8c398;
+    cursor: pointer;
+    margin: 7px 0 4px;
+}
+.music-status {
+    width: 64px;
+    text-align: center;
+    font-size: 9px;
+    color: #dce4da;
+    line-height: 1.3;
+}
+@media (max-width: 650px) {
+    .music-player {
+        right: 9px;
+        top: auto;
+        bottom: 88px;
+        transform: none;
+        flex-direction: row;
+        gap: 6px;
+        padding: 8px;
+        border-radius: 30px;
+    }
+    .music-player .music-label { writing-mode: horizontal-tb; transform: none; display:none; }
+    .music-control { width: 31px; height: 31px; }
+    .music-volume { width: 55px; margin: 0 3px; }
+    .music-status { display:none; }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <a class="brand" href="#top">Além do <span>Éden.</span></a>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menu">☰</button>
+
+    <nav class="nav" id="nav">
+        <a href="#top" onclick="closeMenu()">Início</a>
+        <a href="#conectados" onclick="closeMenu()">Devocionais</a>
+        <a href="Reflexões/reflexoes.html" onclick="closeMenu()">Reflexões</a>
+        <a href="#entretenimento" onclick="closeMenu()">Entretenimento</a>
+        <a href="biblia/biblia.html" class="bible-link" onclick="closeMenu()">Bíblia Sagrada ↗</a>
+    </nav>
+</header>
+
+<main id="top">
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">Um encontro com a presença de Deus</span>
+
+            <h1>Encontre paz<br>além do <span>Éden.</span></h1>
+
+            <p>
+                Um lugar onde a alma encontra descanso,
+                a fé é renovada e a Palavra de Deus ilumina
+                cada passo da sua jornada.
+            </p>
+
+            <a href="#conectados" class="hero-button">
+                Explore nosso jardim <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- PALAVRA DO DIA -->
+
+    <section class="daily-section">
+        <div class="daily-card">
+
+            <div class="daily-content">
+                <div class="eyebrow">✦ Sua dose diária de fé</div>
+
+                <h2>Palavra do dia</h2>
+
+                <p class="verse">
+                    “O Senhor é o meu pastor;
+                    nada me faltará.”
+                </p>
+
+                <p class="verse-reference">Salmos 23:1</p>
+
+                <p class="daily-text">
+                    Mesmo quando o dia começa confuso, pesado ou
+                    silencioso, essa verdade permanece: Deus continua
+                    cuidando. O pastor não abandona o rebanho na
+                    tempestade, nem se afasta quando o caminho parece
+                    incerto. Se hoje falta força, paz ou direção,
+                    lembre-se: quem é guiado pelo Senhor não caminha
+                    sozinho. Há cuidado, provisão e presença de Deus
+                    sobre a sua vida.
+                </p>
+            </div>
+
+            <div class="daily-image"></div>
+
+        </div>
+    </section>
+
+    <!-- CONECTADOS -->
+
+    <section class="section" id="conectados">
+
+        <div class="section-heading">
+            <div class="eyebrow">Cultive sua fé</div>
+            <h2>Conectados ao Céu</h2>
+            <p>
+                Quando os joelhos tocam o chão,
+                o coração se conecta ao Céu.
+            </p>
+        </div>
+
+        <div class="cards">
+
+            <a class="tile" id="devocionais" href="devocionais.html">
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=85" alt="Floresta verde">
+                </div>
+
+                <div class="tile-content">
+                    <div class="tile-category">Vida com Deus</div>
+                    <h3>Devocionais</h3>
+                    <p>
+                        Momentos de comunhão, oração e aprendizado
+                        para fortalecer sua caminhada cristã.
+                    </p>
+
+                    <div class="tile-footer">
+                        <span>Explore</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="tile" id="reflexoes" href="Reflexões/reflexoes.html">
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=900&q=85" alt="Natureza tranquila">
+                </div>
+
+                <div class="tile-content">
+                    <div class="tile-category">Medite na Palavra</div>
+                    <h3>Reflexões</h3>
+                    <p>
+                        Mensagens que inspiram, ensinam e nos aproximam
+                        cada vez mais da presença do Senhor.
+                    </p>
+
+                    <div class="tile-footer">
+                        <span>Explore</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="tile" id="estudos" href="estudos.html">
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=85" alt="Biblioteca">
+                </div>
+
+                <div class="tile-content">
+                    <div class="tile-category">Conhecimento bíblico</div>
+                    <h3>Estudos Bíblicos</h3>
+                    <p>
+                        Aprofunde seu conhecimento nas Escrituras
+                        e descubra as riquezas da Palavra.
+                    </p>
+
+                    <div class="tile-footer">
+                        <span>Explore</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- BÍBLIA -->
+
+    <section class="bible-banner">
+        <div>
+            <div class="eyebrow">A Palavra que transforma</div>
+            <h2>Abra sua Bíblia.</h2>
+            <p>
+                Uma jornada pelas Escrituras.
+                Leia, medite e fortaleça sua fé diariamente.
+            </p>
+        </div>
+
+        <a href="biblia/biblia.html">Ler a Bíblia Sagrada ↗</a>
+    </section>
+
+    <!-- ENTRETENIMENTO -->
+
+    <section class="section" id="entretenimento">
+
+        <div class="section-heading">
+            <div class="eyebrow">Aprenda e divirta-se</div>
+            <h2>Um jardim de descobertas</h2>
+            <p>
+                Fé, conhecimento e entretenimento
+                para toda a família.
+            </p>
+        </div>
+
+        <div class="cards">
+
+            <a class="tile" href="jogos/jogos.html">
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?auto=format&fit=crop&w=900&q=85" alt="Jogos">
+                </div>
+
+                <div class="tile-content">
+                    <div class="tile-category">Desafie sua mente</div>
+                    <h3>Jogos Bíblicos</h3>
+                    <p>
+                        Teste seus conhecimentos bíblicos
+                        com desafios e atividades interativas.
+                    </p>
+
+                    <div class="tile-footer">
+                        <span>Jogar agora</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="tile" href="ebooks.html">
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=85" alt="Livros">
+                </div>
+
+                <div class="tile-content">
+                    <div class="tile-category">Biblioteca digital</div>
+                    <h3>E-Books</h3>
+                    <p>
+                        Explore livros, conteúdos e materiais
+                        para enriquecer sua jornada espiritual.
+                    </p>
+
+                    <div class="tile-footer">
+                        <span>Explorar livros</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="tile" href="eventos.html">
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=85" alt="Evento">
+                </div>
+
+                <div class="tile-content">
+                    <div class="tile-category">Comunhão e celebração</div>
+                    <h3>Eventos</h3>
+                    <p>
+                        Descubra encontros, congressos
+                        e momentos especiais de fé.
+                    </p>
+
+                    <div class="tile-footer">
+                        <span>Ver eventos</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer>
+    <div class="footer-content">
+
+        <div>
+            <div class="footer-brand">Além do Éden.</div>
+            <p>
+                Um lugar de descanso para a alma.<br>
+                Um jardim para cultivar a fé.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#top">Início</a>
+            <a href="#conectados">Devocionais</a>
+            <a href="reflexoes.html">Reflexões</a>
+            <a href="biblia/biblia.html">Bíblia</a>
+            <a href="#entretenimento">Entretenimento</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Além do Éden · Que a graça do Senhor esteja com você.
+    </div>
+</footer>
+
+
+<!-- PLAYER FLUTUANTE DE MÚSICA AMBIENTE -->
+<aside class="music-player" aria-label="Controles da música ambiente">
+    <span class="music-label">Som ambiente</span>
+    <button class="music-control" id="musicPlay" type="button" aria-label="Tocar música" title="Tocar música">▶</button>
+    <button class="music-control" id="musicPause" type="button" aria-label="Pausar música" title="Pausar música">Ⅱ</button>
+    <span style="font-size:13px" aria-hidden="true">♫</span>
+    <input class="music-volume" id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.35"
+           aria-label="Volume da música" title="Ajustar volume">
+    <span class="music-status" id="musicStatus">Som pausado</span>
+</aside>
+
+<audio id="ambientAudio" preload="none"></audio>
+
+<!-- PEDIDO DE ORAÇÃO -->
+
+<button class="prayer-button" onclick="openPrayer()">
+    ✦ &nbsp; Pedido de oração
+</button>
+
+<div class="prayer-modal" id="prayerModal"
+     onclick="if(event.target===this)closePrayer()">
+
+    <div class="modal-card">
+
+        <h2>Pedido de oração</h2>
+
+        <p>
+            Compartilhe seu pedido.
+            Que Deus fortaleça sua fé e seu coração.
+        </p>
+
+        <textarea id="prayerText"
+                  placeholder="Escreva seu pedido de oração..."></textarea>
+
+        <div class="modal-actions">
+
+            <button class="close-btn" onclick="closePrayer()">
+                Fechar
+            </button>
+
+            <button class="send-btn" onclick="sendPrayer()">
+                Enviar
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+function toggleMenu() {
+    document.getElementById('nav').classList.toggle('open');
+}
+
+function closeMenu() {
+    document.getElementById('nav').classList.remove('open');
+}
+
+function openPrayer() {
+    document.getElementById('prayerModal').classList.add('open');
+}
+
+function closePrayer() {
+    document.getElementById('prayerModal').classList.remove('open');
+}
+
+function sendPrayer() {
+    const text = document.getElementById('prayerText').value.trim();
+
+    if (!text) {
+        alert('Por favor, escreva seu pedido de oração.');
+        return;
+    }
+
+    alert('Seu pedido foi preenchido! Para realizar o envio, conecte o formulário a um serviço de mensagens.');
+
+}
+
+
+// PLAYER DE MÚSICA AMBIENTE
+// Coloque os arquivos de áudio dentro da pasta "musicas" ao lado deste HTML.
+// Atualize os nomes abaixo para corresponder exatamente aos arquivos que você adicionar.
+const musicPlaylist = [
+    "musicas/Aline Barros - Autor da Vida - AlineBarrosVEVO (youtube).mp3",
+    "musicas/Anderson Freire -  canção do céu Anderson Freire - Letra - Play back (youtube).mp3",
+    "musicas/Anderson Freire - A Igreja Vem (Clipe oficial MK Music em HD) - MK MUSIC (youtube).mp3",
+    "musicas/Anderson Freire - Efésios 6 (Ao Vivo) - DVD Essência - MK MUSIC (youtube).mp3",
+    "musicas/Anderson Freire - Ele Chegou (Ao Vivo) - DVD Essência - MK MUSIC (youtube).mp3",
+    "musicas/ADORAÇÃO - 124 - HARPA CRISTÃ - Carlos José - CARLOS JOSE E A HARPA CRISTÃ (youtube).mp3",
+    "musicas/Aline Barros - Diante da Cruz - Aline Barros (Clipe Oficial MK Music) - MK MUSIC (youtube).mp3",
+    "musicas/Aline Barros - Ressuscita-me (Clipe Oficial MK Music HD) - MK MUSIC (youtube).mp3",
+    "musicas/Aline Barros - Sonda-me, Usa-me (Clipe Oficial MK Music) - MK MUSIC (youtube).mp3",
+
+
+
+
+
+];
+
+const ambientAudio = document.getElementById("ambientAudio");
+const musicPlay = document.getElementById("musicPlay");
+const musicPause = document.getElementById("musicPause");
+const musicVolume = document.getElementById("musicVolume");
+const musicStatus = document.getElementById("musicStatus");
+let currentMusicIndex = 0;
+
+ambientAudio.volume = Number(musicVolume.value);
+ambientAudio.loop = true;
+ambientAudio.src = musicPlaylist[currentMusicIndex];
+
+musicPlay.addEventListener("click", async function() {
+    try {
+        await ambientAudio.play();
+        musicStatus.textContent = "Música tocando";
+        musicPlay.setAttribute("aria-label", "Música tocando");
+    } catch (error) {
+        musicStatus.textContent = "Confira os arquivos";
+        console.warn("Não foi possível iniciar a música. Confira o caminho/nome do arquivo:", error);
+    }
+});
+
+musicPause.addEventListener("click", function() {
+    ambientAudio.pause();
+    musicStatus.textContent = "Som pausado";
+});
+
+musicVolume.addEventListener("input", function() {
+    ambientAudio.volume = Number(this.value);
+    musicStatus.textContent = ambientAudio.volume === 0 ? "Som no mudo" :
+        "Volume: " + Math.round(ambientAudio.volume * 100) + "%";
+});
+
+ambientAudio.addEventListener("ended", function() {
+    currentMusicIndex = (currentMusicIndex + 1) % musicPlaylist.length;
+    ambientAudio.src = musicPlaylist[currentMusicIndex];
+    ambientAudio.play().catch(() => {
+        musicStatus.textContent = "Clique em play";
+    });
+});
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closePrayer();
+        closeMenu();
+    }
+});
+
+</script>
+
+</body>
+</html>
