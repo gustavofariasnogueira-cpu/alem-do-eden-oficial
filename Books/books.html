@@ -32,6 +32,30 @@ main{max-width:1100px;margin:auto;padding:44px 22px 65px}.hero{text-align:center
 .verse blockquote{font-family:Georgia,serif;font-size:19px;line-height:1.55;margin:0 0 8px;font-style:italic}.verse cite{font-size:12px;font-style:normal;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 footer{text-align:center;color:#8a9686;font-size:12px;padding:0 20px 25px}
 @media(max-width:650px){header{padding:15px 16px}.grid{grid-template-columns:1fr}.card{padding:19px}.hero{margin-bottom:26px}main{padding-top:32px}}
+
+
+.card.manutencao {
+    position: relative;
+    overflow: hidden;
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.card.manutencao::after {
+    content: "EM MANUTENÇÃO";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 30, 20, 0.75);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+  
+  
 </style></head>
 <body>
 <header><div class="brand"><div class="logo">✝</div><div><small>Além do Éden</small><h1>Books · Livros da Bíblia</h1></div></div><a class="back" href="../index.html">← Voltar ao início</a></header>
@@ -39,9 +63,9 @@ footer{text-align:center;color:#8a9686;font-size:12px;padding:0 20px 25px}
 <section class="hero"><div class="eyebrow">Conheça as Escrituras</div><h2>Uma jornada por toda a Bíblia</h2><p>Explore os livros sagrados, conheça seus contextos e descubra a mensagem de cada parte da Palavra de Deus.</p></section>
 <section class="grid" aria-label="Menu de livros bíblicos">
 <a class="card" href="opoco.html"><div class="icon">📜</div><div><h3>O Poço</h3><p>Uma jornada pelas profundezas da fé, onde cada poço revela ensinamentos sobre a presença de Deus, a perseverança e a fonte de água viva que transforma a alma.</p></div><span class="arrow">›</span></a>
-<a class="card" href="novo_testamento.html"><div class="icon">✝</div><div><h3>Novo Testamento</h3><p>Explore os Evangelhos, a história da Igreja primitiva, as cartas apostólicas e Apocalipse.</p></div><span class="arrow">›</span></a>
-<a class="card" href="livros_por_categoria.html"><div class="icon">🗂</div><div><h3>Livros por Categoria</h3><p>Navegue por grupos como Pentateuco, Históricos, Poéticos, Proféticos e cartas.</p></div><span class="arrow">›</span></a>
-<a class="card" href="resumo_livros.html"><div class="icon">🔎</div><div><h3>Resumo dos Livros</h3><p>Veja uma introdução e os principais temas de cada livro bíblico.</p></div><span class="arrow">›</span></a>
+<a class="card manutencao" href="novo_testamento.html"><div class="icon">✝</div><div><h3>Novo Testamento</h3><p>Explore os Evangelhos, a história da Igreja primitiva, as cartas apostólicas e Apocalipse.</p></div><span class="arrow">›</span></a>
+<a class="card manutencao" href="livros_por_categoria.html"><div class="icon">🗂</div><div><h3>Livros por Categoria</h3><p>Navegue por grupos como Pentateuco, Históricos, Poéticos, Proféticos e cartas.</p></div><span class="arrow">›</span></a>
+<a class="card manutencao" href="resumo_livros.html"><div class="icon">🔎</div><div><h3>Resumo dos Livros</h3><p>Veja uma introdução e os principais temas de cada livro bíblico.</p></div><span class="arrow">›</span></a>
 </section>
 <section class="verse"><blockquote>“Toda a Escritura é divinamente inspirada, e proveitosa para ensinar...”</blockquote><cite>2 Timóteo 3:16</cite></section>
 </main><footer>Além do Éden · Conhecendo a Palavra, livro por livro.</footer>
