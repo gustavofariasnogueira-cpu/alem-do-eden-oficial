@@ -1188,5 +1188,58 @@ document.addEventListener('keydown', function(event) {
 
 </script>
 
+<!-- Importando o Firebase (SDK Modular) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // As suas chaves de configuração do Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCBIG3jGDWALMkCJ1vLS0XEzfPZZzuRi6s",
+    authDomain: "harry-99baf.firebaseapp.com",
+    databaseURL: "https://harry-99baf-default-rtdb.firebaseio.com",
+    projectId: "harry-99baf",
+    storageBucket: "harry-99baf.firebasestorage.app",
+    messagingSenderId: "221578620025",
+    appId: "1:221578620025:web:95e5521c1a480c64fcb8a8"
+  };
+
+  // Inicializando o Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Exemplo 1: Função para SALVAR dados no seu nó 'alem_do_eden'
+  function salvarNoBanco(chave, valor) {
+    set(ref(db, 'alem_do_eden/' + chave), {
+      dado: valor,
+      ultimaAtualizacao: new Date().toISOString()
+    })
+    .then(() => {
+      console.log("Dado salvo com sucesso!");
+    })
+    .catch((error) => {
+      console.error("Erro ao salvar: ", error);
+    });
+  }
+
+  // Exemplo 2: Função para LER dados do seu banco
+  function lerDoBanco() {
+    const dbRef = ref(db);
+    get(child(dbRef, 'alem_do_eden')).then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log("Dados encontrados:", snapshot.val());
+      } else {
+        console.log("Nenhum dado encontrado.");
+      }
+    }).catch((error) => {  
+      console.error(error);
+    });
+  }
+
+  // Você pode testar chamando as funções no console do navegador:
+  // salvarNoBanco('visitas', 1);
+  // lerDoBanco();
+</script>
+    
 </body>
 </html>
